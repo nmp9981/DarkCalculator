@@ -1,5 +1,7 @@
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnrollUser : MonoBehaviour
 {
@@ -38,6 +40,7 @@ public class EnrollUser : MonoBehaviour
             else
             {
                 string name = enrollUserArray[i].text;
+                //ÀÌ¸§ À¯È¿¼º °Ë»ç
                 if (CheckEffectiveness_UserName(name)) curCount++;
             }
         }
@@ -56,6 +59,11 @@ public class EnrollUser : MonoBehaviour
         //±ÛÀÚ ¼ö °Ë»ç
         if(name.Length >= 6 || name.Length<=1) return false;
 
+        //Æ¯¼ö ¹®ÀÚ °Ë»ç
+        if(Regex.IsMatch(name, @"[^a-zA-Z0-9°¡-ÆR¤¡-¤¾¤¿-¤Ó\s]"))
+        {
+            return false;
+        }
         return true;
     }
 }
