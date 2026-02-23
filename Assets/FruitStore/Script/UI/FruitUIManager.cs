@@ -6,6 +6,9 @@ public class FruitUIManager : MonoBehaviour
 {
     [Header("UI")]
     public List<GameObject> fruitUIList = new List<GameObject>();
+
+    [Header("Class")]
+    EnrollUser enrollUser;
     
     private void Awake()
     {
@@ -40,9 +43,13 @@ public class FruitUIManager : MonoBehaviour
     public void ViewToUserList()
     {
         //인원 검사
-
-
-        fruitUIList[3].SetActive(true);
-        fruitUIList[2].SetActive(false);
+        if (enrollUser.CheckEnroll_AllUserNick()){
+            fruitUIList[3].SetActive(true);
+            fruitUIList[2].SetActive(false);
+        }
+        else
+        {
+            enrollUser.ShowNotFullMassage();
+        }
     }
 }
