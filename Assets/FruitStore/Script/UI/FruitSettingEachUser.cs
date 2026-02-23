@@ -34,7 +34,7 @@ public class FruitSettingEachUser : MonoBehaviour
             userBlockList[i].SetActive(true);
 
             UserInfoClass user = userBlockList[i].GetComponent<UserInfoClass>();
-
+            user.name = FruitGameManager.Instance.UserNameList[i];
             
 
             FruitGameManager.Instance.UserInfoList.Add(user);

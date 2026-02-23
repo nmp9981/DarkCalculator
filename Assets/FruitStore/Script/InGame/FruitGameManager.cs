@@ -49,7 +49,7 @@ public class FruitGameManager : MonoBehaviour
     public int TotalRound { get { return totalRound; } }
     public int PeopleCount { get { return peopleCount; } set { peopleCount = value; } }
 
-
+    public List<string> UserNameList = new List<string>();
     public List<UserInfoClass> UserInfoList  = new List<UserInfoClass>();
     public List<FruitImageData> fruitImageList = new List<FruitImageData>();
     public Dictionary<string, Image> fruitImageDic = new Dictionary<string, Image>();

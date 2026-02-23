@@ -38,17 +38,25 @@ public class EnrollUser : MonoBehaviour
     public bool CheckEnroll_AllUserNick()
     {
         int curCount = 0;
-        for (int i = 0; i < FruitGameManager.Instance.maxPeopleCount; i++)
+        for (int i = 0; i < FruitGameManager.Instance.PeopleCount; i++)
         {
-            if (i >= FruitGameManager.Instance.PeopleCount) continue;
-            else
+            string name = enrollUserArray[i].text;
+            //이름 유효성 검사
+            if (CheckEffectiveness_UserName(name)) curCount++;
+        }
+
+        //전부 유효
+        if(curCount == FruitGameManager.Instance.PeopleCount)
+        {
+            for (int i = 0; i < curCount; i++)
             {
                 string name = enrollUserArray[i].text;
-                //이름 유효성 검사
-                if (CheckEffectiveness_UserName(name)) curCount++;
+                FruitGameManager.Instance.UserNameList.Add(name);
             }
+            return true;
         }
-        return curCount == FruitGameManager.Instance.PeopleCount;
+
+        return false;//유효하지 않은 이름들이 있음
     }
 
     /// <summary>
