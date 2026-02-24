@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public struct FruitImageData
 {
     public string fruitName;
-    public Image fruitImage;
+    public Sprite fruitImage;
     public int restCount;
 }
 public class FruitGameManager : MonoBehaviour
@@ -56,7 +56,7 @@ public class FruitGameManager : MonoBehaviour
     public List<string> UserNameList = new List<string>();
     public List<UserInfoClass> UserInfoList  = new List<UserInfoClass>();
     public List<FruitImageData> fruitImageList = new List<FruitImageData>();
-    public Dictionary<string, Image> fruitImageDic = new Dictionary<string, Image>();
+    public Dictionary<string, Sprite> fruitImageDic = new Dictionary<string, Sprite>();
     public Dictionary<string, int> fruitTypeCountDic = new Dictionary<string, int>();
     #endregion
 }
