@@ -12,7 +12,16 @@ public class FruitSettingEachUser : MonoBehaviour
 
     private int[] divFruitTypeCount;
 
-    void Start()
+
+    private void OnEnable()
+    {
+        EnrollUserInfo();//유저 정보 등록
+    }
+
+    /// <summary>
+    /// 유저 오브젝트 풀링
+    /// </summary>
+    public void UserObjectFulling()
     {
         //유저 리스트 블록 생성
         userBlockList = new GameObject[FruitGameManager.Instance.maxPeopleCount];
@@ -20,14 +29,10 @@ public class FruitSettingEachUser : MonoBehaviour
         {
             userBlockList[i] = Instantiate(userInfoPrefab);
             userBlockList[i].transform.parent = scrollTransform;
+            userBlockList[i].SetActive(false);
         }
 
         divFruitTypeCount = new int[FruitGameManager.Instance.maxPeopleCount];
-    }
-
-    private void OnEnable()
-    {
-        EnrollUserInfo();
     }
 
     /// <summary>
@@ -37,6 +42,10 @@ public class FruitSettingEachUser : MonoBehaviour
     {
         //총 인원
         int totalNum = FruitGameManager.Instance.PeopleCount;
+        for (int i = 0; i < totalNum; i++)
+        {
+            userBlockList[i].gameObject.SetActive(true);
+        }
 
         //과일 종류 개수 정하기
         if (totalNum < 10) FruitGameManager.Instance.FruitTypeCount = (totalNum + 1) / 2;

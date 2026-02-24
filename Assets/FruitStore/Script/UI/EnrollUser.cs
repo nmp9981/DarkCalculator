@@ -24,7 +24,9 @@ public class EnrollUser : MonoBehaviour
     private void OnEnable()
     {
         notifyText.text = string.Empty;
-        for(int i = 0; i < FruitGameManager.Instance.maxPeopleCount; i++)
+        notifyText.gameObject.SetActive(false);
+
+        for (int i = 0; i < FruitGameManager.Instance.maxPeopleCount; i++)
         {
             if(i>=FruitGameManager.Instance.PeopleCount) enrollUserArray[i].gameObject.SetActive(false);
             else enrollUserArray[i].gameObject.SetActive(true);
@@ -81,11 +83,13 @@ public class EnrollUser : MonoBehaviour
 
     public void ShowNotFullMassage()
     {
+        notifyText.gameObject.SetActive(true);
         notifyText.text = $"모든 유저의 닉네임을\n 입력해야 합니다.";
         Invoke("Off_ShowNotFullMassage",0.5f);
     }
     void Off_ShowNotFullMassage()
     {
-        notifyText.text = string.Empty; 
+        notifyText.text = string.Empty;
+        notifyText.gameObject.SetActive(false);
     }
 }

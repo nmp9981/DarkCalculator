@@ -8,11 +8,12 @@ public class FruitUIManager : MonoBehaviour
     public List<GameObject> fruitUIList = new List<GameObject>();
 
     [Header("Class")]
-    EnrollUser enrollUser;
+    public EnrollUser enrollUser;
     
     private void Awake()
     {
         SetButtonBinding();
+        fruitUIList[3].GetComponent<FruitSettingEachUser>().UserObjectFulling();
     }
 
     void SetButtonBinding()
