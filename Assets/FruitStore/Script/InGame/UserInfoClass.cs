@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UserInfoClass : MonoBehaviour
 {
@@ -11,6 +13,13 @@ public class UserInfoClass : MonoBehaviour
 
     //각 라운드별 얻은 돈
     public int[] getMoney = new int[FruitGameManager.Instance.TotalRound];
+
+    //UI 요소
+    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] TextMeshProUGUI fruit1Text;
+    [SerializeField] Image fruit1Image;
+    [SerializeField] TextMeshProUGUI fruit2Text;
+    [SerializeField] Image fruit2Image;
 
     public UserInfoClass(string name, string fruit1, string fruit2)
     {
@@ -28,5 +37,16 @@ public class UserInfoClass : MonoBehaviour
         int money = 0;
         for(int i = 0; i < getMoney.Length; i++) money+= getMoney[i];
         return money;
+    }
+    /// <summary>
+    /// UI 표시
+    /// </summary>
+    public void ShowUI()
+    {
+        nameText.text = userName;
+        fruit1Text.text = fruit1Name;
+        fruit1Image.sprite = FruitGameManager.Instance.fruitImageDic[fruit1Name];
+        fruit2Text.text = fruit2Name;
+        fruit2Image.sprite = FruitGameManager.Instance.fruitImageDic[fruit2Name];
     }
 }

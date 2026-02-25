@@ -92,6 +92,9 @@ public class FruitSettingEachUser : MonoBehaviour
             FruitGameManager.Instance.fruitTypeCountDic[user.fruit2Name] -= 1;
 
             FruitGameManager.Instance.UserInfoList.Add(user);
+
+            //UI업데이트
+            user.ShowUI();
         }
     }
     /// <summary>

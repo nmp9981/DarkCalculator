@@ -1356,6 +1356,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6324cc8f985471449174c796301e212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userName: 
+  fruit1Name: 
+  fruit2Name: 
+  getMoney: 
+  nameText: {fileID: 5976945723883700674}
+  fruit1Text: {fileID: 6698682967638639922}
+  fruit1Image: {fileID: 2476037664008686984}
+  fruit2Text: {fileID: 463653441710231495}
+  fruit2Image: {fileID: 2568055834357022699}
 --- !u!1 &7301542213790453507
 GameObject:
   m_ObjectHideFlags: 0
