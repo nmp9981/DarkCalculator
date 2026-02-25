@@ -14,6 +14,7 @@ public class FruitGameManager : MonoBehaviour
 { 
     static FruitGameManager _instance;
     public static FruitGameManager Instance { get { Init(); return _instance; } }
+    public FruitSettingUserUI setUserUI;
 
     static void Init()
     {
@@ -40,6 +41,25 @@ public class FruitGameManager : MonoBehaviour
                 fruitImageDic.Add(data.fruitName, data.fruitImage);
                 fruitTypeCountDic.Add(data.fruitName, 0);
             }
+        }
+    }
+
+    /// <summary>
+    /// 교환, 비밀, 확정 버튼 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="buttonNum"></param>
+    public void Connect_FruitSettingUserUI(UserInfoClass user, int buttonNum)
+    {
+        switch (buttonNum)
+        {
+            case 1://교환
+                setUserUI.ExchangeFruit(user);
+                break;
+            case 2://비밀
+                break;
+            case 3://확정
+                break;
         }
     }
 

@@ -256,7 +256,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 310537066614377556}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4474696731762970768}
+        m_TargetAssemblyTypeName: UserInfoClass, Assembly-CSharp
+        m_MethodName: SecterPriceConnect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1227554653968839819
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +600,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8288513095208899528}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4474696731762970768}
+        m_TargetAssemblyTypeName: UserInfoClass, Assembly-CSharp
+        m_MethodName: ConfirmPriceConnect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3048423617865239028
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +869,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2122276255974896222}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4474696731762970768}
+        m_TargetAssemblyTypeName: UserInfoClass, Assembly-CSharp
+        m_MethodName: ExchangeFruitConnect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3529987840718972314
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,6 +1396,7 @@ MonoBehaviour:
   fruit1Name: 
   fruit2Name: 
   getMoney: 
+  settingUI: {fileID: 0}
   nameText: {fileID: 5976945723883700674}
   fruit1Text: {fileID: 6698682967638639922}
   fruit1Image: {fileID: 2476037664008686984}

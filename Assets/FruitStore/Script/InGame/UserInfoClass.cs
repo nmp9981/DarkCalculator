@@ -15,6 +15,7 @@ public class UserInfoClass : MonoBehaviour
     public int[] getMoney = new int[FruitGameManager.Instance.TotalRound];
 
     //UI 요소
+    [SerializeField] FruitSettingUserUI settingUI;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI fruit1Text;
     [SerializeField] Image fruit1Image;
@@ -48,5 +49,29 @@ public class UserInfoClass : MonoBehaviour
         fruit1Image.sprite = FruitGameManager.Instance.fruitImageDic[fruit1Name];
         fruit2Text.text = fruit2Name;
         fruit2Image.sprite = FruitGameManager.Instance.fruitImageDic[fruit2Name];
+    }
+
+    /// <summary>
+    /// 과일 교환 연결
+    /// </summary>
+    public void ExchangeFruitConnect()
+    {
+        FruitGameManager.Instance.Connect_FruitSettingUserUI(this,1);
+        ShowUI();
+    }
+
+    /// <summary>
+    /// 가격 비밀 연결
+    /// </summary>
+    public void SecterPriceConnect()
+    {
+        FruitGameManager.Instance.Connect_FruitSettingUserUI(this,2);
+    }
+    /// <summary>
+    /// 가격 확정 연결
+    /// </summary>
+    public void ConfirmPriceConnect()
+    {
+        FruitGameManager.Instance.Connect_FruitSettingUserUI(this,3);
     }
 }
