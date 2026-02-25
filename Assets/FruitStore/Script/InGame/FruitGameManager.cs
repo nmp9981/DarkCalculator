@@ -54,7 +54,7 @@ public class FruitGameManager : MonoBehaviour
         switch (buttonNum)
         {
             case 1://교환
-                setUserUI.ExchangeFruit(user);
+                setUserUI.ExchangeFruitShow(user);
                 break;
             case 2://비밀
                 break;
@@ -68,6 +68,7 @@ public class FruitGameManager : MonoBehaviour
     private int peopleCount;
     private int fruitTypeCount;
 
+    public int maxFruitTypeCount = 10;
     public int maxPeopleCount = 20;
     public int TotalRound { get { return totalRound; } }
     public int PeopleCount { get { return peopleCount; } set { peopleCount = value; } }
