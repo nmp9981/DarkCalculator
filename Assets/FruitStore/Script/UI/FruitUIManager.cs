@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ public class FruitUIManager : MonoBehaviour
 {
     [Header("UI")]
     public List<GameObject> fruitUIList = new List<GameObject>();
+    [SerializeField] private TextMeshProUGUI roundText;
 
     [Header("Class")]
     public EnrollUser enrollUser;

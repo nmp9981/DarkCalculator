@@ -58,10 +58,10 @@ public class FruitGameManager : MonoBehaviour
                 setUserUI.ExchangeFruitShow(user);
                 break;
             case 2://가격 확정
-                setPriceConfirmUI.FruitPriceDecideUIShow(user,user.fruit1Name);
+                setPriceConfirmUI.FruitPriceDecideUIShow(user,user.fruit1Name,0);
                 break;
             case 3://가격 확정
-                setPriceConfirmUI.FruitPriceDecideUIShow(user,user.fruit2Name);
+                setPriceConfirmUI.FruitPriceDecideUIShow(user,user.fruit2Name,1);
                 break;
             default:
                 break;

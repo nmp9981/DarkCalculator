@@ -17,16 +17,18 @@ public class FruitPriceConfirmUI : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI notiText;
 
+    private int fruitIdx;
     private int selectPrice;
     private string sellFruitName;
     /// <summary>
     /// 과일 가격 결정 UI보이기
     /// </summary>
-    public void FruitPriceDecideUIShow(UserInfoClass user, string fruitName)
+    public void FruitPriceDecideUIShow(UserInfoClass user, string fruitName, int idx)
     {
         priceCheckUI.SetActive(true);
         userInfo = user;
         sellFruitName = fruitName;
+        fruitIdx = idx;
     }
     /// <summary>
     /// 과일 가격 선택
@@ -49,15 +51,19 @@ public class FruitPriceConfirmUI : MonoBehaviour
     /// </summary>
     public void FruitPriceConfirms()
     {
-        if (CheckSinglePrice())//가격 중복 체크 체크
+        if (!CheckSinglePrice())//가격 중복 체크
         {
+            notiText.gameObject.SetActive(true);
             Invoke("ShowNoti", 0.5f);
         }
         else
         {
             //가격 확정
-            userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound-1].name = sellFruitName;
-            userInfo.sellMoneyRound[0].money =selectPrice;
+            userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound - 1, fruitIdx].name = sellFruitName;
+            userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound - 1, fruitIdx].money = selectPrice;
+            //버튼 비활성화
+            if(fruitIdx==0) userInfo.fruit1SellButton.interactable = false;
+            else userInfo.fruit2SellButton.interactable = false;
 
             secretToggle.interactable = !userInfo.isSecret;
             priceCheckUI.SetActive(false);

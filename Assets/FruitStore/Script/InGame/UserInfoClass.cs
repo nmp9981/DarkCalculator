@@ -16,10 +16,10 @@ public class UserInfoClass : MonoBehaviour
     public string fruit2Name;
 
     //각 라운드별 제출한 돈
-    public SellInfo[] sellMoneyRound = new SellInfo[FruitGameManager.Instance.TotalRound];
+    public SellInfo[,] sellMoneyRound;
 
     //각 라운드별 얻은 돈
-    public int[] getMoney = new int[FruitGameManager.Instance.TotalRound];
+    public int[] getMoney;
 
     //교환, 비밀
     public bool isSecret;
@@ -34,6 +34,8 @@ public class UserInfoClass : MonoBehaviour
 
     //버튼
     [SerializeField] Button useExchangeButton;
+    [SerializeField] public Button fruit1SellButton;
+    [SerializeField] public Button fruit2SellButton;
     [SerializeField] Image fruit1ButtonImage;
     [SerializeField] Image fruit2ButtonImage;
 
@@ -120,8 +122,18 @@ public class UserInfoClass : MonoBehaviour
         fruit1Name = string.Empty;
         fruit2Name = string.Empty;
 
-        for (int i = 0; i < FruitGameManager.Instance.TotalRound; i++) getMoney[i] = 0;
+        fruit1SellButton.interactable=true;
+        fruit2SellButton.interactable=true;
 
-        
+        sellMoneyRound = new SellInfo[FruitGameManager.Instance.TotalRound, 2];
+        getMoney = new int[FruitGameManager.Instance.TotalRound];
+        for (int i = 0; i < FruitGameManager.Instance.TotalRound; i++)
+        {
+            getMoney[i] = 0;
+            sellMoneyRound[i,0].name = string.Empty;
+            sellMoneyRound[i,0].money = 0;
+            sellMoneyRound[i, 1].name = string.Empty;
+            sellMoneyRound[i, 1].money = 0;
+        }
     }
 }

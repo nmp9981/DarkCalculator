@@ -84,6 +84,9 @@ public class FruitSettingEachUser : MonoBehaviour
             userBlockList[i].SetActive(true);
 
             UserInfoClass user = userBlockList[i].GetComponent<UserInfoClass>();
+            //초기화 후 정보 입력
+            user.InitUserInfo();
+
             user.userName = FruitGameManager.Instance.UserNameList[i];
             user.fruit1Name = FruitGameManager.Instance.fruitImageList[fruitStack.Pop()].fruitName;
             user.fruit2Name = FruitGameManager.Instance.fruitImageList[fruitStack.Pop()].fruitName;

@@ -1406,6 +1406,8 @@ MonoBehaviour:
   fruit2Text: {fileID: 463653441710231495}
   fruit2Image: {fileID: 2568055834357022699}
   useExchangeButton: {fileID: 6466196727946159300}
+  fruit1SellButton: {fileID: 5977362573211892088}
+  fruit2SellButton: {fileID: 1571082438420805113}
   fruit1ButtonImage: {fileID: 2482376061177493415}
   fruit2ButtonImage: {fileID: 4446180811697126658}
 --- !u!1 &6843187610036241741
