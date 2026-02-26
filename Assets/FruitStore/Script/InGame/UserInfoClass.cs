@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,9 @@ public class UserInfoClass : MonoBehaviour
     //각 라운드별 얻은 돈
     public int[] getMoney = new int[FruitGameManager.Instance.TotalRound];
 
+    //교환, 비밀
+    public bool isSecret;
+
     //UI 요소
     [SerializeField] FruitSettingUserUI settingUI;
     [SerializeField] TextMeshProUGUI nameText;
@@ -21,6 +25,10 @@ public class UserInfoClass : MonoBehaviour
     [SerializeField] Image fruit1Image;
     [SerializeField] TextMeshProUGUI fruit2Text;
     [SerializeField] Image fruit2Image;
+
+    //버튼
+    [SerializeField] Button useExchangeButton;
+    [SerializeField] Button secretButton;
 
     public UserInfoClass(string name, string fruit1, string fruit2)
     {
@@ -52,6 +60,21 @@ public class UserInfoClass : MonoBehaviour
     }
 
     /// <summary>
+    /// 교환권 사용
+    /// </summary>
+    public void UseExchange()
+    {
+        useExchangeButton.interactable = false;
+    }
+    /// <summary>
+    /// 비밀 사용
+    /// </summary>
+    public void UseSecretPrice()
+    {
+        isSecret = true;
+    }
+
+    /// <summary>
     /// 과일 교환 연결
     /// </summary>
     public void ExchangeFruitConnect()
@@ -61,17 +84,26 @@ public class UserInfoClass : MonoBehaviour
     }
 
     /// <summary>
-    /// 가격 비밀 연결
-    /// </summary>
-    public void SecterPriceConnect()
-    {
-        FruitGameManager.Instance.Connect_FruitSettingUserUI(this,2);
-    }
-    /// <summary>
     /// 가격 확정 연결
     /// </summary>
     public void ConfirmPriceConnect()
     {
-        FruitGameManager.Instance.Connect_FruitSettingUserUI(this,3);
+        FruitGameManager.Instance.Connect_FruitSettingUserUI(this,2);
+    }
+
+    /// <summary>
+    /// 유저 정보 초기화
+    /// </summary>
+    public void InitUserInfo()
+    {
+        useExchangeButton.interactable = true;
+
+        userName = string.Empty;
+        fruit1Name = string.Empty;
+        fruit2Name = string.Empty;
+
+        for (int i = 0; i < FruitGameManager.Instance.TotalRound; i++) getMoney[i] = 0;
+
+        
     }
 }

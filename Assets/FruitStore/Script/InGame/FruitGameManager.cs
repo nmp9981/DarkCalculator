@@ -15,6 +15,7 @@ public class FruitGameManager : MonoBehaviour
     static FruitGameManager _instance;
     public static FruitGameManager Instance { get { Init(); return _instance; } }
     public FruitSettingUserUI setUserUI;
+    public FruitPriceConfirmUI setPriceConfirmUI;
 
     static void Init()
     {
@@ -56,9 +57,10 @@ public class FruitGameManager : MonoBehaviour
             case 1://교환
                 setUserUI.ExchangeFruitShow(user);
                 break;
-            case 2://비밀
+            case 2://가격 확정
+                setPriceConfirmUI.FruitPriceDecideUIShow(user);
                 break;
-            case 3://확정
+            default:
                 break;
         }
     }

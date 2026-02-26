@@ -56,7 +56,7 @@ public class FruitSettingUserUI : MonoBehaviour
         }
     }
     /// <summary>
-    /// 과일 교환 찬 닫기
+    /// 과일 교환 창 닫기
     /// </summary>
     public void ExitExchangeFruitUI()
     {
@@ -130,7 +130,7 @@ public class FruitSettingUserUI : MonoBehaviour
         else targetUserInfo.fruit2Name = targetExchangeFruit;
 
         targetUserInfo.ShowUI();
-        exchangeCheckUI.SetActive(false);
+        targetUserInfo.UseExchange();
 
         exchangeCheckUI.SetActive(false);
     }
