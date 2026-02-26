@@ -58,7 +58,10 @@ public class FruitGameManager : MonoBehaviour
                 setUserUI.ExchangeFruitShow(user);
                 break;
             case 2://가격 확정
-                setPriceConfirmUI.FruitPriceDecideUIShow(user);
+                setPriceConfirmUI.FruitPriceDecideUIShow(user,user.fruit1Name);
+                break;
+            case 3://가격 확정
+                setPriceConfirmUI.FruitPriceDecideUIShow(user,user.fruit2Name);
                 break;
             default:
                 break;
@@ -67,12 +70,14 @@ public class FruitGameManager : MonoBehaviour
 
     #region 데이터
     private int totalRound =4;
+    private int currentRound=1;
     private int peopleCount;
     private int fruitTypeCount;
 
     public int maxFruitTypeCount = 10;
     public int maxPeopleCount = 20;
     public int TotalRound { get { return totalRound; } }
+    public int CurrentRound { get { return currentRound; }set { currentRound = value; } }
     public int PeopleCount { get { return peopleCount; } set { peopleCount = value; } }
     public int FruitTypeCount { get { return fruitTypeCount; } set { fruitTypeCount = value; } }
 

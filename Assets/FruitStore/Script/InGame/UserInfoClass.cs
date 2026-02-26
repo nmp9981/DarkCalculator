@@ -1,7 +1,12 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+
+public struct SellInfo
+{
+    public string name;
+    public int money;
+}
 
 public class UserInfoClass : MonoBehaviour
 {
@@ -10,7 +15,8 @@ public class UserInfoClass : MonoBehaviour
     public string fruit1Name;
     public string fruit2Name;
 
-    //각 과일의 가격
+    //각 라운드별 제출한 돈
+    public SellInfo[] sellMoneyRound = new SellInfo[FruitGameManager.Instance.TotalRound];
 
     //각 라운드별 얻은 돈
     public int[] getMoney = new int[FruitGameManager.Instance.TotalRound];
@@ -28,7 +34,8 @@ public class UserInfoClass : MonoBehaviour
 
     //버튼
     [SerializeField] Button useExchangeButton;
-    [SerializeField] Button secretButton;
+    [SerializeField] Image fruit1ButtonImage;
+    [SerializeField] Image fruit2ButtonImage;
 
     public UserInfoClass(string name, string fruit1, string fruit2)
     {
@@ -57,6 +64,9 @@ public class UserInfoClass : MonoBehaviour
         fruit1Image.sprite = FruitGameManager.Instance.fruitImageDic[fruit1Name];
         fruit2Text.text = fruit2Name;
         fruit2Image.sprite = FruitGameManager.Instance.fruitImageDic[fruit2Name];
+
+        fruit1ButtonImage.sprite = fruit1Image.sprite;
+        fruit2ButtonImage.sprite = fruit2Image.sprite;
     }
 
     /// <summary>
@@ -86,9 +96,16 @@ public class UserInfoClass : MonoBehaviour
     /// <summary>
     /// 가격 확정 연결
     /// </summary>
-    public void ConfirmPriceConnect()
+    public void ConfirmPrice1Connect()
     {
         FruitGameManager.Instance.Connect_FruitSettingUserUI(this,2);
+    }
+    /// <summary>
+    /// 가격 확정 연결
+    /// </summary>
+    public void ConfirmPrice2Connect()
+    {
+        FruitGameManager.Instance.Connect_FruitSettingUserUI(this, 3);
     }
 
     /// <summary>
@@ -97,6 +114,7 @@ public class UserInfoClass : MonoBehaviour
     public void InitUserInfo()
     {
         useExchangeButton.interactable = true;
+        isSecret = false;
 
         userName = string.Empty;
         fruit1Name = string.Empty;
