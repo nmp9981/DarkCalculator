@@ -11,6 +11,7 @@ public class FruitUIManager : MonoBehaviour
 
     [Header("Class")]
     public EnrollUser enrollUser;
+    public SellResultClass sellResultClass;
     
     private void Awake()
     {
@@ -54,5 +55,10 @@ public class FruitUIManager : MonoBehaviour
         {
             enrollUser.ShowNotFullMassage();
         }
+    }
+    public void ViewToSellResult()
+    {
+        fruitUIList[4].SetActive(true);
+        sellResultClass.AllUserConfirm();
     }
 }

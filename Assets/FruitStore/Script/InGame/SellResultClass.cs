@@ -4,7 +4,6 @@ using UnityEngine;
 public class SellResultClass : MonoBehaviour
 {
     // 각 과일마다 누가 얼마에 팔았는지
-    // TODO : Stack으로 자료구조 교체,
     Dictionary<string, Stack<(string name,int money)>> allUsersellDic = new Dictionary<string, Stack<(string, int)>>();
 
     /// <summary>
@@ -64,9 +63,36 @@ public class SellResultClass : MonoBehaviour
                 }
             }
         }
-        foreach(var item in allUsersellDic.Values)
-        {
 
+        //결과 공개
+        foreach(var item in allUsersellDic.Keys)
+        {
+            int finalEachPrice = allUsersellDic[item].Peek().money;//다 동일한 가격
+            int finalFruitSellCount = allUsersellDic[item].Count;//최종 판매 인원
+            int finalPrice = finalEachPrice*finalFruitSellCount;//총 금액
+            string finalFruitName = item;
+
+            //스택을 비우면서 최종 판매자 기록
+            while (allUsersellDic[item].Count != 0)
+            {
+                foreach(var user in FruitGameManager.Instance.UserInfoList)
+                {
+                    //승리 유저
+                    if(user.userName == allUsersellDic[item].Peek().name)
+                    {
+                        user.getMoney[FruitGameManager.Instance.CurrentRound - 1] = (finalPrice/finalFruitSellCount);
+                    }
+                }
+                allUsersellDic[item].Pop();
+            }
         }
+    }
+
+    /// <summary>
+    /// 결과 공개
+    /// </summary>
+    public void ShowResultUI()
+    {
+
     }
 }
