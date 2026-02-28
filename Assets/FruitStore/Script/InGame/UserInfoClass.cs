@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public struct SellInfo
 {
     public string name;
@@ -16,8 +17,8 @@ public class UserInfoClass : MonoBehaviour
     public string fruit2Name;
 
     //각 라운드별 제출한 돈
-    public SellInfo[,] sellMoneyRound;
-
+    [SerializeField] public SellInfo[,] sellMoneyRound;
+    
     //각 라운드별 얻은 돈
     public int[] getMoney;
 

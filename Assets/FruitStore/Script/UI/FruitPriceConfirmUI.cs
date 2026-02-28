@@ -20,12 +20,20 @@ public class FruitPriceConfirmUI : MonoBehaviour
     private int fruitIdx;
     private int selectPrice;
     private string sellFruitName;
+
     /// <summary>
     /// 과일 가격 결정 UI보이기
     /// </summary>
     public void FruitPriceDecideUIShow(UserInfoClass user, string fruitName, int idx)
     {
         priceCheckUI.SetActive(true);
+
+        //맨 처음엔 모두 비활성화
+        foreach (Toggle toggle in priceToggles)
+        {
+            toggle.isOn = false;
+        }
+
         userInfo = user;
         sellFruitName = fruitName;
         fruitIdx = idx;
@@ -59,8 +67,9 @@ public class FruitPriceConfirmUI : MonoBehaviour
         else
         {
             //가격 확정
-            userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound - 1, fruitIdx].name = sellFruitName;
-            userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound - 1, fruitIdx].money = selectPrice;
+            userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound - 1, fruitIdx]
+                = new SellInfo { name = sellFruitName, money = selectPrice };
+           
             //버튼 비활성화
             if(fruitIdx==0) userInfo.fruit1SellButton.interactable = false;
             else userInfo.fruit2SellButton.interactable = false;

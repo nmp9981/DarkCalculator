@@ -59,12 +59,12 @@ public class SellResultClass : MonoBehaviour
             for(int idx = 0; idx < 2; idx++)
             {
                 //이 과일을
-                string sellFruitName = user.sellMoneyRound[FruitGameManager.Instance.CurrentRound, idx].name;
+                string sellFruitName = user.sellMoneyRound[FruitGameManager.Instance.CurrentRound-1, idx].name;
                 //누가
                 string sellUserName = user.userName;
                 //얼마에 팔았는지
-                int sellPrice = user.sellMoneyRound[FruitGameManager.Instance.CurrentRound, idx].money;
-
+                int sellPrice = user.sellMoneyRound[FruitGameManager.Instance.CurrentRound-1, idx].money;
+               
                 //new Stack 추가
                 if (!allUsersellDic.ContainsKey(sellFruitName))
                 {
@@ -113,7 +113,7 @@ public class SellResultClass : MonoBehaviour
             {
                 resultSellDic.Add(finalFruitName,0);
             }
-
+ 
             //최종 가격 기록
             resultSellDic[finalFruitName] = finalEachPrice;
 
@@ -139,6 +139,12 @@ public class SellResultClass : MonoBehaviour
     /// </summary>
     public void ShowResultUI()
     {
+        //전부 끈 상태에서 시작
+        for(int objIdx = 0; objIdx < FruitGameManager.Instance.TotalRound; objIdx++)
+        {
+            pageObject[objIdx].SetActive(false);
+        }
+
         //현재 라운드 오브젝트 켜기
         GameObject curPageObject = pageObject[FruitGameManager.Instance.CurrentRound - 1];
         curPageObject.SetActive(true);
@@ -153,8 +159,11 @@ public class SellResultClass : MonoBehaviour
             Transform curFruit = curPageObject.transform.GetChild(idx);
             string frutName = result.Key;
             int price = result.Value;
+           
+            Sprite sp = FruitGameManager.Instance.fruitImageDic[frutName]; 
             curFruit.transform.GetChild(0).GetComponent<Image>().sprite = FruitGameManager.Instance.fruitImageDic[frutName];
             curFruit.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{price}원";
+            idx++;
         }
         //나머지 비활성화
         for (int i = idx; i < FruitGameManager.Instance.maxFruitTypeCount; i++) {
