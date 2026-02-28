@@ -24,7 +24,7 @@ public class SellResultClass : MonoBehaviour
     /// <summary>
     /// 모든 유저 확정했는가?
     /// </summary>
-    public void AllUserConfirm()
+    public bool AllUserConfirm()
     {
         int notActiveCount = 0;
         int allButtonCount = FruitGameManager.Instance.PeopleCount * 2;
@@ -35,12 +35,17 @@ public class SellResultClass : MonoBehaviour
         }
 
         //모든 유저가 확정했을 경우 판매 결과 계산
-        if (notActiveCount == allButtonCount)
-        {
-            CalSellResult();//판매 결과 계산
-            ResultSell();//판매 결과
-            ShowResultUI();//UI로 공개
-        }
+        if (notActiveCount == allButtonCount) return true;
+        return false;
+    }
+    /// <summary>
+    /// 판매 결과 플로우
+    /// </summary>
+    public void SellResultFlow()
+    {
+        CalSellResult();//판매 결과 계산
+        ResultSell();//판매 결과
+        ShowResultUI();//UI로 공개
     }
 
     /// <summary>
@@ -147,7 +152,7 @@ public class SellResultClass : MonoBehaviour
         {
             Transform curFruit = curPageObject.transform.GetChild(idx);
             string frutName = result.Key;
-            int price = resultSellDic[result.Key];
+            int price = result.Value;
             curFruit.transform.GetChild(0).GetComponent<Image>().sprite = FruitGameManager.Instance.fruitImageDic[frutName];
             curFruit.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{price}원";
         }

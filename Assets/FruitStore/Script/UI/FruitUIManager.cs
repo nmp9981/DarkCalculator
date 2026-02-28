@@ -58,7 +58,9 @@ public class FruitUIManager : MonoBehaviour
     }
     public void ViewToSellResult()
     {
-        fruitUIList[4].SetActive(true);
-        sellResultClass.AllUserConfirm();
+        if (sellResultClass.AllUserConfirm()){
+            fruitUIList[4].SetActive(true);
+            sellResultClass.SellResultFlow();
+        }
     }
 }
