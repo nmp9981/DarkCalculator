@@ -63,4 +63,12 @@ public class FruitUIManager : MonoBehaviour
             sellResultClass.SellResultFlow();
         }
     }
+    /// <summary>
+    /// 메인으로 돌아가기
+    /// </summary>
+    public void ViewToMain()
+    {
+        fruitUIList[4].SetActive(false);
+        fruitUIList[0].SetActive(true);
+    }
 }

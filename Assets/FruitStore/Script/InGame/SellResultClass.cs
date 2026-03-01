@@ -224,6 +224,7 @@ public class SellResultClass : MonoBehaviour
     {
         if (FruitGameManager.Instance.CurrentRound == 1) return;
 
+        this.gameObject.SetActive(true);
         closeResulUIButton.gameObject.SetActive(true);//닫기 버튼 활성화
 
         //페이지 열기
@@ -279,7 +280,7 @@ public class SellResultClass : MonoBehaviour
     public void CloseResultUI()
     {
         finalResultUI.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 
     /// <summary>
