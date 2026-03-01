@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 
 public class SellResultClass : MonoBehaviour
@@ -19,7 +18,21 @@ public class SellResultClass : MonoBehaviour
     [SerializeField] TextMeshProUGUI roundText;
     //페이지 오브젝트
     [SerializeField] GameObject[] pageObject = new GameObject[4];
+    //최종 결과 페이지
+    [SerializeField] GameObject finalResultUI;
     int currentPageIdx;//현재 페이지
+
+    //과일 세팅 UI
+    [SerializeField] FruitSettingUserUI fruitSettingUserUI;
+    //닫기 버튼 따로 관리
+    [SerializeField] Button closeResulUIButton;
+
+
+    private void OnEnable()
+    {
+        //최종 결과 오브젝트 비활성화
+        finalResultUI.gameObject.SetActive(false);
+    }
 
     /// <summary>
     /// 모든 유저 확정했는가?
@@ -90,6 +103,10 @@ public class SellResultClass : MonoBehaviour
                         //스택을 비운다.
                         allUsersellDic[sellFruitName].Clear();
                         allUsersellDic[sellFruitName].Push((sellUserName, sellPrice));
+                    }else if(allUsersellDic[sellFruitName].Peek().money == sellPrice)
+                    {
+                        //같은 가격일때도 푸시 진행
+                        allUsersellDic[sellFruitName].Push((sellUserName, sellPrice));
                     }
                 }
             }
@@ -107,7 +124,7 @@ public class SellResultClass : MonoBehaviour
             int originSellCount = sellEachFruitCountDic[finalFruitName];//총 판매 인원
             int finalFruitSellCount = allUsersellDic[finalFruitName].Count;//최종 판매 인원
             int finalPrice = finalEachPrice * originSellCount;//총 금액
-
+            
             //결과 종류 추가
             if (!resultSellDic.ContainsKey(finalFruitName))
             {
@@ -125,7 +142,7 @@ public class SellResultClass : MonoBehaviour
                     //승리 유저
                     if (user.userName == allUsersellDic[finalFruitName].Peek().name)
                     {
-                        user.getMoney[FruitGameManager.Instance.CurrentRound - 1] = (finalPrice / finalFruitSellCount);
+                        user.getMoney[FruitGameManager.Instance.CurrentRound - 1] += (finalPrice / finalFruitSellCount);
                     }
                 }
                 allUsersellDic[finalFruitName].Pop();
@@ -176,9 +193,28 @@ public class SellResultClass : MonoBehaviour
     /// </summary>
     public void GoNextRound()
     {
-        GameObject curPageObject = pageObject[FruitGameManager.Instance.CurrentRound - 1];
-        curPageObject.SetActive(false);
-        FruitGameManager.Instance.CurrentRound += 1;
+        //최종 라운드인 경우 각 유저별 최종 정산 금액 공개
+        if(FruitGameManager.Instance.CurrentRound == FruitGameManager.Instance.TotalRound)
+        {
+            ShowFinalResult();
+        }
+        else
+        {
+            //닫기 버튼 비활성화
+            closeResulUIButton.gameObject.SetActive(false);
+
+            //결과 페이지 열기
+            GameObject curPageObject = pageObject[FruitGameManager.Instance.CurrentRound - 1];
+            curPageObject.SetActive(false);
+            FruitGameManager.Instance.CurrentRound += 1;
+
+            //다음 라운드 텍스트 표시
+            fruitSettingUserUI.ShowRoundText();
+            //초기화
+            InitSelectButton();
+            //결과 UI페이지 닫기
+            this.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -188,6 +224,9 @@ public class SellResultClass : MonoBehaviour
     {
         if (FruitGameManager.Instance.CurrentRound == 1) return;
 
+        closeResulUIButton.gameObject.SetActive(true);//닫기 버튼 활성화
+
+        //페이지 열기
         currentPageIdx = FruitGameManager.Instance.CurrentRound - 2;
         GameObject curPageObject = pageObject[currentPageIdx];
         curPageObject.SetActive(true);
@@ -225,11 +264,39 @@ public class SellResultClass : MonoBehaviour
         //라운드 텍스트
         roundText.text = $"{currentPageIdx+1} Round";
     }
+
+    /// <summary>
+    /// 최종 결과 공개
+    /// </summary>
+    public void ShowFinalResult()
+    {
+        finalResultUI.gameObject.SetActive(true);
+    }
+
     /// <summary>
     /// 결과 UI창 닫기
     /// </summary>
     public void CloseResultUI()
     {
+        finalResultUI.gameObject.SetActive(false);
         gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 선택 버튼 초기화
+    /// </summary>
+    public void InitSelectButton()
+    {
+        //버튼 활성화
+        foreach (var user in FruitGameManager.Instance.UserInfoList)
+        {
+            user.fruit1SellButton.interactable = true;
+            user.fruit2SellButton.interactable = true;
+        }
+
+        //각 유저들이 선택한 과일 가격 초기화
+        allUsersellDic.Clear();
+        sellEachFruitCountDic.Clear();
+        resultSellDic.Clear();
     }
 }

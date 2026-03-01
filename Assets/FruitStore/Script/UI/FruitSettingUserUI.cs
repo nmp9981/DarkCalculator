@@ -24,6 +24,9 @@ public class FruitSettingUserUI : MonoBehaviour
     [SerializeField] Button fruit2ImageButton;
     [SerializeField] GameObject deduplicationText;
 
+    //라운드 표시
+    [SerializeField] private TextMeshProUGUI roundText;
+
     /// <summary>
     /// 과일 교환 창 띄우기
     /// </summary>
@@ -141,5 +144,13 @@ public class FruitSettingUserUI : MonoBehaviour
     void ShowDeduplicationText()
     {
         deduplicationText.SetActive(false);
+    }
+
+    /// <summary>
+    /// 라운드 텍스트 표시
+    /// </summary>
+    public void ShowRoundText()
+    {
+        roundText.text = $"Round {FruitGameManager.Instance.CurrentRound}/{FruitGameManager.Instance.TotalRound}";
     }
 }
