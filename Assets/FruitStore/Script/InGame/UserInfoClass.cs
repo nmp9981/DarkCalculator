@@ -24,6 +24,7 @@ public class UserInfoClass : MonoBehaviour
 
     //교환, 비밀
     public bool isSecret;
+    public string secretFruitName;//비공개 과일 명
 
     //UI 요소
     [SerializeField] FruitSettingUserUI settingUI;
@@ -79,14 +80,7 @@ public class UserInfoClass : MonoBehaviour
     {
         useExchangeButton.interactable = false;
     }
-    /// <summary>
-    /// 비밀 사용
-    /// </summary>
-    public void UseSecretPrice()
-    {
-        isSecret = true;
-    }
-
+    
     /// <summary>
     /// 과일 교환 연결
     /// </summary>
@@ -118,6 +112,7 @@ public class UserInfoClass : MonoBehaviour
     {
         useExchangeButton.interactable = true;
         isSecret = false;
+        secretFruitName = string.Empty;
 
         userName = string.Empty;
         fruit1Name = string.Empty;

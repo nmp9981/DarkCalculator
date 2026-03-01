@@ -13,6 +13,8 @@ public class SellResultClass : MonoBehaviour
     Dictionary<string, int> sellEachFruitCountDic = new Dictionary<string, int>();
     //각 과일별 최종 낙찰 가격
     Dictionary<string,int> resultSellDic = new Dictionary<string, int>();
+    //각 과일별 비공개 여부
+    Dictionary<string, bool> isNotPublicDic = new Dictionary<string, bool>();
 
     //라운드 텍스트
     [SerializeField] TextMeshProUGUI roundText;
@@ -89,6 +91,16 @@ public class SellResultClass : MonoBehaviour
                     sellEachFruitCountDic.Add(sellFruitName, 0);
                 }
                 sellEachFruitCountDic[sellFruitName] += 1;
+                //비공개 여부 정보 추가
+                if (!isNotPublicDic.ContainsKey(sellFruitName))
+                {
+                    isNotPublicDic.Add(sellFruitName, false);
+                }
+                //비공개 과일 표시
+                if (user.isSecret && user.secretFruitName == sellFruitName)
+                {
+                    isNotPublicDic[sellFruitName] = true;
+                }
 
                 //정보 추가
                 if (allUsersellDic[sellFruitName].Count == 0)//빈 스택
@@ -179,7 +191,11 @@ public class SellResultClass : MonoBehaviour
            
             Sprite sp = FruitGameManager.Instance.fruitImageDic[frutName]; 
             curFruit.transform.GetChild(0).GetComponent<Image>().sprite = FruitGameManager.Instance.fruitImageDic[frutName];
-            curFruit.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{price}원";
+            if (isNotPublicDic[frutName])
+            {
+                curFruit.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"비공개";
+            }
+            else curFruit.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{price}원";
             idx++;
         }
         //나머지 비활성화
@@ -299,5 +315,6 @@ public class SellResultClass : MonoBehaviour
         allUsersellDic.Clear();
         sellEachFruitCountDic.Clear();
         resultSellDic.Clear();
+        isNotPublicDic.Clear();
     }
 }

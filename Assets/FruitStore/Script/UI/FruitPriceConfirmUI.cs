@@ -33,10 +33,14 @@ public class FruitPriceConfirmUI : MonoBehaviour
         {
             toggle.isOn = false;
         }
+        secretToggle.interactable = true;//일단 활성화
 
         userInfo = user;
         sellFruitName = fruitName;
         fruitIdx = idx;
+
+        //비밀은 이미 사용한 경우
+        if(user.isSecret) secretToggle.interactable = false;
     }
     /// <summary>
     /// 과일 가격 선택
@@ -53,6 +57,7 @@ public class FruitPriceConfirmUI : MonoBehaviour
     public void SelectSecret()
     {
         userInfo.isSecret = true;
+        userInfo.secretFruitName = sellFruitName;
     }
     /// <summary>
     /// 과일 가격 확정
@@ -74,7 +79,12 @@ public class FruitPriceConfirmUI : MonoBehaviour
             if(fruitIdx==0) userInfo.fruit1SellButton.interactable = false;
             else userInfo.fruit2SellButton.interactable = false;
 
-            secretToggle.interactable = !userInfo.isSecret;
+            //비밀 여부 => 비활성화시 원래대로
+            if (!secretToggle.isOn)
+            {
+                userInfo.isSecret = false;
+                userInfo.secretFruitName = string.Empty;
+            }
             priceCheckUI.SetActive(false);
         }
     }
