@@ -69,6 +69,7 @@ public class FruitUIManager : MonoBehaviour
     public void ViewToMain()
     {
         fruitUIList[4].SetActive(false);
+        fruitUIList[3].SetActive(false);
         fruitUIList[0].SetActive(true);
     }
 }

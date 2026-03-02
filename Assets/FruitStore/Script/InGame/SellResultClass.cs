@@ -26,9 +26,12 @@ public class SellResultClass : MonoBehaviour
 
     //과일 세팅 UI
     [SerializeField] FruitSettingUserUI fruitSettingUserUI;
-    //닫기 버튼 따로 관리
-    [SerializeField] Button closeResulUIButton;
 
+    //닫기, 페이지 이동
+    [SerializeField] Button closeResulUIButton;
+    [SerializeField] Button previousPageButton;
+    [SerializeField] Button nextPageButton;
+    [SerializeField] Button nextButton;
 
     private void OnEnable()
     {
@@ -173,6 +176,11 @@ public class SellResultClass : MonoBehaviour
         {
             pageObject[objIdx].SetActive(false);
         }
+        //닫기, 페이지 이동 버튼 꺼야함
+        closeResulUIButton.gameObject.SetActive(false);
+        previousPageButton.gameObject.SetActive(false);
+        nextPageButton.gameObject.SetActive(false);
+        nextButton.gameObject.SetActive(true);
 
         //현재 라운드 오브젝트 켜기
         GameObject curPageObject = pageObject[FruitGameManager.Instance.CurrentRound - 1];
@@ -242,6 +250,12 @@ public class SellResultClass : MonoBehaviour
 
         this.gameObject.SetActive(true);
         closeResulUIButton.gameObject.SetActive(true);//닫기 버튼 활성화
+
+        //닫기, 페이지 이동 버튼 켜야함
+        closeResulUIButton.gameObject.SetActive(true);
+        previousPageButton.gameObject.SetActive(true);
+        nextPageButton.gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(false);
 
         //페이지 열기
         currentPageIdx = FruitGameManager.Instance.CurrentRound - 2;
