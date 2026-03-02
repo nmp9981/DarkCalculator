@@ -24,6 +24,7 @@ public class UserInfoClass : MonoBehaviour
 
     //교환, 비밀
     public bool isSecret;
+    public bool isUsedSecret;//비밀 사용 여부
     public string secretFruitName;//비공개 과일 명
 
     //UI 요소
@@ -112,6 +113,7 @@ public class UserInfoClass : MonoBehaviour
     {
         useExchangeButton.interactable = true;
         isSecret = false;
+        isUsedSecret = false;
         secretFruitName = string.Empty;
 
         userName = string.Empty;

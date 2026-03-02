@@ -94,7 +94,7 @@ public class SellResultClass : MonoBehaviour
                 //비공개 여부 정보 추가
                 if (!isNotPublicDic.ContainsKey(sellFruitName))
                 {
-                    isNotPublicDic.Add(sellFruitName, false);
+                    isNotPublicDic.Add(sellFruitName, false);//기본은 false
                 }
                 //비공개 과일 표시
                 if (user.isSecret && user.secretFruitName == sellFruitName)
@@ -309,6 +309,9 @@ public class SellResultClass : MonoBehaviour
         {
             user.fruit1SellButton.interactable = true;
             user.fruit2SellButton.interactable = true;
+
+            user.isSecret = false;
+            user.secretFruitName = string.Empty;
         }
 
         //각 유저들이 선택한 과일 가격 초기화

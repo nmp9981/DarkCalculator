@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,13 +35,14 @@ public class FruitPriceConfirmUI : MonoBehaviour
             toggle.isOn = false;
         }
         secretToggle.interactable = true;//일단 활성화
-
+        secretToggle.isOn = false;
+        
         userInfo = user;
         sellFruitName = fruitName;
         fruitIdx = idx;
 
         //비밀은 이미 사용한 경우
-        if(user.isSecret) secretToggle.interactable = false;
+        if(user.isUsedSecret) secretToggle.interactable = false;
     }
     /// <summary>
     /// 과일 가격 선택
@@ -56,7 +58,7 @@ public class FruitPriceConfirmUI : MonoBehaviour
     /// <param name="price"></param>
     public void SelectSecret()
     {
-        userInfo.isSecret = true;
+        userInfo.isSecret = !userInfo.isSecret;
         userInfo.secretFruitName = sellFruitName;
     }
     /// <summary>
@@ -84,6 +86,12 @@ public class FruitPriceConfirmUI : MonoBehaviour
             {
                 userInfo.isSecret = false;
                 userInfo.secretFruitName = string.Empty;
+            }
+            else//비밀 사용
+            {
+                userInfo.isSecret = true;
+                userInfo.isUsedSecret = true;
+                userInfo.secretFruitName = sellFruitName;
             }
             priceCheckUI.SetActive(false);
         }
