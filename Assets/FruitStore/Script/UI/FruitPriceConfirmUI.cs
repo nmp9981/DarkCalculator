@@ -58,8 +58,7 @@ public class FruitPriceConfirmUI : MonoBehaviour
     /// <param name="price"></param>
     public void SelectSecret()
     {
-        userInfo.isSecret = !userInfo.isSecret;
-        userInfo.secretFruitName = sellFruitName;
+       
     }
     /// <summary>
     /// 과일 가격 확정
@@ -82,12 +81,12 @@ public class FruitPriceConfirmUI : MonoBehaviour
             else userInfo.fruit2SellButton.interactable = false;
 
             //비밀 여부 => 비활성화시 원래대로
-            if (!secretToggle.isOn)
+            if (!secretToggle.isOn && !userInfo.isSecret)
             {
                 userInfo.isSecret = false;
                 userInfo.secretFruitName = string.Empty;
             }
-            else//비밀 사용
+            else if(secretToggle.isOn && !userInfo.isSecret)//비밀 사용
             {
                 userInfo.isSecret = true;
                 userInfo.isUsedSecret = true;
