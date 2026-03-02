@@ -41,15 +41,28 @@ public class FinalResultclass : MonoBehaviour
             userRanks.Add((totalMoney, userName));
         }
         //내림차순 정렬
-        userRanks.Sort();
-        //꼴지부터 기록
-        int idx = FruitGameManager.Instance.PeopleCount - 1;
+        userRanks.Sort((a, b) => b.money.CompareTo(a.money));
+        //1위부터 기록
+        int idx = 0;
+        int lastMoney = -1;
+        int currentRank = 1;//실제 표시 순위
         foreach (var rank in userRanks)
         {
-            userRankTexts[idx].text = $"{idx+1}위 - {rank.name} {rank.money}원";
-            idx--;
+            //인덱스 아웃 방지
+            if (idx >= FruitGameManager.Instance.PeopleCount) break;
 
-            if (idx == -1) break;
+            //더 낮은 순위 발생
+            if (lastMoney != rank.money)
+            {
+                currentRank = idx + 1;
+                lastMoney = rank.money;
+            }
+
+            //기록
+            userRankTexts[idx].text = $"{currentRank}위 - {rank.name} {rank.money}원";
+
+            //다음 칸
+            idx++;
         }
     }
 

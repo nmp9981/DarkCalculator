@@ -71,7 +71,11 @@ public class EnrollUser : MonoBehaviour
         if (name == null) return false;
 
         //±ÛÀÚ ¼ö °Ë»ç
-        if(name.Length >= 6 || name.Length<=1) return false;
+        if (name.Length >= 6 || name.Length <= 1)
+        {
+            ShowNotLengthMassage();
+            return false;
+        }
         
         //Æ¯¼ö ¹®ÀÚ °Ë»ç
         if(Regex.IsMatch(name, @"[^a-zA-Z0-9°¡-ÆR¤¡-¤¾¤¿-¤Ó\s]"))
@@ -84,8 +88,14 @@ public class EnrollUser : MonoBehaviour
     public void ShowNotFullMassage()
     {
         notifyText.gameObject.SetActive(true);
-        notifyText.text = $"¸ðµç À¯ÀúÀÇ ´Ð³×ÀÓÀ»\n ÀÔ·ÂÇØ¾ß ÇÕ´Ï´Ù.";
+        notifyText.text = $"¸ðµç À¯ÀúÀÇ ´Ð³×ÀÓÀ»\n ÀÔ·ÂÇØ¾ß ÇÕ´Ï´Ù.\nÀÌ¸§¿¡ Æ¯¼ö¹®ÀÚ°¡ ¼¯ÀÌÁö´Â\n¾Ê¾Ò´ÂÁö È®ÀÎÇØ ÁÖ¼¼¿ä.";
         Invoke("Off_ShowNotFullMassage",0.5f);
+    }
+    public void ShowNotLengthMassage()
+    {
+        notifyText.gameObject.SetActive(true);
+        notifyText.text = $"´Ð³×ÀÓÀÇ ±ÛÀÚ ¼ö´Â\n 2~5ÀÚ¸¸ °¡´ÉÇÕ´Ï´Ù.";
+        Invoke("Off_ShowNotFullMassage", 0.5f);
     }
     void Off_ShowNotFullMassage()
     {
