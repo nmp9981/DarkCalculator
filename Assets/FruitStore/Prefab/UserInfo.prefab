@@ -1399,6 +1399,8 @@ MonoBehaviour:
   fruit2Name: 
   getMoney: 
   isSecret: 0
+  isUsedSecret: 0
+  secretFruitName: 
   settingUI: {fileID: 0}
   nameText: {fileID: 5976945723883700674}
   fruit1Text: {fileID: 6698682967638639922}
