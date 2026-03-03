@@ -26,6 +26,9 @@ public class FruitUIManager : MonoBehaviour
             string btnName = btn.name;
             switch (btnName)
             {
+                case "GameStartButton":
+                    btn.onClick.AddListener(GoToGameStart);
+                    break;
                 case "EnrollToUser":
                     btn.onClick.AddListener(SetToUserCount);
                     break;
@@ -38,6 +41,14 @@ public class FruitUIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 게임 시작
+    /// </summary>
+    public void GoToGameStart()
+    {
+        fruitUIList[1].SetActive(true);
+        fruitUIList[0].SetActive(false);
+    }
     public void SetToUserCount()
     {
         fruitUIList[2].SetActive(true);
