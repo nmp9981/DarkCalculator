@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -48,12 +50,19 @@ public class EnrollUser : MonoBehaviour
         }
 
         //전부 유효
-        if(curCount == FruitGameManager.Instance.PeopleCount)
+        FruitGameManager.Instance.UserNameList.Clear();
+        if (curCount == FruitGameManager.Instance.PeopleCount)
         {
             for (int i = 0; i < curCount; i++)
             {
                 string name = enrollUserArray[i].text;
                 FruitGameManager.Instance.UserNameList.Add(name);
+            }
+            //중복 이름 검사
+            if (IsRepetitionUserName(FruitGameManager.Instance.UserNameList))
+            {
+                ShowRepetitionMassage();
+                return false;//중복이 발생했으므로 유효하지 않음
             }
             return true;
         }
@@ -84,6 +93,23 @@ public class EnrollUser : MonoBehaviour
         }
         return true;
     }
+    /// <summary>
+    /// 유저이름 중복 검사
+    /// </summary>
+    /// <param name="nameList"></param>
+    /// <returns></returns>
+    private bool IsRepetitionUserName(List<string> nameList)
+    {
+        List<string> sortingList = nameList;
+        sortingList.Sort();//정렬
+        for(int i=0;i< sortingList.Count-1;i++)
+        {
+            //이름 중복 발생
+            if (sortingList[i] == sortingList[i + 1]) return true;
+        }
+
+        return false;//중복X
+    }
 
     public void ShowNotFullMassage()
     {
@@ -95,6 +121,12 @@ public class EnrollUser : MonoBehaviour
     {
         notifyText.gameObject.SetActive(true);
         notifyText.text = $"닉네임의 글자 수는\n 2~5자만 가능합니다.";
+        Invoke("Off_ShowNotFullMassage", 0.5f);
+    }
+    public void ShowRepetitionMassage()
+    {
+        notifyText.gameObject.SetActive(true);
+        notifyText.text = $"중복된 닉네임이 있습니다";
         Invoke("Off_ShowNotFullMassage", 0.5f);
     }
     void Off_ShowNotFullMassage()

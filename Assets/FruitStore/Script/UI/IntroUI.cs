@@ -3,6 +3,7 @@ using UnityEngine;
 public class IntroUI : MonoBehaviour
 {
     [SerializeField] GameObject howToPlayObject;
+    [SerializeField] GameObject settingObject;
 
     /// <summary>
     /// 게임 종료
@@ -28,5 +29,19 @@ public class IntroUI : MonoBehaviour
     public void CloseHowToPlay()
     {
         howToPlayObject.SetActive(false);
+    }
+    /// <summary>
+    /// 모드 세팅
+    /// </summary>
+    public void ShowGameSetting()
+    {
+        settingObject.SetActive(true);
+    }
+    /// <summary>
+    /// 모드 세팅 닫기
+    /// </summary>
+    public void CloseGameSetting()
+    {
+        settingObject.SetActive(true);
     }
 }
