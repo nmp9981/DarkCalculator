@@ -250,6 +250,7 @@ public class SellResultClass : MonoBehaviour
 
         this.gameObject.SetActive(true);
         closeResulUIButton.gameObject.SetActive(true);//닫기 버튼 활성화
+        finalResultUI.gameObject.SetActive(false);//최종 결과 비활성화
 
         //닫기, 페이지 이동 버튼 켜야함
         closeResulUIButton.gameObject.SetActive(true);
@@ -301,6 +302,7 @@ public class SellResultClass : MonoBehaviour
     /// </summary>
     public void ShowFinalResult()
     {
+        FruitGameManager.Instance.CurrentRound += 1;
         finalResultUI.gameObject.SetActive(true);
     }
 
@@ -309,8 +311,16 @@ public class SellResultClass : MonoBehaviour
     /// </summary>
     public void CloseResultUI()
     {
-        finalResultUI.gameObject.SetActive(false);
-        this.gameObject.SetActive(false);
+        if (FruitGameManager.Instance.CurrentRound <= 4)
+        {
+            finalResultUI.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            finalResultUI.gameObject.SetActive(true);//최종 결과 활성화
+            this.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

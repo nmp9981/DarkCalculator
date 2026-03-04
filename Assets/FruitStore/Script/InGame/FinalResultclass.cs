@@ -70,5 +70,6 @@ public class FinalResultclass : MonoBehaviour
     {
         userRanks.Clear();
         fruitUIManager.ViewToMain();
+        this.gameObject.SetActive(false);
     }
 }
