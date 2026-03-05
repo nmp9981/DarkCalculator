@@ -76,6 +76,7 @@ public class FruitGameManager : MonoBehaviour
 
     public int maxFruitTypeCount = 10;
     public int maxPeopleCount = 20;
+    public int minPeopleCount = 5;
     public int TotalRound { get { return totalRound; } }
     public int CurrentRound { get { return currentRound; }set { currentRound = value; } }
     public int PeopleCount { get { return peopleCount; } set { peopleCount = value; } }

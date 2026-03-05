@@ -110,7 +110,7 @@ public class EnrollUser : MonoBehaviour
 
         return false;//Áßº¹X
     }
-
+    
     public void ShowNotFullMassage()
     {
         notifyText.gameObject.SetActive(true);

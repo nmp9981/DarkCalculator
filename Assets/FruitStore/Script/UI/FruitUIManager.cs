@@ -10,6 +10,7 @@ public class FruitUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roundText;
 
     [Header("Class")]
+    public SettingPopulation settingPopulation;
     public EnrollUser enrollUser;
     public SellResultClass sellResultClass;
     
@@ -51,8 +52,27 @@ public class FruitUIManager : MonoBehaviour
     }
     public void SetToUserCount()
     {
-        fruitUIList[2].SetActive(true);
+        if (settingPopulation.InspectPopulation())
+        {
+            fruitUIList[2].SetActive(true);
+            fruitUIList[1].SetActive(false);
+        }
+    }
+    /// <summary>
+    /// Main 으로 돌아가기
+    /// </summary>
+    public void ReturnToMain()
+    {
+        fruitUIList[0].SetActive(true);
         fruitUIList[1].SetActive(false);
+    }
+    /// <summary>
+    /// 유저 수 입력으로 돌아가기
+    /// </summary>
+    public void ReturnToUserCount()
+    {
+        fruitUIList[1].SetActive(true);
+        fruitUIList[2].SetActive(false);
     }
 
     public void ViewToUserList()
