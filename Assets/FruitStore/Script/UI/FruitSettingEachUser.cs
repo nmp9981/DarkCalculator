@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FruitSettingEachUser : MonoBehaviour
@@ -9,7 +10,6 @@ public class FruitSettingEachUser : MonoBehaviour
     Transform scrollTransform;
 
     public GameObject[] userBlockList;
-
     private int[] divFruitTypeCount;
 
 
@@ -32,7 +32,7 @@ public class FruitSettingEachUser : MonoBehaviour
             userBlockList[i].SetActive(false);
         }
 
-        divFruitTypeCount = new int[FruitGameManager.Instance.maxPeopleCount];
+        divFruitTypeCount = new int[FruitGameManager.Instance.maxFruitTypeCount];
     }
 
     /// <summary>
@@ -106,31 +106,98 @@ public class FruitSettingEachUser : MonoBehaviour
     Stack<int> RandomFruit(int typeCount)
     {
         //과일 분배용 랜덤 해쉬
-        Stack<int> ranStack = new Stack<int>();
+        //Stack<int> ranStack = new Stack<int>();
         int maxNum = FruitGameManager.Instance.PeopleCount*2;
-        
-        while (ranStack.Count < maxNum)
+       
+        //while (ranStack.Count < maxNum)
+        //{
+        //    int ran = Random.Range(0, typeCount);
+
+        //    //남은 과일인가?
+        //    if (divFruitTypeCount[ran] <= 0) continue;
+
+        //    if (ranStack.Count % 2 == 1)//같은 유저
+        //    {
+        //        //다른 종류가 나올때까지 다시 뽑음
+        //        //남은 과일이 있어야함, || divFruitTypeCount[ran]<=0
+        //        while (ran == ranStack.Peek())
+        //        {
+        //            ran = Random.Range(0, typeCount);
+        //        }
+        //        ranStack.Push(ran);
+        //        divFruitTypeCount[ran] -= 1;
+        //    }
+        //    else//각 유저별 첫 과일
+        //    {
+        //        ranStack.Push(ran);
+        //        divFruitTypeCount[ran] -= 1;
+        //    }
+        //}
+
+        //리스트 셔플 방식
+        List<int> fruitTypeNumList = new List<int>();//과일 리스트
+        List<int> randomList = Enumerable.Range(0, maxNum).ToList();//랜덤 번호
+        List<int> randomFruitType = new List<int>();//배치한 과일 번호
+        //000011112222등 과일 배치 : 개수가 넘치거나 모자라지 않음
+        for (int i = 0; i < typeCount; i++)
         {
-            int ran = Random.Range(0, typeCount);
+            int eachCount = divFruitTypeCount[i];
+            for(int j=0;j<eachCount;j++) fruitTypeNumList.Add(i);
+        }
+        
+        // 한 번만 순회하며 섞기 (O(n))
+        for (int i = 0; i < maxNum; i++)
+        {
+            int rnd = Random.Range(i, maxNum);
+            (randomList[i], randomList[rnd]) = (randomList[rnd], randomList[i]);
+        }
+        //각 유저에게 과일 우선 배치
+        foreach (int i in randomList)
+        {
+            randomFruitType.Add(fruitTypeNumList[i]);
+        }
 
-            //남은 과일인가?
-            if (divFruitTypeCount[ran] == 0) continue;
+        //각 유저의 두번째 과일만 검사(홀수 인덱스)
+        for(int idx = 1; idx < maxNum; idx+=2)
+        {
+            //각 유저의 과일은 서로 달라야함
+            if (randomFruitType[idx] != randomFruitType[idx - 1]) continue;
 
-            if (ranStack.Count % 2 == 1)//같은 유저
+            //같을 경우 다음 홀수 인덱스부터 탐색
+            for (int idxJ = idx + 2; idxJ < maxNum; idxJ += 2)
             {
-                while (ran == ranStack.Peek())//다른 종류가 나올때까지 다시 뽑음
+                //교환 가능
+                if(randomFruitType[idx]!= randomFruitType[idxJ])
                 {
-                    ran = Random.Range(0, typeCount);
+                    int temp = randomFruitType[idxJ];
+                    randomFruitType[idxJ] = randomFruitType[idx];
+                    randomFruitType[idx] = temp;
+                    break;
                 }
-                ranStack.Push(ran);
-                divFruitTypeCount[ran] -= 1;
-            }
-            else//각 유저별 첫 과일
-            {
-                ranStack.Push(ran);
-                divFruitTypeCount[ran] -= 1;
             }
         }
-        return ranStack;
+        //마지막 과일 : maxNum-2인덱스
+        if (randomFruitType[maxNum-1] == randomFruitType[maxNum - 2])
+        {
+            //같을 경우 처음 홀수 인덱스부터 탐색
+            for (int idxJ = 1; idxJ < maxNum-2; idxJ += 2)
+            {
+                //교환 가능
+                if (randomFruitType[maxNum - 2] != randomFruitType[idxJ - 1] &&
+                    randomFruitType[maxNum - 1] != randomFruitType[idxJ])
+                {
+                    int temp = randomFruitType[idxJ];
+                    randomFruitType[idxJ] = randomFruitType[maxNum - 2];
+                    randomFruitType[maxNum - 2] = temp;
+                    break;
+                }
+            }
+        }
+
+        //스택에 등록
+        Stack<int> ranStack2 = new Stack<int>();
+        foreach (int idx in randomFruitType) ranStack2.Push(idx);
+
+        return ranStack2;
     }
 }
