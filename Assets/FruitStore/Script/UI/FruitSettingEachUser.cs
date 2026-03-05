@@ -48,8 +48,7 @@ public class FruitSettingEachUser : MonoBehaviour
         }
 
         //과일 종류 개수 정하기
-        if (totalNum < 10) FruitGameManager.Instance.FruitTypeCount = (totalNum + 1) / 2;
-        else FruitGameManager.Instance.FruitTypeCount = totalNum / 2;
+        FruitGameManager.Instance.FruitTypeCount = (totalNum-1)/3+2;
 
         int div = (2*totalNum) / FruitGameManager.Instance.FruitTypeCount;//몫
         int rest = (2 * totalNum) % FruitGameManager.Instance.FruitTypeCount;//나머지
