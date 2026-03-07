@@ -27,7 +27,7 @@ public class FruitSettingEachUser : MonoBehaviour
         userBlockList = new GameObject[FruitGameManager.Instance.maxPeopleCount];
         for (int i = 0; i < FruitGameManager.Instance.maxPeopleCount; i++)
         {
-            userBlockList[i] = Instantiate(userInfoPrefab);
+            userBlockList[i] = Instantiate(userInfoPrefab, scrollTransform, false);
             userBlockList[i].transform.parent = scrollTransform;
             userBlockList[i].SetActive(false);
         }
