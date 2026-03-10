@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
 using UnityEngine.UI;
 
 [Serializable]
@@ -73,6 +74,7 @@ public class FruitGameManager : MonoBehaviour
     private int currentRound=1;
     private int peopleCount;
     private int fruitTypeCount;
+    private bool isGameOver = false;
 
     public int maxFruitTypeCount = 10;
     public int maxPeopleCount = 20;
@@ -81,6 +83,7 @@ public class FruitGameManager : MonoBehaviour
     public int CurrentRound { get { return currentRound; }set { currentRound = value; } }
     public int PeopleCount { get { return peopleCount; } set { peopleCount = value; } }
     public int FruitTypeCount { get { return fruitTypeCount; } set { fruitTypeCount = value; } }
+    public bool IsGameOver { get { return isGameOver; } set { isGameOver = value; } }
 
     public List<string> UserNameList = new List<string>();
     public List<UserInfoClass> UserInfoList  = new List<UserInfoClass>();

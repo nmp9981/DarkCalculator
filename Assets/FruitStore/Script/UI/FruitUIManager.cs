@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FruitUIManager : MonoBehaviour
@@ -13,7 +14,9 @@ public class FruitUIManager : MonoBehaviour
     public SettingPopulation settingPopulation;
     public EnrollUser enrollUser;
     public SellResultClass sellResultClass;
-    
+
+    private string sceneName = "FruitStore";
+
     private void Awake()
     {
         SetButtonBinding();
@@ -102,5 +105,7 @@ public class FruitUIManager : MonoBehaviour
         fruitUIList[4].SetActive(false);
         fruitUIList[3].SetActive(false);
         fruitUIList[0].SetActive(true);
+
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -118,70 +118,51 @@ public class FruitSettingEachUser : MonoBehaviour
     List<int> RandomFruit(int typeCount)
     {
         int maxNum = FruitGameManager.Instance.PeopleCount*2;
+        bool isValid;
 
-        // 캐싱 리스트 재활용 - Clear는 Capacity를 유지하므로 재할당 없음
-        _fruitTypeNumList.Clear();
-        _randomList.Clear();
-        _randomFruitType.Clear();
-
-        // Enumerable.Range 대신 직접 루프 (Iterator 할당 제거)
-        for (int i = 0; i < maxNum; i++) _randomList.Add(i);
-
-        //000011112222와 같이 배치 : 과일별 배치수가 다르거나 부족하면 조정
-        for (int i = 0; i < typeCount; i++)
+        do
         {
-            int eachCount = divFruitTypeCount[i];
-            for(int j=0;j<eachCount;j++) _fruitTypeNumList.Add(i);
-        }
+            isValid = false;//검사 전
 
-        // 각 원소 순회하며 셔플 (O(n))
-        for (int i = 0; i < maxNum; i++)
-        {
-            int rnd = Random.Range(i, maxNum);
-            (_randomList[i], _randomList[rnd]) = (_randomList[rnd], _randomList[i]);
-        }
-        //각 과일별로 랜덤 우선 배치
-        for (int i = 0; i < _randomList.Count; i++)
-        {
-            _randomFruitType.Add(_fruitTypeNumList[_randomList[i]]);
-        }
+            // 캐싱 리스트 재활용 - Clear는 Capacity를 유지하므로 재할당 없음
+            _fruitTypeNumList.Clear();
+            _randomList.Clear();
+            _randomFruitType.Clear();
 
-        //각 유저의 두번째 과일만 검사(홀수 인덱스)
-        for(int idx = 1; idx < maxNum; idx+=2)
-        {
-            //각 유저의 과일이 서로 달라야함
-            if (_randomFruitType[idx] != _randomFruitType[idx - 1]) continue;
+            // Enumerable.Range 대신 직접 루프 (Iterator 할당 제거)
+            for (int i = 0; i < maxNum; i++) _randomList.Add(i);
 
-            //같은 경우 다음 홀수 인덱스에서 탐색
-            for (int idxJ = idx + 2; idxJ < maxNum; idxJ += 2)
+            //000011112222와 같이 배치 : 과일별 배치수가 다르거나 부족하면 조정
+            for (int i = 0; i < typeCount; i++)
             {
-                //교환 조건
-                if(_randomFruitType[idx]!= _randomFruitType[idxJ])
+                int eachCount = divFruitTypeCount[i];
+                for (int j = 0; j < eachCount; j++) _fruitTypeNumList.Add(i);
+            }
+
+            // 각 원소 순회하며 셔플 (O(n))
+            for (int i = 0; i < maxNum; i++)
+            {
+                int rnd = Random.Range(i, maxNum);
+                (_randomList[i], _randomList[rnd]) = (_randomList[rnd], _randomList[i]);
+            }
+            //각 과일별로 랜덤 우선 배치
+            for (int i = 0; i < _randomList.Count; i++)
+            {
+                _randomFruitType.Add(_fruitTypeNumList[_randomList[i]]);
+            }
+
+            //각 유저별 과일 검사
+            for (int idx = 1; idx < maxNum; idx += 2)
+            {
+                //각 유저의 과일이 서로 달라야함, 같으면 실패
+                if (_randomFruitType[idx] == _randomFruitType[idx - 1])
                 {
-                    int temp = _randomFruitType[idxJ];
-                    _randomFruitType[idxJ] = _randomFruitType[idx];
-                    _randomFruitType[idx] = temp;
+                    isValid = true;
                     break;
                 }
             }
-        }
-        //마지막 검증 : maxNum-2인덱스
-        if (_randomFruitType[maxNum-1] == _randomFruitType[maxNum - 2])
-        {
-            //같은 경우 처음 홀수 인덱스에서 탐색
-            for (int idxJ = 1; idxJ < maxNum-2; idxJ += 2)
-            {
-                //교환 조건
-                if (_randomFruitType[maxNum - 2] != _randomFruitType[idxJ - 1] &&
-                    _randomFruitType[maxNum - 1] != _randomFruitType[idxJ])
-                {
-                    int temp = _randomFruitType[idxJ];
-                    _randomFruitType[idxJ] = _randomFruitType[maxNum - 2];
-                    _randomFruitType[maxNum - 2] = temp;
-                    break;
-                }
-            }
-        }
+
+        } while (isValid);//통과할 때까지 반복
 
         return _randomFruitType;
     }

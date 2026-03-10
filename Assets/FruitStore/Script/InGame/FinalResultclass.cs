@@ -27,6 +27,9 @@ public class FinalResultclass : MonoBehaviour
     /// </summary>
     void ShowRankUser()
     {
+        //게임 오버 상황에서는 밑로직이 작동하지 않음
+        if (FruitGameManager.Instance.IsGameOver) return;
+
         //초기화
         foreach (var rank in userRankTexts)
         {
@@ -64,11 +67,15 @@ public class FinalResultclass : MonoBehaviour
             //다음 칸
             idx++;
         }
+
+        //게임 오버 표시
+        FruitGameManager.Instance.IsGameOver = true;
     }
 
     public void GoToMain()
     {
         userRanks.Clear();
+        FruitGameManager.Instance.IsGameOver = false;
         fruitUIManager.ViewToMain();
         this.gameObject.SetActive(false);
     }
