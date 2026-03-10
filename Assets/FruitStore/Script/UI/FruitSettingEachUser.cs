@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class FruitSettingEachUser : MonoBehaviour
@@ -12,192 +11,178 @@ public class FruitSettingEachUser : MonoBehaviour
     public GameObject[] userBlockList;
     private int[] divFruitTypeCount;
 
+    // GC í• ë‹¹ ë°©ì§€ë¥¼ ìœ„í•œ ìºì‹± ë¦¬ìŠ¤íŠ¸
+    private List<string> _cachedKeys = new List<string>();
+    private List<int> _fruitTypeNumList = new List<int>(40);
+    private List<int> _randomList = new List<int>(40);
+    private List<int> _randomFruitType = new List<int>(40);
 
     private void OnEnable()
     {
-        EnrollUserInfo();//À¯Àú Á¤º¸ µî·Ï
+        EnrollUserInfo();//ìœ ì € ì •ë³´ ë“±ë¡
     }
 
     /// <summary>
-    /// À¯Àú ¿ÀºêÁ§Æ® Ç®¸µ
+    /// ìœ ì € ì˜¤ë¸Œì íŠ¸ í’€ë§
     /// </summary>
     public void UserObjectFulling()
     {
-        //À¯Àú ¸®½ºÆ® ºí·Ï »ı¼º
-        userBlockList = new GameObject[FruitGameManager.Instance.maxPeopleCount];
-        for (int i = 0; i < FruitGameManager.Instance.maxPeopleCount; i++)
+        var gm = FruitGameManager.Instance;
+        //ìœ ì € ë¦¬ìŠ¤íŠ¸ ìƒì„± í’€ë§
+        userBlockList = new GameObject[gm.maxPeopleCount];
+        for (int i = 0; i < gm.maxPeopleCount; i++)
         {
             userBlockList[i] = Instantiate(userInfoPrefab, scrollTransform, false);
             userBlockList[i].transform.parent = scrollTransform;
             userBlockList[i].SetActive(false);
         }
 
-        divFruitTypeCount = new int[FruitGameManager.Instance.maxFruitTypeCount];
+        divFruitTypeCount = new int[gm.maxFruitTypeCount];
     }
 
     /// <summary>
-    /// ÃÊ±â °úÀÏ °³¼ö ¼³Á¤
+    /// ì´ˆê¸° ê³¼ì¼ ìˆ˜ëŸ‰ ì„¤ì •
     /// </summary>
     void InitEachFruitCount()
     {
-        //ÃÑ ÀÎ¿ø
-        int totalNum = FruitGameManager.Instance.PeopleCount;
+        var gm = FruitGameManager.Instance;
+        //ì´ ì¸ì›
+        int totalNum = gm.PeopleCount;
         for (int i = 0; i < totalNum; i++)
         {
             userBlockList[i].gameObject.SetActive(true);
         }
 
-        //°úÀÏ Á¾·ù °³¼ö Á¤ÇÏ±â
-        FruitGameManager.Instance.FruitTypeCount = (totalNum-1)/3+2;
+        //ê³¼ì¼ ì¢…ë¥˜ ê°œìˆ˜ êµ¬í•˜ê¸°
+        gm.FruitTypeCount = (totalNum-1)/3+2;
 
-        int div = (2*totalNum) / FruitGameManager.Instance.FruitTypeCount;//¸ò
-        int rest = (2 * totalNum) % FruitGameManager.Instance.FruitTypeCount;//³ª¸ÓÁö
+        int div = (2*totalNum) / gm.FruitTypeCount;//ëª«
+        int rest = (2 * totalNum) % gm.FruitTypeCount;//ë‚˜ë¨¸ì§€
+
+        // ê¸°ì¡´ ë¦¬ìŠ¤íŠ¸ë¥¼ ì¬í™œìš©í•˜ì—¬ GC í• ë‹¹ ë°©ì§€
+        _cachedKeys.Clear();
+        _cachedKeys.AddRange(gm.fruitTypeCountDic.Keys);
 
         int idx = 0;
-        var keys = new List<string>(FruitGameManager.Instance.fruitTypeCountDic.Keys);//Å°¸¦ ¹è¿­·Î
-        foreach (var key in keys)
+        foreach (var key in _cachedKeys)
         {
-            if (idx >= FruitGameManager.Instance.FruitTypeCount) break;//ÃÖ´ë °úÀÏ Á¾·ù °³¼ö ÃÊ°ú
+            if (idx >= gm.FruitTypeCount) break;//ìµœëŒ€ ê³¼ì¼ ì¢…ë¥˜ ê°œìˆ˜ ì´ˆê³¼
 
-            int targetValue = (idx < rest) ? (div + 1) : div;//°¢ Á¾·ùº° ÃÖ´ë °úÀÏ °³¼ö
-            FruitGameManager.Instance.fruitTypeCountDic[key] = (targetValue+2);
+            int targetValue = (idx < rest) ? (div + 1) : div;//ê° ê³¼ì¼ì— ìµœëŒ€ ìˆ˜ëŸ‰ ì„¤ì •
+            gm.fruitTypeCountDic[key] = (targetValue+2);
             divFruitTypeCount[idx] = targetValue;
             idx++;
         }
     }
 
     /// <summary>
-    /// À¯Àú Á¤º¸ µî·Ï
+    /// ìœ ì € ì •ë³´ ë“±ë¡
     /// </summary>
     void EnrollUserInfo()
     {
-        //ÃÊ±â °úÀÏ °³¼ö ¼³Á¤
+        var gm = FruitGameManager.Instance;
+
+        //ì´ˆê¸° ê³¼ì¼ ìˆ˜ëŸ‰ ì„¤ì •
         InitEachFruitCount();
 
-        //·£´ı °úÀÏ ¼ø¼­
-        Stack<int> fruitStack = RandomFruit(FruitGameManager.Instance.FruitTypeCount);
+        //ê³¼ì¼ ëœë¤ ë°°ë¶„
+        List<int> fruitList = RandomFruit(gm.FruitTypeCount);
 
-        //°úÀÏ ¹èºĞ
-        for (int i = 0; i < FruitGameManager.Instance.PeopleCount; i++)
+        //ìœ ì € ë“±ë¡ (ë’¤ì—ì„œë¶€í„° ì†Œë¹„ - ê¸°ì¡´ Stack.Popê³¼ ë™ì¼ ìˆœì„œ)
+        int fruitIdx = fruitList.Count - 1;
+        for (int i = 0; i < gm.PeopleCount; i++)
         {
             userBlockList[i].SetActive(true);
 
             UserInfoClass user = userBlockList[i].GetComponent<UserInfoClass>();
-            //ÃÊ±âÈ­ ÈÄ Á¤º¸ ÀÔ·Â
+            //ì´ˆê¸°í™” ë° ì •ë³´ ì…ë ¥
             user.InitUserInfo();
 
-            user.userName = FruitGameManager.Instance.UserNameList[i];
-            user.fruit1Name = FruitGameManager.Instance.fruitImageList[fruitStack.Pop()].fruitName;
-            user.fruit2Name = FruitGameManager.Instance.fruitImageList[fruitStack.Pop()].fruitName;
+            user.userName = gm.UserNameList[i];
+            user.fruit1Name = gm.fruitImageList[fruitList[fruitIdx--]].fruitName;
+            user.fruit2Name = gm.fruitImageList[fruitList[fruitIdx--]].fruitName;
 
-            FruitGameManager.Instance.fruitTypeCountDic[user.fruit1Name] -= 1;
-            FruitGameManager.Instance.fruitTypeCountDic[user.fruit2Name] -= 1;
+            gm.fruitTypeCountDic[user.fruit1Name] -= 1;
+            gm.fruitTypeCountDic[user.fruit2Name] -= 1;
 
-            FruitGameManager.Instance.UserInfoList.Add(user);
+            gm.UserInfoList.Add(user);
 
-            //UI¾÷µ¥ÀÌÆ®
+            //UIì—…ë°ì´íŠ¸
             user.ShowUI();
         }
     }
     /// <summary>
-    /// ·£´ı °úÀÏ ¼³Á¤
+    /// ê³¼ì¼ ëœë¤ ë°°ë¶„
     /// </summary>
     /// <returns></returns>
-    Stack<int> RandomFruit(int typeCount)
+    List<int> RandomFruit(int typeCount)
     {
-        //°úÀÏ ºĞ¹è¿ë ·£´ı ÇØ½¬
-        //Stack<int> ranStack = new Stack<int>();
         int maxNum = FruitGameManager.Instance.PeopleCount*2;
-       
-        //while (ranStack.Count < maxNum)
-        //{
-        //    int ran = Random.Range(0, typeCount);
 
-        //    //³²Àº °úÀÏÀÎ°¡?
-        //    if (divFruitTypeCount[ran] <= 0) continue;
+        // ìºì‹± ë¦¬ìŠ¤íŠ¸ ì¬í™œìš© - ClearëŠ” Capacityë¥¼ ìœ ì§€í•˜ë¯€ë¡œ ì¬í• ë‹¹ ì—†ìŒ
+        _fruitTypeNumList.Clear();
+        _randomList.Clear();
+        _randomFruitType.Clear();
 
-        //    if (ranStack.Count % 2 == 1)//°°Àº À¯Àú
-        //    {
-        //        //´Ù¸¥ Á¾·ù°¡ ³ª¿Ã¶§±îÁö ´Ù½Ã »ÌÀ½
-        //        //³²Àº °úÀÏÀÌ ÀÖ¾î¾ßÇÔ, || divFruitTypeCount[ran]<=0
-        //        while (ran == ranStack.Peek())
-        //        {
-        //            ran = Random.Range(0, typeCount);
-        //        }
-        //        ranStack.Push(ran);
-        //        divFruitTypeCount[ran] -= 1;
-        //    }
-        //    else//°¢ À¯Àúº° Ã¹ °úÀÏ
-        //    {
-        //        ranStack.Push(ran);
-        //        divFruitTypeCount[ran] -= 1;
-        //    }
-        //}
+        // Enumerable.Range ëŒ€ì‹  ì§ì ‘ ë£¨í”„ (Iterator í• ë‹¹ ì œê±°)
+        for (int i = 0; i < maxNum; i++) _randomList.Add(i);
 
-        //¸®½ºÆ® ¼ÅÇÃ ¹æ½Ä
-        List<int> fruitTypeNumList = new List<int>();//°úÀÏ ¸®½ºÆ®
-        List<int> randomList = Enumerable.Range(0, maxNum).ToList();//·£´ı ¹øÈ£
-        List<int> randomFruitType = new List<int>();//¹èÄ¡ÇÑ °úÀÏ ¹øÈ£
-        //000011112222µî °úÀÏ ¹èÄ¡ : °³¼ö°¡ ³ÑÄ¡°Å³ª ¸ğÀÚ¶óÁö ¾ÊÀ½
+        //000011112222ì™€ ê°™ì´ ë°°ì¹˜ : ê³¼ì¼ë³„ ë°°ì¹˜ìˆ˜ê°€ ë‹¤ë¥´ê±°ë‚˜ ë¶€ì¡±í•˜ë©´ ì¡°ì •
         for (int i = 0; i < typeCount; i++)
         {
             int eachCount = divFruitTypeCount[i];
-            for(int j=0;j<eachCount;j++) fruitTypeNumList.Add(i);
+            for(int j=0;j<eachCount;j++) _fruitTypeNumList.Add(i);
         }
-        
-        // ÇÑ ¹ø¸¸ ¼øÈ¸ÇÏ¸ç ¼¯±â (O(n))
+
+        // ê° ì›ì†Œ ìˆœíšŒí•˜ë©° ì…”í”Œ (O(n))
         for (int i = 0; i < maxNum; i++)
         {
             int rnd = Random.Range(i, maxNum);
-            (randomList[i], randomList[rnd]) = (randomList[rnd], randomList[i]);
+            (_randomList[i], _randomList[rnd]) = (_randomList[rnd], _randomList[i]);
         }
-        //°¢ À¯Àú¿¡°Ô °úÀÏ ¿ì¼± ¹èÄ¡
-        foreach (int i in randomList)
+        //ê° ê³¼ì¼ë³„ë¡œ ëœë¤ ìš°ì„  ë°°ì¹˜
+        for (int i = 0; i < _randomList.Count; i++)
         {
-            randomFruitType.Add(fruitTypeNumList[i]);
+            _randomFruitType.Add(_fruitTypeNumList[_randomList[i]]);
         }
 
-        //°¢ À¯ÀúÀÇ µÎ¹øÂ° °úÀÏ¸¸ °Ë»ç(È¦¼ö ÀÎµ¦½º)
+        //ê° ìœ ì €ì˜ ë‘ë²ˆì§¸ ê³¼ì¼ë§Œ ê²€ì‚¬(í™€ìˆ˜ ì¸ë±ìŠ¤)
         for(int idx = 1; idx < maxNum; idx+=2)
         {
-            //°¢ À¯ÀúÀÇ °úÀÏÀº ¼­·Î ´Ş¶ó¾ßÇÔ
-            if (randomFruitType[idx] != randomFruitType[idx - 1]) continue;
+            //ê° ìœ ì €ì˜ ê³¼ì¼ì´ ì„œë¡œ ë‹¬ë¼ì•¼í•¨
+            if (_randomFruitType[idx] != _randomFruitType[idx - 1]) continue;
 
-            //°°À» °æ¿ì ´ÙÀ½ È¦¼ö ÀÎµ¦½ººÎÅÍ Å½»ö
+            //ê°™ì€ ê²½ìš° ë‹¤ìŒ í™€ìˆ˜ ì¸ë±ìŠ¤ì—ì„œ íƒìƒ‰
             for (int idxJ = idx + 2; idxJ < maxNum; idxJ += 2)
             {
-                //±³È¯ °¡´É
-                if(randomFruitType[idx]!= randomFruitType[idxJ])
+                //êµí™˜ ì¡°ê±´
+                if(_randomFruitType[idx]!= _randomFruitType[idxJ])
                 {
-                    int temp = randomFruitType[idxJ];
-                    randomFruitType[idxJ] = randomFruitType[idx];
-                    randomFruitType[idx] = temp;
+                    int temp = _randomFruitType[idxJ];
+                    _randomFruitType[idxJ] = _randomFruitType[idx];
+                    _randomFruitType[idx] = temp;
                     break;
                 }
             }
         }
-        //¸¶Áö¸· °úÀÏ : maxNum-2ÀÎµ¦½º
-        if (randomFruitType[maxNum-1] == randomFruitType[maxNum - 2])
+        //ë§ˆì§€ë§‰ ê²€ì¦ : maxNum-2ì¸ë±ìŠ¤
+        if (_randomFruitType[maxNum-1] == _randomFruitType[maxNum - 2])
         {
-            //°°À» °æ¿ì Ã³À½ È¦¼ö ÀÎµ¦½ººÎÅÍ Å½»ö
+            //ê°™ì€ ê²½ìš° ì²˜ìŒ í™€ìˆ˜ ì¸ë±ìŠ¤ì—ì„œ íƒìƒ‰
             for (int idxJ = 1; idxJ < maxNum-2; idxJ += 2)
             {
-                //±³È¯ °¡´É
-                if (randomFruitType[maxNum - 2] != randomFruitType[idxJ - 1] &&
-                    randomFruitType[maxNum - 1] != randomFruitType[idxJ])
+                //êµí™˜ ì¡°ê±´
+                if (_randomFruitType[maxNum - 2] != _randomFruitType[idxJ - 1] &&
+                    _randomFruitType[maxNum - 1] != _randomFruitType[idxJ])
                 {
-                    int temp = randomFruitType[idxJ];
-                    randomFruitType[idxJ] = randomFruitType[maxNum - 2];
-                    randomFruitType[maxNum - 2] = temp;
+                    int temp = _randomFruitType[idxJ];
+                    _randomFruitType[idxJ] = _randomFruitType[maxNum - 2];
+                    _randomFruitType[maxNum - 2] = temp;
                     break;
                 }
             }
         }
 
-        //½ºÅÃ¿¡ µî·Ï
-        Stack<int> ranStack2 = new Stack<int>();
-        foreach (int idx in randomFruitType) ranStack2.Push(idx);
-
-        return ranStack2;
+        return _randomFruitType;
     }
 }
