@@ -14,7 +14,6 @@ public class FruitSettingEachUser : MonoBehaviour
     // GC 할당 방지를 위한 캐싱 리스트
     private List<string> _cachedKeys = new List<string>();
     private List<int> _fruitTypeNumList = new List<int>(40);
-    private List<int> _randomList = new List<int>(40);
     private List<int> _randomFruitType = new List<int>(40);
 
     private void OnEnable()
@@ -126,11 +125,7 @@ public class FruitSettingEachUser : MonoBehaviour
 
             // 캐싱 리스트 재활용 - Clear는 Capacity를 유지하므로 재할당 없음
             _fruitTypeNumList.Clear();
-            _randomList.Clear();
             _randomFruitType.Clear();
-
-            // Enumerable.Range 대신 직접 루프 (Iterator 할당 제거)
-            for (int i = 0; i < maxNum; i++) _randomList.Add(i);
 
             //000011112222와 같이 배치 : 과일별 배치수가 다르거나 부족하면 조정
             for (int i = 0; i < typeCount; i++)
@@ -139,18 +134,16 @@ public class FruitSettingEachUser : MonoBehaviour
                 for (int j = 0; j < eachCount; j++) _fruitTypeNumList.Add(i);
             }
 
+            //셔플을 위해 리스트 복사
+            _randomFruitType.AddRange(_fruitTypeNumList);
+
             // 각 원소 순회하며 셔플 (O(n))
             for (int i = 0; i < maxNum; i++)
             {
                 int rnd = Random.Range(i, maxNum);
-                (_randomList[i], _randomList[rnd]) = (_randomList[rnd], _randomList[i]);
+                (_randomFruitType[i], _randomFruitType[rnd]) = (_randomFruitType[rnd], _randomFruitType[i]);
             }
-            //각 과일별로 랜덤 우선 배치
-            for (int i = 0; i < _randomList.Count; i++)
-            {
-                _randomFruitType.Add(_fruitTypeNumList[_randomList[i]]);
-            }
-
+            
             //각 유저별 과일 검사
             for (int idx = 1; idx < maxNum; idx += 2)
             {
