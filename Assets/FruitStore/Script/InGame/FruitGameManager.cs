@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
-using UnityEngine.UI;
 
 [Serializable]
 public struct FruitImageData
