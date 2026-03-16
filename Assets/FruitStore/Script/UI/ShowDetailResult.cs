@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShowDetailResult : MonoBehaviour
 {
@@ -8,12 +9,33 @@ public class ShowDetailResult : MonoBehaviour
 
     [Header("각 라운드")]
     [SerializeField] List<TextMeshProUGUI> roundResultList = new();
-   
+
+    [Header("각 유저별 버튼")]
+    [SerializeField] List<Button> userResultButtonList = new();
+
     /// <summary>
     /// 상세정보 표시 텍스트 초기화
     /// </summary>
-    public void Init_RoundResultTest()
+    public void Init_RoundResultText()
     {
+        //버튼 초기화
+        for(int idx = 0; idx < FruitGameManager.Instance.maxPeopleCount; idx++)
+        {
+            if (idx >= FruitGameManager.Instance.PeopleCount)
+            {
+                userResultButtonList[idx].gameObject.SetActive(false);
+            }
+            else
+            {
+                GameObject btn = userResultButtonList[idx].gameObject;
+                btn.gameObject.SetActive(true);
+                //유저명 등록
+                btn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text
+                    = FruitGameManager.Instance.UserInfoList[idx].userName;
+            }
+        }
+
+        //결과 표시 초기화
         for(int idx = 0; idx < FruitGameManager.Instance.TotalRound; idx++)
         {
             roundResultList[idx].text = string.Empty;

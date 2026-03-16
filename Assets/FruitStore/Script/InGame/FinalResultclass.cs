@@ -80,7 +80,7 @@ public class FinalResultclass : MonoBehaviour
     public void ShowEachUserSubmitDetail()
     {
         showDetailResult.gameObject.SetActive(true);
-        showDetailResult.Init_RoundResultTest();
+        showDetailResult.Init_RoundResultText();
     }
 
     public void GoToMain()
