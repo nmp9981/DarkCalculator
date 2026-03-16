@@ -12,6 +12,8 @@ public class FinalResultclass : MonoBehaviour
     TextMeshProUGUI[] userRankTexts = new TextMeshProUGUI[20];
     [SerializeField]
     FruitUIManager fruitUIManager;
+    [SerializeField] 
+    ShowDetailResult showDetailResult;
 
     //유저 순위
     List<(int money, string name)> userRanks = new List<(int money, string name)> ();
@@ -77,7 +79,8 @@ public class FinalResultclass : MonoBehaviour
     /// </summary>
     public void ShowEachUserSubmitDetail()
     {
-
+        showDetailResult.gameObject.SetActive(true);
+        showDetailResult.Init_RoundResultTest();
     }
 
     public void GoToMain()
