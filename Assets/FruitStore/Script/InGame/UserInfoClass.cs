@@ -5,8 +5,9 @@ using UnityEngine.UI;
 [System.Serializable]
 public struct SellInfo
 {
-    public string name;
-    public int money;
+    public string name;//판매한 과일명
+    public int money;//판매가
+    public bool isSecret;//비밀여부
 }
 
 public class UserInfoClass : MonoBehaviour
@@ -130,8 +131,11 @@ public class UserInfoClass : MonoBehaviour
             getMoney[i] = 0;
             sellMoneyRound[i,0].name = string.Empty;
             sellMoneyRound[i,0].money = 0;
+            sellMoneyRound[i,0].isSecret = false;
+
             sellMoneyRound[i, 1].name = string.Empty;
             sellMoneyRound[i, 1].money = 0;
+            sellMoneyRound[i,1].isSecret = false;
         }
     }
 }

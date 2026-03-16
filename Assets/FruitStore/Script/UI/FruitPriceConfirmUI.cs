@@ -52,14 +52,7 @@ public class FruitPriceConfirmUI : MonoBehaviour
     {
         selectPrice = price;
     }
-    /// <summary>
-    /// 과일 가격 선택
-    /// </summary>
-    /// <param name="price"></param>
-    public void SelectSecret()
-    {
-       
-    }
+   
     /// <summary>
     /// 과일 가격 확정
     /// </summary>
@@ -74,7 +67,7 @@ public class FruitPriceConfirmUI : MonoBehaviour
         {
             //가격 확정
             userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound - 1, fruitIdx]
-                = new SellInfo { name = sellFruitName, money = selectPrice };
+                = new SellInfo { name = sellFruitName, money = selectPrice, isSecret=false };
            
             //버튼 비활성화
             if(fruitIdx==0) userInfo.fruit1SellButton.interactable = false;
@@ -91,6 +84,7 @@ public class FruitPriceConfirmUI : MonoBehaviour
                 userInfo.isSecret = true;
                 userInfo.isUsedSecret = true;
                 userInfo.secretFruitName = sellFruitName;
+                userInfo.sellMoneyRound[FruitGameManager.Instance.CurrentRound - 1, fruitIdx].isSecret = true;
             }
             priceCheckUI.SetActive(false);
         }

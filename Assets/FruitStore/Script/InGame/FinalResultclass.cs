@@ -72,6 +72,14 @@ public class FinalResultclass : MonoBehaviour
         FruitGameManager.Instance.IsGameOver = true;
     }
 
+    /// <summary>
+    /// 각 유저별 라운드마다 얼마냈는지 공개
+    /// </summary>
+    public void ShowEachUserSubmitDetail()
+    {
+
+    }
+
     public void GoToMain()
     {
         userRanks.Clear();
