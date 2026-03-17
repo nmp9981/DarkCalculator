@@ -66,12 +66,12 @@ public class ShowDetailResult : MonoBehaviour
                 if (clickUser.sellMoneyRound[curRd, idx].isSecret)
                 {
                     roundResultList[curRd].text +=
-                        $"\n\n{clickUser.sellMoneyRound[curRd, idx].name} 비공개";
+                        $"{clickUser.sellMoneyRound[curRd, idx].name} 비공개\n\n";
                 }
                 else
                 {
                     roundResultList[curRd].text +=
-                        $"\n\n{clickUser.sellMoneyRound[curRd, idx].name} {clickUser.sellMoneyRound[curRd, idx].money}";
+                        $"{clickUser.sellMoneyRound[curRd, idx].name} {clickUser.sellMoneyRound[curRd, idx].money}\n\n";
                 }
             }
         }
