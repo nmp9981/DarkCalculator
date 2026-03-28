@@ -44,4 +44,18 @@ public class IntroUI : MonoBehaviour
     {
         settingObject.SetActive(true);
     }
+    /// <summary>
+    /// 라스베가스 모드로 변환
+    /// </summary>
+    public void ChangeModeLasvegas()
+    {
+        FruitGameManager.Instance.gameMode = GameMode.Lasvegas;
+    }
+    /// <summary>
+    /// 일반 모드로 변환
+    /// </summary>
+    public void ChangeModeGerneral()
+    {
+        FruitGameManager.Instance.gameMode = GameMode.General;
+    }
 }

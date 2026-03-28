@@ -9,6 +9,15 @@ public struct FruitImageData
     public Sprite fruitImage;
     public int restCount;
 }
+/// <summary>
+/// 게임 모드
+/// </summary>
+public enum GameMode
+{
+    General,
+    Lasvegas,
+    Count
+}
 public class FruitGameManager : MonoBehaviour
 { 
     static FruitGameManager _instance;
@@ -74,6 +83,7 @@ public class FruitGameManager : MonoBehaviour
     private int fruitTypeCount;
     private bool isGameOver = false;
 
+    public GameMode gameMode;
     public int maxFruitTypeCount = 10;
     public int maxPeopleCount = 20;
     public int minPeopleCount = 5;
