@@ -42,7 +42,7 @@ public class IntroUI : MonoBehaviour
     /// </summary>
     public void CloseGameSetting()
     {
-        settingObject.SetActive(true);
+        settingObject.SetActive(false);
     }
     /// <summary>
     /// 라스베가스 모드로 변환

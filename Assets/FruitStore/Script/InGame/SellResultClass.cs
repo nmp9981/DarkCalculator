@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,7 +64,8 @@ public class SellResultClass : MonoBehaviour
     public void SellResultFlow()
     {
         CalSellResult();//판매 결과 계산
-        ResultSell();//판매 결과
+        if (FruitGameManager.Instance.gameMode == GameMode.General) ResultSell();
+        else if(FruitGameManager.Instance.gameMode == GameMode.Lasvegas) ResultSell_Lasvegas();//판매 결과
         ShowResultUI();//UI로 공개
     }
 
@@ -112,15 +115,24 @@ public class SellResultClass : MonoBehaviour
                 }
                 else
                 {
-                    //더 낮은 가격
-                    if (allUsersellDic[sellFruitName].Peek().money > sellPrice)
+                    //일반 모드인 경우 가장 낮은 가격만 스택에 넣는다.
+                    if (FruitGameManager.Instance.gameMode == GameMode.General)
                     {
-                        //스택을 비운다.
-                        allUsersellDic[sellFruitName].Clear();
-                        allUsersellDic[sellFruitName].Push((sellUserName, sellPrice));
-                    }else if(allUsersellDic[sellFruitName].Peek().money == sellPrice)
+                        //더 낮은 가격
+                        if (allUsersellDic[sellFruitName].Peek().money > sellPrice)
+                        {
+                            //스택을 비운다.
+                            allUsersellDic[sellFruitName].Clear();
+                            allUsersellDic[sellFruitName].Push((sellUserName, sellPrice));
+                        }
+                        else if (allUsersellDic[sellFruitName].Peek().money == sellPrice)
+                        {
+                            //같은 가격일때도 푸시 진행
+                            allUsersellDic[sellFruitName].Push((sellUserName, sellPrice));
+                        }
+                    }else if(FruitGameManager.Instance.gameMode == GameMode.Lasvegas)
                     {
-                        //같은 가격일때도 푸시 진행
+                        //라스베가스 모드인 경우 모든 가격을 넣는다.
                         allUsersellDic[sellFruitName].Push((sellUserName, sellPrice));
                     }
                 }
@@ -129,7 +141,7 @@ public class SellResultClass : MonoBehaviour
     }
 
     /// <summary>
-    /// 판매 결과
+    /// 판매 결과 - 일반 모드
     /// </summary>
     private void ResultSell()
     {
@@ -145,7 +157,7 @@ public class SellResultClass : MonoBehaviour
             {
                 resultSellDic.Add(finalFruitName,0);
             }
- 
+
             //최종 가격 기록
             resultSellDic[finalFruitName] = finalEachPrice;
 
@@ -163,8 +175,111 @@ public class SellResultClass : MonoBehaviour
                 allUsersellDic[finalFruitName].Pop();
             }
         }
-    } 
+    }
+    /// <summary>
+    /// 판매 결과 - 라스베가스 모드
+    /// </summary>
+    private void ResultSell_Lasvegas()
+    {
+        foreach (var finalFruitName in allUsersellDic.Keys)//각 과일별 검사
+        {
+            //스택의 리스트화
+            List<(string,int)> list = allUsersellDic[finalFruitName].ToList();
+            list = list.OrderBy(x => x.Item2).ToList();
 
+            //각 가격별 유저가 몇명 모였는지 검사
+            Dictionary<int ,List<string>> userInEachPrice = new Dictionary<int ,List<string>>();
+            foreach(var item in list)
+            {
+                int price = item.Item2;//가격
+                string userName = item.Item1;//유저명
+
+                if (!userInEachPrice.ContainsKey(price))
+                {
+                    userInEachPrice[price] = new List<string>();
+                }
+                userInEachPrice[price].Add(userName);
+            }
+
+            //가격별 검사후 최종 가격
+            int finalEachPrice = 0;//최종 가격
+            int finalFruitSellCount = 0;//최종 판매 인원
+            List<string> victoryUser = new List<string>();
+            for (int price= 1000;price<=5000;price+=1000)
+            {
+                //아무도 없음
+                if (!userInEachPrice.ContainsKey(price)) continue;
+                if (userInEachPrice[price].Count == 0) continue;
+
+                //3000원 이상일 시 모두가 똑같은 가격을 적으면 모두 성공
+                if(price >= 3000)
+                {
+                    if(userInEachPrice[price].Count == allUsersellDic[finalFruitName].Count)
+                    {
+                        finalEachPrice = price;
+                        finalFruitSellCount = userInEachPrice[price].Count;
+                        victoryUser = userInEachPrice[price].ToList();
+                        break;
+                    }
+                }
+
+                //1명 존재
+                if (userInEachPrice[price].Count == 1)
+                {
+                    finalEachPrice = price;
+                    finalFruitSellCount = 1;
+                    victoryUser = userInEachPrice[price].ToList();
+                    break;
+                }//2명 이상
+                else if (userInEachPrice[price].Count >= 2)
+                {
+                    //과반수를 넘는가?(기준)
+                    int halfCount =Mathf.Min(4, Mathf.Max(2,finalFruitName.Length/2));
+
+                    //기준 이상이면 탈락
+                    if(halfCount <= userInEachPrice[price].Count)
+                    {
+                        continue;
+                    }
+                    else//최종 설정
+                    {
+                        finalEachPrice = price;
+                        finalFruitSellCount = userInEachPrice[price].Count;
+                        victoryUser = userInEachPrice[price].ToList();
+                        break;
+                    }
+                }
+            }
+
+            int originSellCount = sellEachFruitCountDic[finalFruitName];//총 판매 인원
+            int finalPrice = finalEachPrice * originSellCount;//총 금액
+
+            //결과 종류 추가
+            if (!resultSellDic.ContainsKey(finalFruitName))
+            {
+                resultSellDic.Add(finalFruitName, 0);
+            }
+
+            //최종 가격 기록
+            resultSellDic[finalFruitName] = finalEachPrice;
+
+            //승리유저 기록
+            foreach (var user in FruitGameManager.Instance.UserInfoList)
+            {
+                //승리 유저인가?
+                if (victoryUser.Contains(user.userName))
+                {
+                    user.getMoney[FruitGameManager.Instance.CurrentRound - 1] += (finalPrice / finalFruitSellCount);
+                }
+            }
+
+            //스택을 비우기
+            while (allUsersellDic[finalFruitName].Count != 0)
+            {
+                allUsersellDic[finalFruitName].Pop();
+            }
+        }
+    }
     /// <summary>
     /// 결과 공개
     /// 각 과일별로 얼마에 낙찰되었는지 공개
