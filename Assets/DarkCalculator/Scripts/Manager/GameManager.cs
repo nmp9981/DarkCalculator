@@ -1,8 +1,12 @@
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
+public enum PlayMode
+{
+    General,
+    Challenge,
+    Count
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -76,6 +80,7 @@ public class GameManager : MonoBehaviour
     int _score;//점수
     int _cal3DigitCount;//계산할 자릿수가 3개인 개수
 
+    PlayMode _playMode;//플레이 모드
     CalMode _calMode;//계산 모드
 
     bool _isGamePlay;//게임 진행중인가?
@@ -106,6 +111,7 @@ public class GameManager : MonoBehaviour
     public int Cal3DigitCount { get { return _cal3DigitCount; } set { _cal3DigitCount = value; } }
 
     public CalMode CurrentCalMode { get { return _calMode; } set { _calMode = value; } }
+    public PlayMode CurrentPlayMode { get { return _playMode; } set { _playMode = value; } }
 
     public bool IsGamePlay { get { return _isGamePlay; } set { _isGamePlay = value; } }
     public bool IsSettingPossible { get { return _isSettingPossible; } set { _isSettingPossible = value; } }

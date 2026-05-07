@@ -43,6 +43,9 @@ public class MainUI : MonoBehaviour
                 case "Play":
                     gm.onClick.AddListener(() => GoGameStart(gmName));
                     break;
+                case "Challenge":
+                    gm.onClick.AddListener(() => GoGameStart(gmName));
+                    break;
                 case "Prime":
                     gm.onClick.AddListener(() => GoGameStart(gmName));
                     break;
@@ -79,9 +82,15 @@ public class MainUI : MonoBehaviour
         switch (mode)
         {
             case "Play":
+                GameManager.Instance.CurrentPlayMode = PlayMode.General;
                 SceneManager.LoadScene("InGameCalMode");
                 SoundManager._sound.StopBGM(0);
                 GameManager.Instance.Cal3DigitCount = 0;
+                break;
+            case "Challenge":
+                GameManager.Instance.CurrentPlayMode = PlayMode.Challenge;
+                SceneManager.LoadScene("ChallengeMode");
+                SoundManager._sound.StopBGM(0);
                 break;
             case "Prime":
                 SceneManager.LoadScene("PrimeMode");
