@@ -50,7 +50,6 @@ public class InputKeyInGame : MonoBehaviour
                 break;
         }
         ShowInputAnswer();
-        CompareAnswerAndInput();
     }
     /// <summary>
     /// 기능 : 입력값이 보이게
@@ -62,19 +61,25 @@ public class InputKeyInGame : MonoBehaviour
     /// <summary>
     /// 입력값과 정답 비교
     /// </summary>
-    void CompareAnswerAndInput()
+    public void CompareAnswerAndInput()
     {
+        var man = GameManager.Instance;
         //정답
-        if (GameManager.Instance.InputAnswerString == GameManager.Instance.RealAnswer.ToString())
+        if (man.InputAnswerString == man.RealAnswer.ToString())
         {
-            GameManager.Instance.CurrentSolveCount += 1;//정답 개수 증가
-            //모두 맞춤
-            if (GameManager.Instance.CurrentProblemNum == GameManager.Instance.TargetSolveCount)
+            man.CurrentSolveCount += 1;//정답 개수 증가
+            //일반 모드
+            if (man.CurrentPlayMode == PlayMode.General)
             {
-                AllSolveProblem();
+                //모두 맞춤
+                if (man.CurrentProblemNum == man.TargetSolveCount)
+                {
+                    AllSolveProblem();
+                }
+                questionProblem.SetProblem();
             }
+            else if (man.CurrentPlayMode == PlayMode.Challenge) questionProblem.SetChallengeProblem();
 
-            questionProblem.SetProblem();
             questionProblem.ShowProblemCount();
             //초기화
             InputInit();

@@ -27,14 +27,18 @@ public class QuestionProblem : MonoBehaviour
         problemText = GetComponent<TextMeshProUGUI>();
         inputKeyInGame = GameObject.Find("InputKey").GetComponent<InputKeyInGame>();
         passButton = GameObject.Find("PassButton").GetComponent<Button>();
-        currentTime = 0;
+         
+        if (GameManager.Instance.CurrentPlayMode == PlayMode.General) currentTime = 0;
+        else if (GameManager.Instance.CurrentPlayMode == PlayMode.Challenge) currentTime = 99.99f;
 
+        GameManager.Instance.CurrentProblemNum = 0;
         BindingButton();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetProblem();
+        if(GameManager.Instance.CurrentPlayMode == PlayMode.General) SetProblem();
+        else if (GameManager.Instance.CurrentPlayMode == PlayMode.Challenge) SetChallengeProblem();
         ShowProblemCount();
     }
 
@@ -49,6 +53,8 @@ public class QuestionProblem : MonoBehaviour
     void BindingButton()
     {
         passButton.onClick.AddListener(PassButton);
+        if (GameManager.Instance.CurrentPlayMode == PlayMode.General) passButton.gameObject.SetActive(true);
+        else passButton.gameObject.SetActive(false);
     }
     
     //문제 출제
@@ -78,6 +84,13 @@ public class QuestionProblem : MonoBehaviour
                     break;
             }
         }
+    }
+    /// <summary>
+    /// 챌린지 문제 출제
+    /// </summary>
+    public void SetChallengeProblem()
+    {
+        SetProblemDegree2();
     }
     public void SetProblemDegree2()
     {
@@ -173,7 +186,15 @@ public class QuestionProblem : MonoBehaviour
     /// </summary>
     void TimeFlow()
     {
-        currentTime += Time.deltaTime;
+        if (GameManager.Instance.CurrentPlayMode == PlayMode.General) currentTime += Time.deltaTime;
+        else if (GameManager.Instance.CurrentPlayMode == PlayMode.Challenge)
+        {
+            currentTime -= Time.deltaTime;
+            if (currentTime <= 0)
+            {
+                inputKeyInGame.AllSolveProblem();
+            }
+        }
         ShowCurrentTime();
     }
     /// <summary>
@@ -181,12 +202,21 @@ public class QuestionProblem : MonoBehaviour
     /// </summary>
     void ShowCurrentTime()
     {
-        timeText.text = Mathf.Floor(currentTime).ToString();
+        timeText.text = Mathf.Floor(Mathf.Max(0,currentTime)).ToString();
     }
+    /// <summary>
+    /// 문제 맞춘 개수 세기
+    /// </summary>
     public void ShowProblemCount()
     {
+        if (GameManager.Instance.CurrentPlayMode == PlayMode.General)
+        {
+            problemCountText.text = $"{GameManager.Instance.CurrentProblemNum} / {GameManager.Instance.TargetSolveCount}";
+        }else if(GameManager.Instance.CurrentPlayMode == PlayMode.Challenge)
+        {
+            problemCountText.text = $"{GameManager.Instance.CurrentProblemNum}";
+        }
         GameManager.Instance.CurrentProblemNum += 1;
-        problemCountText.text = $"{GameManager.Instance.CurrentProblemNum} / {GameManager.Instance.TargetSolveCount}";
     }
     /// <summary>
     /// 기능 : 패스
@@ -195,6 +225,8 @@ public class QuestionProblem : MonoBehaviour
     /// </summary>
     public void PassButton()
     {
+        if (GameManager.Instance.CurrentPlayMode == PlayMode.Challenge) return;
+     
         //모두 맞춤
         if (GameManager.Instance.CurrentProblemNum == GameManager.Instance.TargetSolveCount)
         {
