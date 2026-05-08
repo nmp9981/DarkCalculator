@@ -41,8 +41,15 @@ public class ScoreResult : MonoBehaviour
     /// </summary>
     void ShowResultRecord()
     {
-        resultText.text = $"경과 시간\n{GameManager.Instance.RecordTime} \n\n정답 개수\n{GameManager.Instance.CurrentSolveCount} \n\n" +
+        if(GameManager.Instance.CurrentPlayMode == PlayMode.General)
+        {
+            resultText.text = $"경과 시간\n{GameManager.Instance.RecordTime} \n\n정답 개수\n{GameManager.Instance.CurrentSolveCount} \n\n" +
             $"점수\n{GameManager.Instance.Score}";
+        }else if(GameManager.Instance.CurrentPlayMode == PlayMode.Challenge)
+        {
+            resultText.text = $"정답 개수\n{GameManager.Instance.CurrentSolveCount} \n\n" +
+            $"점수\n{GameManager.Instance.Score}";
+        }
     }
     /// <summary>
     /// 기능 :점수 계산
