@@ -69,15 +69,15 @@ public class ScoreResult : MonoBehaviour
         {
             return "C";
         }
-        else if (success >= 13 && success <= 15)
+        else if (success >= 13 && success <= 16)
         {
             return "B";
         }
-        else if (success >= 16 && success <= 18)
+        else if (success >= 17 && success <= 19)
         {
             return "A";
         }
-        else if (success >= 19 && success <= 21)
+        else if (success >= 20 && success <= 22)
         {
             return "S";
         }
