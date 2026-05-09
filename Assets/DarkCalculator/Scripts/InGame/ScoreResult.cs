@@ -48,9 +48,42 @@ public class ScoreResult : MonoBehaviour
         }else if(GameManager.Instance.CurrentPlayMode == PlayMode.Challenge)
         {
             resultText.text = $"정답 개수\n{GameManager.Instance.CurrentSolveCount} \n\n" +
-            $"점수\n{GameManager.Instance.Score}";
+            $"등급\n{CalClass(GameManager.Instance.CurrentSolveCount)}";
         }
     }
+    /// <summary>
+    /// 등급 산출
+    /// </summary>
+    /// <param name="success"></param>
+    /// <returns></returns>
+    string CalClass(int success)
+    {
+        if (success <= 5)
+        {
+            return "F";
+        }else if (success>=6 && success<=9)
+        {
+            return "D";
+        }
+        else if (success >= 10 && success <= 12)
+        {
+            return "C";
+        }
+        else if (success >= 13 && success <= 15)
+        {
+            return "B";
+        }
+        else if (success >= 16 && success <= 18)
+        {
+            return "A";
+        }
+        else if (success >= 19 && success <= 21)
+        {
+            return "S";
+        }
+        return "SS";
+    }
+
     /// <summary>
     /// 기능 :점수 계산
     /// </summary>

@@ -22,6 +22,12 @@ public class QuestionProblem : MonoBehaviour
     public float currentTime;
 
     const long maxInt = 2147483648;
+
+    //문제 출제용 변수
+    int a, b, c;
+    //문제 출제 범위 변수
+    int minNum, maxNum;
+
     private void Awake()
     {
         problemText = GetComponent<TextMeshProUGUI>();
@@ -87,10 +93,223 @@ public class QuestionProblem : MonoBehaviour
     }
     /// <summary>
     /// 챌린지 문제 출제
+    /// 단계에 따라 출제 문제 수준이 다름
     /// </summary>
     public void SetChallengeProblem()
     {
-        SetProblemDegree2();
+        int idx = Random.Range(0, GameManager.Instance.calSymbolJudgeList.Count);
+        int stage = GameManager.Instance.CurrentProblemNum;
+        if (stage < 1)
+        {
+            minNum = 1;
+            maxNum = 10;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = 0;
+            idx = 0;
+        }else if(stage>=1 && stage < 3)
+        {
+            minNum = 1;
+            maxNum = 9;
+            a = (int)Random.Range(minNum*10, maxNum*11);
+            b = (int)Random.Range(minNum, maxNum);
+            c = 0;
+            idx = 0;
+        }else if(stage>=3 && stage < 6)
+        {
+            minNum = 10;
+            maxNum = 100;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = 0;
+            idx = 0;
+        }
+        else if (stage >= 6 && stage < 8)
+        {
+            minNum = 1;
+            maxNum = 10;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = 0;
+            idx = 2;
+        }
+        else if (stage >= 8 && stage < 11)
+        {
+            minNum = 1;
+            maxNum = 100;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = 0;
+            idx = 1;
+        }
+        else if (stage >= 11 && stage < 13)
+        {
+            minNum = 1;
+            maxNum = 11;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = 0;
+            idx = 3;
+        }
+        else if (stage >= 13 && stage < 15)
+        {
+            minNum = 100;
+            maxNum = 1000;
+            c = 0;
+            idx = Random.Range(0, GameManager.Instance.calSymbolJudgeList.Count-1);
+            if (idx <= 2)
+            {
+                a = (int)Random.Range(minNum, maxNum);
+                b = (int)Random.Range(minNum, maxNum);
+            }
+            else
+            {
+                a = (int)Random.Range(minNum, maxNum)/10;
+                b = (int)Random.Range(minNum, maxNum)/10;
+            }
+        }
+        else if (stage >= 15 && stage < 17)
+        {
+            minNum = 10;
+            maxNum = 10000;
+            c = 0;
+            idx = Random.Range(0, GameManager.Instance.calSymbolJudgeList.Count - 2);
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+        }
+        else if (stage >= 17 && stage < 19)
+        {
+            minNum = 10;
+            maxNum = 1000;
+            idx = Random.Range(0, GameManager.Instance.calSymbolJudgeList.Count - 2);
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = (int)Random.Range(minNum, maxNum);
+        }
+        else if (stage >= 19 && stage < 21)
+        {
+            minNum = 1;
+            maxNum = 10;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = (int)Random.Range(minNum, maxNum);
+            idx = 2;
+        }
+        else if (stage >= 21 && stage < 23)
+        {
+            minNum = 10;
+            maxNum = 100;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum)/10;
+            c = 0;
+            idx = 3;
+        }
+        else if (stage >= 23 && stage < 26)
+        {
+            minNum = 10;
+            maxNum = 100;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = 0;
+            idx = 2;
+        }
+        else if (stage >= 26 && stage < 29)
+        {
+            minNum = 100;
+            maxNum = 100000;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = (int)Random.Range(minNum, maxNum);
+            idx = Random.Range(0, GameManager.Instance.calSymbolJudgeList.Count - 2);
+        }
+        else if (stage >= 29 && stage < 32)
+        {
+            minNum = 100;
+            maxNum = 1000;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum)/10;
+            c = 0;
+            idx = 2;
+        }
+        else if (stage >= 32 && stage < 34)
+        {
+            minNum = 10;
+            maxNum = 1000;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum) / 10;
+            c = 0;
+            idx = 3;
+        }
+        else if (stage >= 34 && stage < 36)
+        {
+            minNum = 1000;
+            maxNum = 10000;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum) / 100;
+            c = 0;
+            idx = 2;
+        }
+        else if (stage >= 36)
+        {
+            minNum = 10;
+            maxNum = 100;
+            a = (int)Random.Range(minNum, maxNum);
+            b = (int)Random.Range(minNum, maxNum);
+            c = (int)Random.Range(minNum, maxNum);
+            idx = 2;
+        }
+
+
+        //int calModeidx = GameManager.Instance.calSymbolJudgeList[idx];
+        int calModeidx = idx;
+        int mul2 = a * b;
+        int mul3 = a * b * c;
+
+        switch (calModeidx)
+        {
+            case 0:
+                if ((stage >= 17 && stage < 19) || (stage >= 26 && stage < 29))
+                {
+                    GameManager.Instance.RealAnswer = a + b+c;
+                    problemText.text = a.ToString() + " + " + b.ToString()+" + " + c.ToString();
+                }
+                else
+                {
+                    GameManager.Instance.RealAnswer = a + b;
+                    problemText.text = a.ToString() + " + " + b.ToString();
+                }
+                break;
+            case 1:
+                if ((stage >= 17 && stage < 19) || (stage >= 26 && stage < 29))
+                {
+                    GameManager.Instance.RealAnswer = a - b - c;
+                    problemText.text = a.ToString() + " - " + b.ToString() + " - " + c.ToString();
+                }
+                else
+                {
+                    GameManager.Instance.RealAnswer = a - b;
+                    problemText.text = a.ToString() + " - " + b.ToString();
+                }
+                break;
+            case 2:
+                if ((stage >= 19 && stage < 21) || (stage >= 36))
+                {
+                    GameManager.Instance.RealAnswer = mul3;
+                    problemText.text = a.ToString() + " x " + b.ToString() + " x " + c.ToString();
+                }
+                else
+                {
+                    GameManager.Instance.RealAnswer = mul2;
+                    problemText.text = a.ToString() + " x " + b.ToString();
+                }
+                break;
+            case 3:
+                GameManager.Instance.RealAnswer = b;
+                problemText.text = mul2.ToString() + " / " + a.ToString();
+                break;
+            default:
+                break;
+        }        
     }
     public void SetProblemDegree2()
     {
