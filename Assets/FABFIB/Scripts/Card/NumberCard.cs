@@ -6,9 +6,10 @@ namespace FABFIB
 {
     public class NumberCard : MonoBehaviour
     {
+        public int RandomValue;//랜덤 넘버(셔플용)
         public int Num;//표시 숫자
         public int Attack;//데미지
-        public int RandomValue;//랜덤 넘버(셔플용)
+       
         [SerializeField] private TextMeshProUGUI numText;
         [SerializeField] private List<GameObject> skullList = new();
 

@@ -24,5 +24,22 @@ namespace FABFIB
                 _instance = gm.GetComponent<PlayerManager>();
             }
         }
+
+        /// <summary>
+        /// 각 플레이어에게 카드 분배
+        /// </summary>
+        public void DivideCard_EachPlayer()
+        {
+            var manager = GameManager.Instance;
+            for(int i = 0; i < manager.UserCount; i++)
+            {
+                //3장 뽑기
+                for(int j = 0; j < 3; j++)
+                {
+                    NumberCard card = manager.restNumberCardList.Pop();
+                    manager.playerList[i].ownCards.Add(card);
+                }
+            }
+        }
     }
 }

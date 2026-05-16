@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FABFIB
@@ -7,6 +8,8 @@ namespace FABFIB
         static CardManager _instance;
 
         public static CardManager Instance { get { Init(); return _instance; } }
+
+        public List<NumberCard> presentNumber=new List<NumberCard>();
 
         static void Init()
         {
@@ -56,6 +59,31 @@ namespace FABFIB
 
                     GameManager.Instance.restNumberCardList.Push(card);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 남는 카드 섞기
+        /// </summary>
+        public void ShuffleRestCard()
+        {
+            //랜덤시드 재정의
+            List<NumberCard> tempcardList = new List<NumberCard>();
+            var manager = GameManager.Instance;
+            while (manager.restNumberCardList.Count > 0)
+            {
+                NumberCard card = manager.restNumberCardList.Pop();
+
+                card.RandomValue = Random.Range(0, int.MaxValue);
+                tempcardList.Add(card);
+            }
+
+            tempcardList.Sort();
+
+            //다시 등록
+            foreach(var card in tempcardList)
+            {
+                manager.restNumberCardList.Push(card);
             }
         }
     }

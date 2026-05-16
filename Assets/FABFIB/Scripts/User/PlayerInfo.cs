@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FABFIB
@@ -7,5 +8,7 @@ namespace FABFIB
         public string playerName;
         public int playerHP;
         public int playerIndex;
+
+        public List<NumberCard> ownCards = new List<NumberCard>();
     }
 }
