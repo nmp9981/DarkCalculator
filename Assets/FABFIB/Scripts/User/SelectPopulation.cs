@@ -24,7 +24,7 @@ namespace FABFIB
         }
         /// <summary>
         /// 인원 수 검사
-        /// 5~20명만 받음
+        /// 3~10명만 받음
         /// </summary>
         /// <returns></returns>
         public bool InspectPopulation()

@@ -28,7 +28,7 @@ namespace FABFIB
         {
             notifyText.text = string.Empty;
             notifyText.gameObject.SetActive(false);
-
+            Debug.Log(GameManager.Instance.UserCount);
             for (int i = 0; i < GameManager.Instance.MaxUserCount; i++)
             {
                 if (i >= GameManager.Instance.UserCount) enrollUserArray[i].gameObject.SetActive(false);
@@ -81,7 +81,7 @@ namespace FABFIB
             if (name == null) return false;
 
             //글자 수 검사
-            if (name.Length >= 6 || name.Length <= 1)
+            if (name.Length >= 7 || name.Length <= 1)
             {
                 ShowNotLengthMassage();
                 return false;
@@ -121,7 +121,7 @@ namespace FABFIB
         public void ShowNotLengthMassage()
         {
             notifyText.gameObject.SetActive(true);
-            notifyText.text = $"닉네임의 글자 수는\n 2~5자만 가능합니다.";
+            notifyText.text = $"닉네임의 글자 수는\n 2~6자만 가능합니다.";
             Invoke("Off_ShowNotFullMassage", 0.5f);
         }
         public void ShowRepetitionMassage()

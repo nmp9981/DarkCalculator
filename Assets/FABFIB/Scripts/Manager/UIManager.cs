@@ -8,42 +8,42 @@ namespace FABFIB
         //UI페이지 모음
         [SerializeField] List<GameObject> uiList = new();
 
-        /// <summary>
-        /// UI 오브젝트 비활성화
-        /// </summary>
-        void Off_UIList()
-        {
-            foreach (GameObject go in uiList)
-            {
-                go.SetActive(false);    
-            }
-        }
+        //UI 상세 페이지
+        [SerializeField] SelectPopulation selectPopulation;
+        [SerializeField] EnrollPlayer enrollPlayer;
 
         /// <summary>
-        /// 인트로 페이지로 이동
+        /// 인트로 창으로 이동
         /// </summary>
         public void GotoIntroPage()
         {
-            Off_UIList();
-            uiList[0].SetActive(true);
+            uiList[0].gameObject.SetActive(true);
+            uiList[1].gameObject.SetActive(false);
+            uiList[2].gameObject.SetActive(false);
+            uiList[3].gameObject.SetActive(false);
         }
 
         /// <summary>
-        /// 인원 등록 페이지로 이동
+        /// 인구 수 결정 페이지로 이동
         /// </summary>
-        public void GotoInputPeoplePage()
+        public void GotoSetPopulationPage()
         {
-            Off_UIList();
-            uiList[1].SetActive(true);
+            uiList[1].gameObject.SetActive(true);
+            uiList[0].gameObject.SetActive(false);
+            uiList[2].gameObject.SetActive(false);
         }
 
         /// <summary>
-        /// 유저 등록 페이지로 넘어감
+        /// 유저 등록 페이지로 이동
         /// </summary>
-        public void GotoEnrollPlayer()
+        public void GotoEnrollPlayerPage()
         {
-            Off_UIList();
-            uiList[2].SetActive(true);
+            if (selectPopulation.InspectPopulation())
+            {
+                uiList[2].gameObject.SetActive(true);
+                uiList[1].gameObject.SetActive(false);
+                uiList[3].gameObject.SetActive(false);
+            }
         }
 
         /// <summary>
@@ -51,8 +51,11 @@ namespace FABFIB
         /// </summary>
         public void GotoInGamePage()
         {
-            Off_UIList();
-            uiList[2].SetActive(true);
+            if (enrollPlayer.CheckEnroll_AllUserNick())
+            {
+                uiList[3].gameObject.SetActive(true);
+                uiList[2].gameObject.SetActive(false);
+            }
         }
     }
 }
