@@ -47,5 +47,6 @@ namespace FABFIB
 
         public Stack<NumberCard> restNumberCardList = new Stack<NumberCard>();
         public List<PlayerInfo> playerList = new List<PlayerInfo>();
+        public List<string> playerNameList = new List<string>();
     }
 }
