@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FABFIB
 {
@@ -9,7 +10,9 @@ namespace FABFIB
         public int RandomValue;//랜덤 넘버(셔플용)
         public int Num;//표시 숫자
         public int Attack;//데미지
-       
+        public bool isClick;//클릭 여부
+
+        [SerializeField] private Image cardImage;
         [SerializeField] private TextMeshProUGUI numText;
         [SerializeField] private List<GameObject> skullList = new();
 
@@ -30,6 +33,16 @@ namespace FABFIB
             {
                 skullList[i].gameObject.SetActive(true);
             }
+        }
+
+        /// <summary>
+        /// 카드 클릭
+        /// </summary>
+        public void ClickCard()
+        {
+            isClick = !isClick;
+            if(isClick) cardImage.color = Color.yellow;
+            else cardImage.color = Color.white;
         }
     }
 
