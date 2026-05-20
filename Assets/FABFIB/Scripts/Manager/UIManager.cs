@@ -6,7 +6,7 @@ namespace FABFIB
     public class UIManager : MonoBehaviour
     {
         //UI페이지 모음
-        [SerializeField] List<GameObject> uiList = new();
+        [SerializeField] public List<GameObject> uiList = new();
 
         //UI 상세 페이지
         [SerializeField] SelectPopulation selectPopulation;
