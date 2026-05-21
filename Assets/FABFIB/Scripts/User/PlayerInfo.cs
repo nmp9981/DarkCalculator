@@ -24,7 +24,7 @@ namespace FABFIB
         /// <summary>
         /// 플레이어 정보 등록
         /// </summary>
-        public PlayerInfo(string name, int order)
+        public void EnrollPlayerInfo(string name, int order)
         {
             playerName = name;
             playerHP = GameManager.Instance.MaxPlayerHP;
@@ -39,7 +39,7 @@ namespace FABFIB
         public void ShowPlayerInfo()
         {
             nameText.text = playerName;
-            hpText.text = playerHP.ToString();
+            hpText.text = $"HP : {playerHP}";
             if(isMyTurn) turnSymbol.gameObject.SetActive(true);
             else turnSymbol.gameObject.SetActive(false);
         }

@@ -76,7 +76,8 @@ namespace FABFIB
 
                 //플레이어 정보 등록
                 string playerName = GameManager.Instance.playerNameList[idx];
-                PlayerInfo playerInfo = new PlayerInfo(playerName, idx);
+                PlayerInfo playerInfo = playerObj.GetComponent<PlayerInfo>();
+                playerInfo.EnrollPlayerInfo(playerName,idx);
                 GameManager.Instance.playerList.Add(playerInfo);
             }
         }
