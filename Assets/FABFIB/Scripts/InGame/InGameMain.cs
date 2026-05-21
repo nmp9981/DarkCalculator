@@ -7,21 +7,20 @@ namespace FABFIB
     public class InGameMain : MonoBehaviour
     {
         [SerializeField] private UIManager uimanager;
-       
+
         private void OnEnable()
         {
-            ShowUserInfo();
+            ShowUserInfoUI();
         }
 
         /// <summary>
-        /// 유저 정보 보이기
+        /// 유저 정보 UI에 보이기
         /// </summary>
-        void ShowUserInfo()
+        void ShowUserInfoUI()
         {
-            int userCount = GameManager.Instance.UserCount;
-            for (int idx = 0; idx < userCount; idx++)
+            foreach(var user in GameManager.Instance.playerList)
             {
-                GameManager.Instance.playerList[idx].gameObject.SetActive(true);
+                user.ShowPlayerInfo();
             }
         }
 

@@ -7,6 +7,8 @@ namespace FABFIB
 {
     public class PlayerInfo : MonoBehaviour
     {
+        const int totalChangeCount = 3;//총 교체 회수
+
         public string playerName;//플레이어 명
         public int playerHP;//플레이어 체력
         public int playerIndex;//플레이어 순서
@@ -18,6 +20,18 @@ namespace FABFIB
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private Image turnSymbol;
+
+        /// <summary>
+        /// 플레이어 정보 등록
+        /// </summary>
+        public PlayerInfo(string name, int order)
+        {
+            playerName = name;
+            playerHP = GameManager.Instance.MaxPlayerHP;
+            playerIndex = order;
+            changeCount = totalChangeCount;
+            isMyTurn = false;
+        }
 
         /// <summary>
         /// UI 보이기

@@ -12,6 +12,10 @@ namespace FABFIB
         [SerializeField] SelectPopulation selectPopulation;
         [SerializeField] EnrollPlayer enrollPlayer;
 
+        //유저 정보 스폰 위치
+        [SerializeField] Transform spawnUserTransform;
+        [SerializeField] GameObject playerInfoPrefab;
+
         /// <summary>
         /// 인트로 창으로 이동
         /// </summary>
@@ -53,8 +57,27 @@ namespace FABFIB
         {
             if (enrollPlayer.CheckEnroll_AllUserNick())
             {
+                EnrollUser();
                 uiList[3].gameObject.SetActive(true);
                 uiList[2].gameObject.SetActive(false);
+            }
+        }
+        /// <summary>
+        /// 유저 등록
+        /// </summary>
+        void EnrollUser()
+        {
+            int userCount = GameManager.Instance.UserCount;
+            for (int idx = 0; idx < userCount; idx++)
+            {
+                //오브젝트 생성
+                GameObject playerObj = Instantiate(playerInfoPrefab);
+                playerObj.transform.parent = spawnUserTransform;
+
+                //플레이어 정보 등록
+                string playerName = GameManager.Instance.playerNameList[idx];
+                PlayerInfo playerInfo = new PlayerInfo(playerName, idx);
+                GameManager.Instance.playerList.Add(playerInfo);
             }
         }
     }
