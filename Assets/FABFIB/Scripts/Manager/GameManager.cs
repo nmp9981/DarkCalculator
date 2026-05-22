@@ -47,7 +47,9 @@ namespace FABFIB
         public int StartUserIndex {  get { return _startUserIndex; }set { _startUserIndex = value; } }
 
         public Stack<NumberCard> restNumberCardList = new Stack<NumberCard>();
+        public List<NumberCard> usedCardList = new List<NumberCard>();//사용한 카드
         public List<PlayerInfo> playerList = new List<PlayerInfo>();
         public List<string> playerNameList = new List<string>();
+        public PlayerInfo currentPlayer;//현재 플레이어
     }
 }

@@ -67,7 +67,9 @@ namespace FABFIB
         /// </summary>
         void EnrollUser()
         {
-            int userCount = GameManager.Instance.UserCount;
+            GameManager gm = GameManager.Instance;
+
+            int userCount = gm.UserCount;
             int startUserIndex = Random.Range(0, userCount);
             for (int idx = 0; idx < userCount; idx++)
             {
@@ -76,12 +78,13 @@ namespace FABFIB
                 playerObj.transform.parent = spawnUserTransform;
 
                 //플레이어 정보 등록
-                string playerName = GameManager.Instance.playerNameList[idx];
+                string playerName = gm.playerNameList[idx];
                 PlayerInfo playerInfo = playerObj.GetComponent<PlayerInfo>();
 
                 bool isStartUser = (idx==startUserIndex)?true:false;
                 playerInfo.EnrollPlayerInfo(playerName,idx, isStartUser);
-                GameManager.Instance.playerList.Add(playerInfo);
+                gm.playerList.Add(playerInfo);
+                gm.currentPlayer = playerInfo;
             }
         }
     }

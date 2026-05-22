@@ -9,7 +9,8 @@ namespace FABFIB
 
         public static CardManager Instance { get { Init(); return _instance; } }
 
-        public List<NumberCard> presentNumber=new List<NumberCard>();
+        public List<NumberCard> presentNumber = new List<NumberCard>();
+        public InGameMain gameMain;
 
         static void Init()
         {
@@ -30,6 +31,7 @@ namespace FABFIB
         private void Start()
         {
             EnrollAllCard();
+            ShuffleRestCard();
         }
 
         /// <summary>
@@ -37,16 +39,16 @@ namespace FABFIB
         /// </summary>
         void EnrollAllCard()
         {
-            for(int i = 0; i < 10; i++)//0~9까지
+            for (int i = 0; i < 10; i++)//0~9까지
             {
                 //각 5장
-                for(int j = 0; j < 5; j++)
+                for (int j = 0; j < 5; j++)
                 {
                     NumberCard card = new NumberCard();
                     if (j == 3)
                     {
                         card.Attack = 2;
-                    }else if (j==4)
+                    } else if (j == 4)
                     {
                         card.Attack = 3;
                     }
@@ -81,10 +83,39 @@ namespace FABFIB
             tempcardList.Sort();
 
             //다시 등록
-            foreach(var card in tempcardList)
+            foreach (var card in tempcardList)
             {
                 manager.restNumberCardList.Push(card);
             }
+        }
+        /// <summary>
+        /// 카드 다시 뽑기
+        /// </summary>
+        public void ChangeCard()
+        {
+            GameManager gm = GameManager.Instance;
+
+            //횟수 남아있을대만 유효
+            if (gm.currentPlayer.changeCount < 1) return;
+
+            int changeIndex = 0;
+            for (int i = 0; i < presentNumber.Count; i++)
+            {
+                if (presentNumber[i].isClick)
+                {
+                    changeIndex = i;
+                    break;
+                }
+            }
+
+            NumberCard clickCard = gm.restNumberCardList.Pop();
+            presentNumber[changeIndex] = clickCard;
+            gm.usedCardList.Add(clickCard);
+
+            clickCard.ShowCard();
+            gm.currentPlayer.changeCount -= 1;
+            gm.currentPlayer.ShowPlayerInfo();
+            gameMain.ShowRestChangeCardNum();
         }
     }
 }
