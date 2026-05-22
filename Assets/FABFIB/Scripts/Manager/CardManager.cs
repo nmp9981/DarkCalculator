@@ -32,6 +32,7 @@ namespace FABFIB
         {
             EnrollAllCard();
             ShuffleRestCard();
+            Debug.Log("날아저멀리");
         }
 
         /// <summary>
@@ -72,6 +73,7 @@ namespace FABFIB
             //랜덤시드 재정의
             List<NumberCard> tempcardList = new List<NumberCard>();
             var manager = GameManager.Instance;
+
             while (manager.restNumberCardList.Count > 0)
             {
                 NumberCard card = manager.restNumberCardList.Pop();
@@ -79,9 +81,9 @@ namespace FABFIB
                 card.RandomValue = Random.Range(0, int.MaxValue);
                 tempcardList.Add(card);
             }
-
+            Debug.Log(tempcardList.Count);
             tempcardList.Sort();
-
+            Debug.Log(tempcardList.Count);
             //다시 등록
             foreach (var card in tempcardList)
             {

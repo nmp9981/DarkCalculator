@@ -59,7 +59,7 @@ namespace FABFIB
         /// </summary>
         public void ShowRestChangeCardNum()
         {
-            restChangeNumText.text = GameManager.Instance.currentPlayer.changeCount.ToString();
+            restChangeNumText.text = "³²Àº È½¼ö : "+ GameManager.Instance.currentPlayer.changeCount.ToString();
         }
     }
 }
