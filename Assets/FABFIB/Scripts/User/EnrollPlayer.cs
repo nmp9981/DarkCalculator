@@ -28,7 +28,7 @@ namespace FABFIB
         {
             notifyText.text = string.Empty;
             notifyText.gameObject.SetActive(false);
-            Debug.Log(GameManager.Instance.UserCount);
+
             for (int i = 0; i < GameManager.Instance.MaxUserCount; i++)
             {
                 if (i >= GameManager.Instance.UserCount) enrollUserArray[i].gameObject.SetActive(false);

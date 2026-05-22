@@ -38,12 +38,13 @@ namespace FABFIB
         private int _minUserCount = 3;
         private int _maxUserCount = 10;
         private int _maxPlayerHP = 12;
-
+        private int _startUserIndex;
 
         public int UserCount { get { return _userCount; } set { _userCount = value; } }
         public int MinUserCount { get { return _minUserCount; } }
         public int MaxUserCount { get {return _maxUserCount; } }
         public int MaxPlayerHP { get { return _maxPlayerHP; } }
+        public int StartUserIndex {  get { return _startUserIndex; }set { _startUserIndex = value; } }
 
         public Stack<NumberCard> restNumberCardList = new Stack<NumberCard>();
         public List<PlayerInfo> playerList = new List<PlayerInfo>();

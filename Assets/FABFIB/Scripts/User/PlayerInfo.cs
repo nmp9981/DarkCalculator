@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,13 +25,13 @@ namespace FABFIB
         /// <summary>
         /// 플레이어 정보 등록
         /// </summary>
-        public void EnrollPlayerInfo(string name, int order)
+        public void EnrollPlayerInfo(string name, int order, bool isStart)
         {
             playerName = name;
             playerHP = GameManager.Instance.MaxPlayerHP;
             playerIndex = order;
             changeCount = totalChangeCount;
-            isMyTurn = false;
+            isMyTurn = isStart;
         }
 
         /// <summary>

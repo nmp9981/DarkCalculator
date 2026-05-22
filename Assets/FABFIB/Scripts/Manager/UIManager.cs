@@ -68,6 +68,7 @@ namespace FABFIB
         void EnrollUser()
         {
             int userCount = GameManager.Instance.UserCount;
+            int startUserIndex = Random.Range(0, userCount);
             for (int idx = 0; idx < userCount; idx++)
             {
                 //오브젝트 생성
@@ -77,7 +78,9 @@ namespace FABFIB
                 //플레이어 정보 등록
                 string playerName = GameManager.Instance.playerNameList[idx];
                 PlayerInfo playerInfo = playerObj.GetComponent<PlayerInfo>();
-                playerInfo.EnrollPlayerInfo(playerName,idx);
+
+                bool isStartUser = (idx==startUserIndex)?true:false;
+                playerInfo.EnrollPlayerInfo(playerName,idx, isStartUser);
                 GameManager.Instance.playerList.Add(playerInfo);
             }
         }
