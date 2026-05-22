@@ -22,16 +22,16 @@ namespace FABFIB
         public void ShowCard()
         {
             //이미지 모두 끄기
-            for (int i = 0; i < Attack; i++)
+            for (int i = 0; i < 3; i++)
             {
-                skullList[i].gameObject.SetActive(false);
+                skullList[i].SetActive(false);
             }
 
             //필요한 만큼 이미지 켜기
             numText.text = Num.ToString();
             for (int i = 0; i < Attack; i++)
             {
-                skullList[i].gameObject.SetActive(true);
+                skullList[i].SetActive(true);
             }
         }
 

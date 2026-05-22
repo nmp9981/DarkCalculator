@@ -32,7 +32,6 @@ namespace FABFIB
         {
             EnrollAllCard();
             ShuffleRestCard();
-            Debug.Log("날아저멀리");
         }
 
         /// <summary>
@@ -81,9 +80,9 @@ namespace FABFIB
                 card.RandomValue = Random.Range(0, int.MaxValue);
                 tempcardList.Add(card);
             }
-            Debug.Log(tempcardList.Count);
-            tempcardList.Sort();
-            Debug.Log(tempcardList.Count);
+            
+            tempcardList.Sort((a, b) => a.RandomValue.CompareTo(b.RandomValue));
+         
             //다시 등록
             foreach (var card in tempcardList)
             {
@@ -114,10 +113,20 @@ namespace FABFIB
             presentNumber[changeIndex] = clickCard;
             gm.usedCardList.Add(clickCard);
 
-            clickCard.ShowCard();
+            presentNumber[changeIndex].GetComponent<NumberCard>().ShowCard();
             gm.currentPlayer.changeCount -= 1;
             gm.currentPlayer.ShowPlayerInfo();
             gameMain.ShowRestChangeCardNum();
+
+            SortOrderCard();
+        }
+
+        /// <summary>
+        /// 카드 오름차순 정렬
+        /// </summary>
+        public void SortOrderCard()
+        {
+
         }
     }
 }

@@ -44,14 +44,17 @@ namespace FABFIB
 
             for(int i = 0; i < 3; i++)
             {
-                NumberCard num = gm.restNumberCardList.Peek();
-                CardManager.Instance.presentNumber[i].Num = num.Num;
+                NumberCard num = gm.restNumberCardList.Pop();
 
-                gm.restNumberCardList.Pop();
+                var card = CardManager.Instance.presentNumber[i];
+                card.Num = num.Num;
+                card.Attack = num.Attack;
+                card.isClick = false;
+                card.GetComponent<NumberCard>().ShowCard();
                 gm.usedCardList.Add(num);
-
-                num.ShowCard();
             }
+            //카드 정렬
+            CardManager.Instance.SortOrderCard();
         }
 
         /// <summary>
