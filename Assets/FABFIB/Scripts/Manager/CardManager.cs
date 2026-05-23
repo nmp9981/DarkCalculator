@@ -11,6 +11,7 @@ namespace FABFIB
 
         public List<NumberCard> presentNumber = new List<NumberCard>();
         public InGameMain gameMain;
+        [SerializeField] private Transform cardPivotTransform;
 
         static void Init()
         {
@@ -126,7 +127,26 @@ namespace FABFIB
         /// </summary>
         public void SortOrderCard()
         {
+            for(int i = 0; i < 2; i++)
+            {
+                for(int j = i + 1; j < 3; j++)
+                {
+                    if (i == j) continue;
 
+                    int a = presentNumber[i].Num;
+                    int b = presentNumber[j].Num;
+
+                    //swap
+                    if (a < b)
+                    {
+                        int indexA = presentNumber[i].transform.GetSiblingIndex();
+                        int indexB = presentNumber[j].transform.GetSiblingIndex();
+
+                        presentNumber[i].transform.SetSiblingIndex(indexB);
+                        presentNumber[j].transform.SetSiblingIndex(indexA);
+                    }
+                }
+            }
         }
     }
 }
