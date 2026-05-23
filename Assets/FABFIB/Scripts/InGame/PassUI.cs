@@ -28,7 +28,16 @@ namespace FABFIB
         /// </summary>
         public void PassButton()
         {
+            //이전 사람 패스
+            var gm = GameManager.Instance;
+            gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
+            gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+
             //다음 사람으로 넘어감
+            gm.CurrentUserIndex = (gm.CurrentUserIndex+1)%gm.UserCount;
+            gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
+            gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+
             this.gameObject.SetActive(false);
         }
         /// <summary>
@@ -36,7 +45,8 @@ namespace FABFIB
         /// </summary>
         public void DoubtOtherPlayer()
         {
-            if(inputNum.text.Length!=3)
+            var gm = GameManager.Instance;
+            if (inputNum.text.Length!=3)
             {
                 uiManager.ShowMessage("숫자 3자리를 \n입력해야 합니다.");
                 return;
@@ -46,13 +56,19 @@ namespace FABFIB
             if(RealCardNumber() == inputNum.text)
             {
                 //의심한 사람이 깍임
-
-
+                gm.playerList[gm.CurrentUserIndex].DecreaseHP();
+                gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+                
             }
             else
             {
                 //전 사람이 깍임
+                int previousUserIdx = (gm.CurrentUserIndex - 1+gm.UserCount) % gm.UserCount;
+                gm.playerList[previousUserIdx].DecreaseHP();
+                gm.playerList[previousUserIdx].ShowPlayerInfo();
             }
+            //창 닫기
+            PassButton();
         }
 
         /// <summary>
@@ -67,6 +83,7 @@ namespace FABFIB
             {
                 number += card.Num.ToString();
             }
+            Debug.Log("실제 카드 "+number);
             return number;
         }
     }

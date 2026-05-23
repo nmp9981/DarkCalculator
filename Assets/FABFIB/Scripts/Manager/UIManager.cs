@@ -88,7 +88,7 @@ namespace FABFIB
                 bool isStartUser = (idx==startUserIndex)?true:false;
                 playerInfo.EnrollPlayerInfo(playerName,idx, isStartUser);
                 gm.playerList.Add(playerInfo);
-                gm.currentPlayer = playerInfo;
+                gm.CurrentUserIndex = startUserIndex;
             }
         }
 

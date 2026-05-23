@@ -33,23 +33,26 @@ namespace FABFIB
             Init();
         }
 
+        public const int maxChangeCount = 3;
+
         //인원 수
         private int _userCount = 0;
         private int _minUserCount = 3;
         private int _maxUserCount = 10;
         private int _maxPlayerHP = 12;
         private int _startUserIndex;
-
+        private int _currentPlayerIdx;//현재 플레이어
+        
         public int UserCount { get { return _userCount; } set { _userCount = value; } }
         public int MinUserCount { get { return _minUserCount; } }
         public int MaxUserCount { get {return _maxUserCount; } }
         public int MaxPlayerHP { get { return _maxPlayerHP; } }
         public int StartUserIndex {  get { return _startUserIndex; }set { _startUserIndex = value; } }
-
+        public int CurrentUserIndex { get { return _currentPlayerIdx; } set { _currentPlayerIdx = value; } }
+        
         public Stack<NumberCard> restNumberCardList = new Stack<NumberCard>();
         public List<NumberCard> usedCardList = new List<NumberCard>();//사용한 카드
         public List<PlayerInfo> playerList = new List<PlayerInfo>();
         public List<string> playerNameList = new List<string>();
-        public PlayerInfo currentPlayer;//현재 플레이어
     }
 }

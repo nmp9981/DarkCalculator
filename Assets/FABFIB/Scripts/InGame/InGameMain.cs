@@ -1,7 +1,5 @@
 using FABFIB;
-using NUnit.Framework;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,7 +74,8 @@ namespace FABFIB
         /// </summary>
         public void ShowRestChangeCardNum()
         {
-            restChangeNumText.text = "³²Àº È½¼ö : "+ GameManager.Instance.currentPlayer.changeCount.ToString();
+            int idx = GameManager.Instance.CurrentUserIndex;
+            restChangeNumText.text = "³²Àº È½¼ö : "+ GameManager.Instance.playerList[idx].changeCount.ToString();
         }
 
         /// <summary>

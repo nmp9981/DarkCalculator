@@ -8,8 +8,6 @@ namespace FABFIB
 {
     public class PlayerInfo : MonoBehaviour
     {
-        const int totalChangeCount = 3;//총 교체 회수
-
         public string playerName;//플레이어 명
         public int playerHP;//플레이어 체력
         public int playerIndex;//플레이어 순서
@@ -21,6 +19,7 @@ namespace FABFIB
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private Image turnSymbol;
+        [SerializeField] private Image deathImage;
 
         /// <summary>
         /// 플레이어 정보 등록
@@ -30,7 +29,7 @@ namespace FABFIB
             playerName = name;
             playerHP = GameManager.Instance.MaxPlayerHP;
             playerIndex = order;
-            changeCount = totalChangeCount;
+            changeCount = GameManager.Instance.MaxUserCount;
             isMyTurn = isStart;
         }
 
@@ -43,6 +42,27 @@ namespace FABFIB
             hpText.text = $"HP : {playerHP}";
             if(isMyTurn) turnSymbol.gameObject.SetActive(true);
             else turnSymbol.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// HP 감소
+        /// </summary>
+        public void DecreaseHP()
+        {
+            int totalDamage = 0;
+            foreach(var card in CardManager.Instance.presentNumber)
+            {
+                totalDamage += card.Attack;
+            }
+            playerHP = Mathf.Max(0, playerHP - totalDamage);
+        }
+
+        /// <summary>
+        /// 플레이어 아웃
+        /// </summary>
+        public void OutPlayer()
+        {
+            deathImage.gameObject.SetActive(true);
         }
     }
 }
