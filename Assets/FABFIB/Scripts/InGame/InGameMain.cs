@@ -1,7 +1,9 @@
 using FABFIB;
 using NUnit.Framework;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FABFIB
 {
@@ -9,10 +11,15 @@ namespace FABFIB
     {
         [SerializeField] private UIManager uimanager;
         [SerializeField] public TextMeshProUGUI restChangeNumText;
+        [SerializeField] private Image hideCardInage;
+
+        [SerializeField] Button newCardDrawButton;
+        [SerializeField] public TMP_InputField callInput;
 
         private void OnEnable()
         {
             ShowUserInfoUI();
+            HideImageActive(true);
         }
 
         /// <summary>
@@ -32,6 +39,12 @@ namespace FABFIB
         /// </summary>
         public void GotoNextPlayer()
         {
+            if(callInput.text.Length != 3)
+            {
+                uimanager.ShowMessage("숫자 3자리를 입력해야 합니다.");
+                return;
+            }
+
             uimanager.uiList[4].gameObject.SetActive(true);
         }
 
@@ -41,6 +54,7 @@ namespace FABFIB
         public void DrawNewCard()
         {
             GameManager gm = GameManager.Instance;
+            HideImageActive(false);
 
             for(int i = 0; i < 3; i++)
             {
@@ -63,6 +77,14 @@ namespace FABFIB
         public void ShowRestChangeCardNum()
         {
             restChangeNumText.text = "남은 횟수 : "+ GameManager.Instance.currentPlayer.changeCount.ToString();
+        }
+
+        /// <summary>
+        /// 카드 숨기기 이미지 활성화
+        /// </summary>
+        public void HideImageActive(bool isHide)
+        {
+            hideCardInage.gameObject.SetActive(isHide);
         }
     }
 }
