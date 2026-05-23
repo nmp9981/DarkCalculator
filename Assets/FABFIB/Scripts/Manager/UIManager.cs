@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace FABFIB
@@ -15,6 +16,9 @@ namespace FABFIB
         //유저 정보 스폰 위치
         [SerializeField] Transform spawnUserTransform;
         [SerializeField] GameObject playerInfoPrefab;
+
+        //메세지
+        [SerializeField] TextMeshProUGUI notifyText;//알림
 
         /// <summary>
         /// 인트로 창으로 이동
@@ -86,6 +90,22 @@ namespace FABFIB
                 gm.playerList.Add(playerInfo);
                 gm.currentPlayer = playerInfo;
             }
+        }
+
+        /// <summary>
+        /// 메세지 보이기
+        /// </summary>
+        public void ShowMessage(string msg)
+        {
+            notifyText.text = msg;
+            Invoke("CloseMessage",1f);
+        }
+        /// <summary>
+        /// 메세지 끄기
+        /// </summary>
+        void CloseMessage()
+        {
+            notifyText.text = string.Empty;
         }
     }
 }

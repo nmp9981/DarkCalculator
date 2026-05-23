@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace FABFIB
@@ -11,7 +12,7 @@ namespace FABFIB
 
         public List<NumberCard> presentNumber = new List<NumberCard>();
         public InGameMain gameMain;
-        [SerializeField] private Transform cardPivotTransform;
+        [SerializeField] private UIManager uiManager;
 
         static void Init()
         {
@@ -98,9 +99,14 @@ namespace FABFIB
             GameManager gm = GameManager.Instance;
 
             //횟수 남아있을대만 유효
-            if (gm.currentPlayer.changeCount < 1) return;
+            if (gm.currentPlayer.changeCount < 1)
+            {
+                uiManager.ShowMessage("더 이상 교체할 수 없습니다");
+                InitChangeState();
+                return;
+            }
 
-            int changeIndex = 0;
+            int changeIndex = -1;
             for (int i = 0; i < presentNumber.Count; i++)
             {
                 if (presentNumber[i].isClick)
@@ -110,11 +116,25 @@ namespace FABFIB
                 }
             }
 
-            NumberCard clickCard = gm.restNumberCardList.Pop();
-            presentNumber[changeIndex] = clickCard;
-            gm.usedCardList.Add(clickCard);
+            //클릭한 카드가 없음
+            if(changeIndex == -1)
+            {
+                uiManager.ShowMessage("클릭한 카드가 없습니다.");
+                InitChangeState();
+                return;
+            }
 
-            presentNumber[changeIndex].GetComponent<NumberCard>().ShowCard();
+            NumberCard clickCard = gm.restNumberCardList.Pop();
+            //카드 정보 변경
+            var card = presentNumber[changeIndex];
+            card.Num = clickCard.Num;
+            card.Attack = clickCard.Attack;
+            card.isClick = false;
+            card.RandomValue = clickCard.RandomValue;
+            card.GetComponent<NumberCard>().InitClickState();
+
+            //UI및 교체 가능 횟수 감소
+            gm.usedCardList.Add(clickCard);
             gm.currentPlayer.changeCount -= 1;
             gm.currentPlayer.ShowPlayerInfo();
             gameMain.ShowRestChangeCardNum();
@@ -146,6 +166,17 @@ namespace FABFIB
                         presentNumber[j].transform.SetSiblingIndex(indexA);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 교체 표시 초기화
+        /// </summary>
+        public void InitChangeState()
+        {
+            for (int i = 0; i < presentNumber.Count; i++)
+            {
+                presentNumber[i].GetComponent<NumberCard>().InitClickState();
             }
         }
     }

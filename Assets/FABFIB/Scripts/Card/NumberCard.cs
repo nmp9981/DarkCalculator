@@ -44,6 +44,14 @@ namespace FABFIB
             if(isClick) cardImage.color = Color.yellow;
             else cardImage.color = Color.white;
         }
-    }
 
+        /// <summary>
+        /// 클릭 상태 초기화
+        /// </summary>
+        public void InitClickState()
+        {
+            cardImage.color = Color.white;
+            ShowCard();
+        }
+    }
 }
