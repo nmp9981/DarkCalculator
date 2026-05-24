@@ -30,7 +30,7 @@ namespace FABFIB
             playerName = name;
             playerHP = GameManager.Instance.MaxPlayerHP;
             playerIndex = order;
-            changeCount = GameManager.Instance.MaxUserCount;
+            changeCount = GameManager.maxChangeCount;
             isMyTurn = isStart;
         }
 

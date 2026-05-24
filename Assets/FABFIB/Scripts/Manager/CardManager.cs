@@ -13,6 +13,7 @@ namespace FABFIB
         public List<NumberCard> presentNumber = new List<NumberCard>();
         public InGameMain gameMain;
         [SerializeField] private UIManager uiManager;
+        [SerializeField] private Transform cardPivot;
 
         static void Init()
         {
@@ -154,17 +155,19 @@ namespace FABFIB
                 {
                     if (i == j) continue;
 
-                    int a = presentNumber[i].Num;
-                    int b = presentNumber[j].Num;
+                    Transform aTrans = cardPivot.GetChild(i);
+                    Transform bTrans = cardPivot.GetChild(j);
+                    int a = aTrans.GetComponent<NumberCard>().Num;
+                    int b = bTrans.GetComponent<NumberCard>().Num;
 
                     //swap
                     if (a < b)
                     {
-                        int indexA = presentNumber[i].transform.GetSiblingIndex();
-                        int indexB = presentNumber[j].transform.GetSiblingIndex();
+                        int indexA = aTrans.GetSiblingIndex();
+                        int indexB = bTrans.GetSiblingIndex();
 
-                        presentNumber[i].transform.SetSiblingIndex(indexB);
-                        presentNumber[j].transform.SetSiblingIndex(indexA);
+                        aTrans.SetSiblingIndex(indexB);
+                        bTrans.SetSiblingIndex(indexA);
                     }
                 }
             }
