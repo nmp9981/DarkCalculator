@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -49,7 +48,7 @@ namespace FABFIB
             else
             {
                 //전 사람이 깍임
-                int previousUserIdx = (gm.CurrentUserIndex - 1+gm.UserCount) % gm.UserCount;
+                int previousUserIdx = PlayerManager.Instance.PreviousPlayerIndex();
                 gm.playerList[previousUserIdx].DecreaseHP();
                 gm.playerList[previousUserIdx].ShowPlayerInfo();
             }

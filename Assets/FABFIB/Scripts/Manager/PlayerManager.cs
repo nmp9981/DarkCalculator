@@ -41,5 +41,36 @@ namespace FABFIB
                 }
             }
         }
+
+        /// <summary>
+        /// 다음 플레이어 인덱스
+        /// </summary>
+        /// <returns></returns>
+        public int NextPlayerIndex()
+        {
+            var gm = GameManager.Instance;
+            int nextIdx = gm.CurrentUserIndex;
+            for (int i = 0; i < gm.UserCount; i++)
+            {
+                nextIdx = (nextIdx+1)%gm.UserCount;
+                if (gm.playerList[nextIdx].playerHP > 0) break;
+            }
+            return nextIdx;
+        }
+        /// <summary>
+        /// 이전 플레이어 인덱스
+        /// </summary>
+        /// <returns></returns>
+        public int PreviousPlayerIndex()
+        {
+            var gm = GameManager.Instance;
+            int prevIdx = gm.CurrentUserIndex;
+            for (int i = 0; i < gm.UserCount; i++)
+            {
+                prevIdx = (prevIdx - 1+gm.UserCount) % gm.UserCount;
+                if (gm.playerList[prevIdx].playerHP > 0) break;
+            }
+            return prevIdx;
+        }
     }
 }

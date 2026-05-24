@@ -19,7 +19,8 @@ namespace FABFIB
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private Image turnSymbol;
-        [SerializeField] private Image deathImage;
+        [SerializeField] private Sprite turnSymbolImage;
+        [SerializeField] private Sprite deathImage;
 
         /// <summary>
         /// 플레이어 정보 등록
@@ -40,6 +41,8 @@ namespace FABFIB
         {
             nameText.text = playerName;
             hpText.text = $"HP : {playerHP}";
+            turnSymbol.sprite = turnSymbolImage;
+
             if(isMyTurn) turnSymbol.gameObject.SetActive(true);
             else turnSymbol.gameObject.SetActive(false);
         }
@@ -55,6 +58,9 @@ namespace FABFIB
                 totalDamage += card.Attack;
             }
             playerHP = Mathf.Max(0, playerHP - totalDamage);
+
+            //사망 판정
+            if (playerHP <= 0) OutPlayer();
         }
 
         /// <summary>
@@ -62,7 +68,7 @@ namespace FABFIB
         /// </summary>
         public void OutPlayer()
         {
-            deathImage.gameObject.SetActive(true);
+            turnSymbol.sprite = deathImage;
         }
     }
 }

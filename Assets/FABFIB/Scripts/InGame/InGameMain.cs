@@ -50,7 +50,7 @@ namespace FABFIB
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
 
             //다음 사람으로 넘어감
-            gm.CurrentUserIndex = (gm.CurrentUserIndex + 1) % gm.UserCount;
+            gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
             gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
 
