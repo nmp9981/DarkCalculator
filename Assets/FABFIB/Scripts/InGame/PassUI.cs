@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -37,9 +39,8 @@ namespace FABFIB
             var gm = GameManager.Instance;
             
             //결과 공개
-            if(RealCardNumber() == inGame.callInput.text)
+            if(RealCardNumber() == int.Parse(inGame.callInput.text))
             {
-                Debug.Log("정답");
                 //의심한 사람이 깍임
                 gm.playerList[gm.CurrentUserIndex].DecreaseHP();
                 gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
@@ -60,15 +61,17 @@ namespace FABFIB
         /// 정답 카드 번호
         /// </summary>
         /// <returns></returns>
-        string RealCardNumber()
+        int RealCardNumber()
         {
             var cardManager = CardManager.Instance;
-            string number = string.Empty;
+            List<int> numList = new(); 
             foreach (var card in cardManager.presentNumber)
             {
-                number += card.Num.ToString();
+                numList.Add(card.Num);
             }
-            Debug.Log("실제 카드 "+number);
+            numList.Sort();
+
+            int number = numList[2]*100+numList[1]*10+numList[0];
             return number;
         }
     }
