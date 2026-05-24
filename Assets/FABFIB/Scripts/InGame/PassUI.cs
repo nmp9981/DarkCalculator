@@ -6,7 +6,6 @@ namespace FABFIB
     public class PassUI : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI numText;
-        [SerializeField] TMP_InputField inputNum;
         [SerializeField] UIManager uiManager;
         [SerializeField] InGameMain inGame;
 
@@ -28,16 +27,6 @@ namespace FABFIB
         /// </summary>
         public void PassButton()
         {
-            //이전 사람 패스
-            var gm = GameManager.Instance;
-            gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
-            gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
-
-            //다음 사람으로 넘어감
-            gm.CurrentUserIndex = (gm.CurrentUserIndex+1)%gm.UserCount;
-            gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
-            gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
-
             this.gameObject.SetActive(false);
         }
         /// <summary>
@@ -46,15 +35,11 @@ namespace FABFIB
         public void DoubtOtherPlayer()
         {
             var gm = GameManager.Instance;
-            if (inputNum.text.Length!=3)
-            {
-                uiManager.ShowMessage("숫자 3자리를 \n입력해야 합니다.");
-                return;
-            }
-
+            
             //결과 공개
-            if(RealCardNumber() == inputNum.text)
+            if(RealCardNumber() == inGame.callInput.text)
             {
+                Debug.Log("정답");
                 //의심한 사람이 깍임
                 gm.playerList[gm.CurrentUserIndex].DecreaseHP();
                 gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();

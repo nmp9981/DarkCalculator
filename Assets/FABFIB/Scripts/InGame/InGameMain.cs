@@ -18,6 +18,7 @@ namespace FABFIB
         {
             ShowUserInfoUI();
             HideImageActive(true);
+            DrawNewCard();
         }
 
         /// <summary>
@@ -42,6 +43,16 @@ namespace FABFIB
                 uimanager.ShowMessage("숫자 3자리를 입력해야 합니다.");
                 return;
             }
+
+            //다음 사람으로 넘어감
+            var gm = GameManager.Instance;
+            gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
+            gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+
+            //다음 사람으로 넘어감
+            gm.CurrentUserIndex = (gm.CurrentUserIndex + 1) % gm.UserCount;
+            gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
+            gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
 
             uimanager.uiList[4].gameObject.SetActive(true);
         }
