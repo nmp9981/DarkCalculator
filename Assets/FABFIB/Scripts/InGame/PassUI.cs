@@ -6,6 +6,7 @@ namespace FABFIB
 {
     public class PassUI : MonoBehaviour
     {
+        [SerializeField] TextMeshProUGUI doubtText;
         [SerializeField] TextMeshProUGUI numText;
         [SerializeField] UIManager uiManager;
         [SerializeField] InGameMain inGame;
@@ -20,6 +21,9 @@ namespace FABFIB
         /// </summary>
         void ShowNumber()
         {
+            var gm = GameManager.Instance;
+            string curPlayerName = gm.playerNameList[gm.CurrentUserIndex];
+            doubtText.text = $"{curPlayerName}";
             numText.text = inGame.callInput.text;
         }
 
