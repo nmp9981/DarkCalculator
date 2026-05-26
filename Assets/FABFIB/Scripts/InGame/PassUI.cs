@@ -52,6 +52,9 @@ namespace FABFIB
                 gm.playerList[previousUserIdx].DecreaseHP();
                 gm.playerList[previousUserIdx].ShowPlayerInfo();
             }
+            //call 수 초기화
+            gm.CallNumber = -1;
+
             //창 닫기
             PassButton();
         }

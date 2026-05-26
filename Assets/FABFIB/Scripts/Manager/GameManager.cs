@@ -42,6 +42,7 @@ namespace FABFIB
         private int _maxPlayerHP = 12;
         private int _startUserIndex;
         private int _currentPlayerIdx;//현재 플레이어
+        private int _callNumber = -1;//부른 번호
         
         public int UserCount { get { return _userCount; } set { _userCount = value; } }
         public int MinUserCount { get { return _minUserCount; } }
@@ -49,7 +50,8 @@ namespace FABFIB
         public int MaxPlayerHP { get { return _maxPlayerHP; } }
         public int StartUserIndex {  get { return _startUserIndex; }set { _startUserIndex = value; } }
         public int CurrentUserIndex { get { return _currentPlayerIdx; } set { _currentPlayerIdx = value; } }
-        
+        public int CallNumber { get { return _callNumber; } set { _callNumber = value; } }
+
         public Stack<NumberCard> restNumberCardList = new Stack<NumberCard>();
         public List<NumberCard> usedCardList = new List<NumberCard>();//사용한 카드
         public List<PlayerInfo> playerList = new List<PlayerInfo>();

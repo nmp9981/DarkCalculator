@@ -43,6 +43,12 @@ namespace FABFIB
             hpText.text = $"HP : {playerHP}";
             turnSymbol.sprite = turnSymbolImage;
 
+            //사망시 이미지가 꺼지지 않도록 함
+            if (playerHP <= 0)
+            {
+                return;
+            }
+
             if(isMyTurn) turnSymbol.gameObject.SetActive(true);
             else turnSymbol.gameObject.SetActive(false);
         }
@@ -69,6 +75,7 @@ namespace FABFIB
         public void OutPlayer()
         {
             turnSymbol.sprite = deathImage;
+            turnSymbol.gameObject.SetActive(true);
         }
     }
 }

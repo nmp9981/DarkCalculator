@@ -38,14 +38,21 @@ namespace FABFIB
         /// </summary>
         public void GotoNextPlayer()
         {
+            //입력해야만 넘어갈 수 있음
             if(callInput.text.Length != 3)
             {
                 uimanager.ShowMessage("숫자 3자리를 입력해야 합니다.");
                 return;
             }
+            //더 큰수를 입력해야함
+            var gm = GameManager.Instance;
+            if (int.Parse(callInput.text) <= gm.CallNumber)
+            {
+                uimanager.ShowMessage("더 큰 수를 입력해야 합니다.");
+                return;
+            }
 
             //다음 사람으로 넘어감
-            var gm = GameManager.Instance;
             gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
 
@@ -53,6 +60,9 @@ namespace FABFIB
             gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
             gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+
+            //수 갱신
+            gm.CallNumber = int.Parse(callInput.text);
 
             uimanager.uiList[4].gameObject.SetActive(true);
         }
