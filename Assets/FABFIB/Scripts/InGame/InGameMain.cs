@@ -51,6 +51,12 @@ namespace FABFIB
                 uimanager.ShowMessage("더 큰 수를 입력해야 합니다.");
                 return;
             }
+            //숫자는 반드시 내림차순으로 입력해야함
+            if (!FABFIB_Utility.IsDescendingOrderInput(callInput.text))
+            {
+                uimanager.ShowMessage("내림차순으로\n 입력해야 합니다.");
+                return;
+            }
 
             //다음 사람으로 넘어감
             gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
