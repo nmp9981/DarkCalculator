@@ -55,6 +55,9 @@ namespace FABFIB
             //call 수 초기화
             gm.CallNumber = -1;
 
+            //새카드 뽑기
+            inGame.DrawNewCard();
+
             //창 닫기
             PassButton();
         }

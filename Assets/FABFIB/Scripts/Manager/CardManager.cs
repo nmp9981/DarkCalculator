@@ -118,6 +118,12 @@ namespace FABFIB
                 }
             }
 
+            //바닥에 남은 패가 없으면 다시 뽑기
+            if (gm.restNumberCardList.Count < 2)
+            {
+                ChargeCardInFloor();
+            }
+
             //클릭한 카드가 없음
             if(changeIndex == -1)
             {
@@ -182,6 +188,22 @@ namespace FABFIB
             {
                 presentNumber[i].GetComponent<NumberCard>().InitClickState();
             }
+        }
+
+        /// <summary>
+        /// 바닥에 있는 패 보충
+        /// </summary>
+        public void ChargeCardInFloor()
+        {
+            //사용한 카드 재등록
+            foreach (var card in GameManager.Instance.usedCardList)
+            {
+                GameManager.Instance.restNumberCardList.Push(card);
+            }
+            GameManager.Instance.usedCardList.Clear();
+
+            //남은 패 섞기
+            ShuffleRestCard();
         }
     }
 }

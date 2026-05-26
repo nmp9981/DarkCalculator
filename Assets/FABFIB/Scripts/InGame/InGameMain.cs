@@ -75,6 +75,12 @@ namespace FABFIB
             GameManager gm = GameManager.Instance;
             HideImageActive(false);
 
+            //바닥에 남은 패 개수가 5개 미만이면 다시 뽑기
+            if (gm.restNumberCardList.Count < 5)
+            {
+                CardManager.Instance.ChargeCardInFloor();
+            }
+
             for(int i = 0; i < 3; i++)
             {
                 NumberCard num = gm.restNumberCardList.Pop();
