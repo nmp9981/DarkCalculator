@@ -59,7 +59,9 @@ namespace FABFIB
             //의심한 사람이 죽은 경우 그 사람의 턴은 오지 않음
             if (gm.playerList[gm.CurrentUserIndex].playerHP <= 0)
             {
+                gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
                 gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
+                gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
                 gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
             }
 
