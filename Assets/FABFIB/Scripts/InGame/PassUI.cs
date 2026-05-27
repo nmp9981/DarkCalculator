@@ -56,6 +56,13 @@ namespace FABFIB
                 gm.playerList[previousUserIdx].DecreaseHP();
                 gm.playerList[previousUserIdx].ShowPlayerInfo();
             }
+            //의심한 사람이 죽은 경우 그 사람의 턴은 오지 않음
+            if (gm.playerList[gm.CurrentUserIndex].playerHP <= 0)
+            {
+                gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
+                gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+            }
+
             //call 수 초기화
             gm.CallNumber = -1;
 

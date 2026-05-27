@@ -46,6 +46,7 @@ namespace FABFIB
             //사망시 이미지가 꺼지지 않도록 함
             if (playerHP <= 0)
             {
+                turnSymbol.sprite = deathImage;
                 return;
             }
 
@@ -76,8 +77,6 @@ namespace FABFIB
         {
             turnSymbol.sprite = deathImage;
             turnSymbol.gameObject.SetActive(true);
-
-            //해당 플레이어의 턴이 오지 않음
 
             //최종 승리 검사
             PlayerManager.Instance.WinPlayer();
