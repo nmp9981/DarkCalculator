@@ -20,6 +20,9 @@ namespace FABFIB
         //메세지
         [SerializeField] TextMeshProUGUI notifyText;//알림
 
+        //승리 UI
+        [SerializeField] GameObject _victoryObj;
+
         /// <summary>
         /// 인트로 창으로 이동
         /// </summary>
@@ -28,6 +31,8 @@ namespace FABFIB
             uiList[0].gameObject.SetActive(true);
             uiList[1].gameObject.SetActive(false);
             uiList[2].gameObject.SetActive(false);
+
+            _victoryObj.SetActive(false);
             uiList[3].gameObject.SetActive(false);
         }
 

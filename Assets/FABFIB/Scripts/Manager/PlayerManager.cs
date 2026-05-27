@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace FABFIB
@@ -8,6 +8,9 @@ namespace FABFIB
         static PlayerManager _instance;
 
         public static PlayerManager Instance { get { Init(); return _instance; } }
+
+        [SerializeField] GameObject _victoryObj;
+        [SerializeField] TextMeshProUGUI _winnerText;
 
         static void Init()
         {
@@ -71,6 +74,31 @@ namespace FABFIB
                 if (gm.playerList[prevIdx].playerHP > 0) break;
             }
             return prevIdx;
+        }
+
+        /// <summary>
+        /// 최종 승리자
+        /// </summary>
+        public void WinPlayer()
+        {
+            //검사
+            int saveCount = 0;
+            string winner = string.Empty;
+            foreach(var player in GameManager.Instance.playerList)
+            {
+                if (player.playerHP != 0)
+                {
+                    saveCount += 1;
+                    winner = player.playerName;
+                }
+            }
+
+            //1명만 남음
+            if (saveCount == 1)
+            {
+                _victoryObj.gameObject.SetActive(true);
+                _winnerText.text = winner;
+            }
         }
     }
 }
