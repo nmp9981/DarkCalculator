@@ -64,6 +64,7 @@ namespace FABFIB
                 gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
                 gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;
                 gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+                inGame.ShowRestChangeCardNum();
             }
 
             //call 수 초기화

@@ -65,13 +65,12 @@ namespace FABFIB
             //다음 사람으로 넘어감
             gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
             gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
+            gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;//교환 횟수 초기화
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+            ShowRestChangeCardNum();
 
             //수 갱신
             gm.CallNumber = int.Parse(callInput.text);
-
-            //교환 횟수 초기화
-            gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;
 
             uimanager.uiList[4].gameObject.SetActive(true);
         }
