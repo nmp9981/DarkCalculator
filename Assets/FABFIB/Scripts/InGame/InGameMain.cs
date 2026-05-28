@@ -70,6 +70,9 @@ namespace FABFIB
             //수 갱신
             gm.CallNumber = int.Parse(callInput.text);
 
+            //교환 횟수 초기화
+            gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;
+
             uimanager.uiList[4].gameObject.SetActive(true);
         }
 

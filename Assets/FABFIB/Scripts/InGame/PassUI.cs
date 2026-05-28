@@ -62,6 +62,7 @@ namespace FABFIB
                 gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
                 gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
                 gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
+                gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;
                 gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
             }
 
