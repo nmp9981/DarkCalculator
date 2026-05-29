@@ -47,7 +47,6 @@ namespace FABFIB
                 //의심한 사람이 깍임
                 gm.playerList[gm.CurrentUserIndex].DecreaseHP();
                 gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
-                
             }
             else
             {
@@ -55,17 +54,26 @@ namespace FABFIB
                 int previousUserIdx = PlayerManager.Instance.PreviousPlayerIndex();
                 gm.playerList[previousUserIdx].DecreaseHP();
                 gm.playerList[previousUserIdx].ShowPlayerInfo();
+
+                //전사람이 선
+                gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
+                gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+                gm.CurrentUserIndex = previousUserIdx;
             }
             //의심한 사람이 죽은 경우 그 사람의 턴은 오지 않음
             if (gm.playerList[gm.CurrentUserIndex].playerHP <= 0)
             {
                 gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
                 gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
-                gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
-                gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;
-                gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
-                inGame.ShowRestChangeCardNum();
             }
+
+            //선 확정
+            gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
+            gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;
+            gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
+
+            //교환 횟수 초기화
+            inGame.ShowRestChangeCardNum();
 
             //call 수 초기화
             gm.CallNumber = -1;
