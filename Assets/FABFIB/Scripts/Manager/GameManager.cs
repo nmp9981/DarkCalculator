@@ -41,7 +41,7 @@ namespace FABFIB
         private int _maxUserCount = 10;
         private int _maxPlayerHP = 12;
         private int _startUserIndex;
-        private int _currentPlayerIdx;//현재 플레이어
+        [SerializeField] private int _currentPlayerIdx;//현재 플레이어
         private int _callNumber = -1;//부른 번호
         
         public int UserCount { get { return _userCount; } set { _userCount = value; } }
