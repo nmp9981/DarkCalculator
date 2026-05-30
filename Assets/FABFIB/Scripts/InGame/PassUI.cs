@@ -32,6 +32,12 @@ namespace FABFIB
         /// </summary>
         public void PassButton()
         {
+            if (inGame.callInput.text == "999")
+            {
+                uiManager.ShowMessage("의심 행동만 가능합니다.");
+                return;
+            }
+
             this.gameObject.SetActive(false);
         }
         /// <summary>
@@ -82,7 +88,7 @@ namespace FABFIB
             inGame.DrawNewCard();
 
             //창 닫기
-            PassButton();
+            this.gameObject.SetActive(false);
         }
 
         /// <summary>
