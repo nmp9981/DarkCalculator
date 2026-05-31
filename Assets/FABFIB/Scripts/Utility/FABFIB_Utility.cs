@@ -8,6 +8,9 @@ namespace FABFIB
         /// <returns></returns>
         public static bool IsDescendingOrderInput(string input)
         {
+            //1000
+            if (input == "1000") return true;
+
             bool input01 = (input[0] >= input[1]);
             bool input02 = (input[1] >= input[2]);
 

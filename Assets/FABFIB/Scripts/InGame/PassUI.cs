@@ -32,7 +32,7 @@ namespace FABFIB
         /// </summary>
         public void PassButton()
         {
-            if (inGame.callInput.text == "999")
+            if (inGame.callInput.text == "1000")
             {
                 uiManager.ShowMessage("의심 행동만 가능합니다.");
                 return;
@@ -106,6 +106,9 @@ namespace FABFIB
             numList.Sort();
 
             int number = numList[2]*100+numList[1]*10+numList[0];
+
+            //000은 1000
+            if (number == 0) number = 1000;
             return number;
         }
     }

@@ -39,7 +39,7 @@ namespace FABFIB
         public void GotoNextPlayer()
         {
             //입력해야만 넘어갈 수 있음
-            if(callInput.text.Length != 3)
+            if(callInput.text.Length != 3 && callInput.text!="1000")
             {
                 uimanager.ShowMessage("숫자 3자리를 입력해야 합니다.");
                 return;
@@ -71,6 +71,8 @@ namespace FABFIB
 
             //수 갱신
             gm.CallNumber = int.Parse(callInput.text);
+            //1000 예외처리
+            if (callInput.text == "1000") gm.CallNumber = 1000;
 
             uimanager.uiList[4].gameObject.SetActive(true);
         }
