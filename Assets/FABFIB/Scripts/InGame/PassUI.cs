@@ -56,7 +56,7 @@ namespace FABFIB
                 gm.playerList[gm.CurrentUserIndex].DecreaseHP(hpAmount);
                 gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
 
-                resultMsg = $"{gm.playerList[gm.CurrentUserIndex].playerName} -{hpAmount}";
+                resultMsg = $"{gm.playerList[gm.CurrentUserIndex].playerName} HP -{hpAmount}";
             }
             else
             {
@@ -65,7 +65,7 @@ namespace FABFIB
                 int hpAmount = gm.playerList[previousUserIdx].CalDecreaseHP();
                 gm.playerList[previousUserIdx].DecreaseHP(hpAmount);
                 gm.playerList[previousUserIdx].ShowPlayerInfo();
-                resultMsg = $"{gm.playerList[previousUserIdx].playerName} -{hpAmount}";
+                resultMsg = $"{gm.playerList[previousUserIdx].playerName} HP -{hpAmount}";
 
                 //전사람이 선
                 gm.playerList[gm.CurrentUserIndex].isMyTurn = false;
@@ -94,7 +94,8 @@ namespace FABFIB
             inGame.DrawNewCard();
 
             //카드 숨김창 활성화
-            inGame.HideImageActive(true, resultMsg);
+            inGame.HideImageActive(true);
+            inGame.ShowResultText(resultMsg);
 
             //창 닫기
             this.gameObject.SetActive(false);

@@ -20,7 +20,8 @@ namespace FABFIB
         private void OnEnable()
         {
             ShowUserInfoUI();
-            HideImageActive(true, string.Empty);
+            HideImageActive(true);
+            ShowResultText(string.Empty);
             DrawNewCard();
         }
 
@@ -123,10 +124,16 @@ namespace FABFIB
         /// <summary>
         /// 카드 숨기기 이미지 활성화
         /// </summary>
-        public void HideImageActive(bool isHide, string msg)
+        public void HideImageActive(bool isHide)
+        {
+            hideCardInage.gameObject.SetActive(isHide);
+        }
+        /// <summary>
+        /// 의심 결과 보이기
+        /// </summary>
+        public void ShowResultText(string msg)
         {
             _resultText.text = msg;
-            hideCardInage.gameObject.SetActive(isHide);
         }
     }
 }
