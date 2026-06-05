@@ -133,6 +133,9 @@ namespace FABFIB
 
             //카드 정렬
             SortOrderCard();
+
+            //버튼 비활성화
+            gameMain.cardChangeButton.interactable = false;
         }
 
         /// <summary>

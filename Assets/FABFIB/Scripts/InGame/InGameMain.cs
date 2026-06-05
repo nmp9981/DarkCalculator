@@ -11,13 +11,16 @@ namespace FABFIB
         [SerializeField] public TextMeshProUGUI restChangeNumText;
         [SerializeField] private Image hideCardInage;
 
+        [SerializeField] public Button cardChangeButton;
         [SerializeField] Button newCardDrawButton;
         [SerializeField] public TMP_InputField callInput;
+
+        [SerializeField] TextMeshProUGUI _resultText;
 
         private void OnEnable()
         {
             ShowUserInfoUI();
-            HideImageActive(true);
+            HideImageActive(true, string.Empty);
             DrawNewCard();
         }
 
@@ -30,6 +33,7 @@ namespace FABFIB
             {
                 user.ShowPlayerInfo();
             }
+            cardChangeButton.interactable = true;
         }
 
         /// <summary>
@@ -68,6 +72,9 @@ namespace FABFIB
             gm.CurChangeCount = 0;//교환 횟수 초기화
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
             ShowRestChangeCardNum();
+
+            //교체 버튼 재활성화
+            cardChangeButton.interactable = true;
 
             //수 갱신
             gm.CallNumber = int.Parse(callInput.text);
@@ -116,8 +123,9 @@ namespace FABFIB
         /// <summary>
         /// 카드 숨기기 이미지 활성화
         /// </summary>
-        public void HideImageActive(bool isHide)
+        public void HideImageActive(bool isHide, string msg)
         {
+            _resultText.text = msg;
             hideCardInage.gameObject.SetActive(isHide);
         }
     }

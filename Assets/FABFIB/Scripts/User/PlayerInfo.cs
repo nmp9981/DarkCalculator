@@ -54,17 +54,25 @@ namespace FABFIB
         /// <summary>
         /// HP 감소
         /// </summary>
-        public void DecreaseHP()
+        public void DecreaseHP(int amount)
         {
-            int totalDamage = 0;
-            foreach(var card in CardManager.Instance.presentNumber)
-            {
-                totalDamage += card.Attack;
-            }
-            playerHP = Mathf.Max(0, playerHP - totalDamage);
+            playerHP = Mathf.Max(0, playerHP - amount);
 
             //사망 판정
             if (playerHP <= 0) OutPlayer();
+        }
+        /// <summary>
+        /// HP감소량
+        /// </summary>
+        /// <returns></returns>
+        public int CalDecreaseHP()
+        {
+            int totalDamage = 0;
+            foreach (var card in CardManager.Instance.presentNumber)
+            {
+                totalDamage += card.Attack;
+            }
+            return totalDamage;
         }
 
         /// <summary>
