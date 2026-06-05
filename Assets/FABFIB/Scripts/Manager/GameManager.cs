@@ -40,6 +40,7 @@ namespace FABFIB
         private int _maxUserCount = 10;
         private int _maxPlayerHP = 12;
         private int _startUserIndex;
+        private int _curChangeCount = 0;//현재 교환한 카드 개수
         [SerializeField] private int _currentPlayerIdx;//현재 플레이어
         private int _callNumber = -1;//부른 번호
         
@@ -48,6 +49,7 @@ namespace FABFIB
         public int MaxUserCount { get {return _maxUserCount; } }
         public int MaxPlayerHP { get { return _maxPlayerHP; } }
         public int StartUserIndex {  get { return _startUserIndex; }set { _startUserIndex = value; } }
+        public int CurChangeCount { get { return _curChangeCount; } set { _curChangeCount = value; } }
         public int CurrentUserIndex { get { return _currentPlayerIdx; } set { _currentPlayerIdx = value; } }
         public int CallNumber { get { return _callNumber; } set { _callNumber = value; } }
 

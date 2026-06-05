@@ -10,7 +10,6 @@ namespace FABFIB
         public string playerName;//플레이어 명
         public int playerHP;//플레이어 체력
         public int playerIndex;//플레이어 순서
-        public int changeCount;//교체 횟수
         public bool isMyTurn;//내턴인가?
 
         public List<NumberCard> ownCards = new List<NumberCard>();//소유한 카드
@@ -29,7 +28,6 @@ namespace FABFIB
             playerName = name;
             playerHP = GameManager.Instance.MaxPlayerHP;
             playerIndex = order;
-            changeCount = GameManager.maxChangeCount;
             isMyTurn = isStart;
         }
 

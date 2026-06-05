@@ -85,8 +85,10 @@ namespace FABFIB
             gm.CallNumber = -1;
 
             //»õÄ«µå »Ì±â
-            inGame.HideImageActive(false);
             inGame.DrawNewCard();
+
+            //Ä«µå ¼û±èÃ¢ È°¼ºÈ­
+            inGame.HideImageActive(true);
 
             //Ã¢ ´Ý±â
             this.gameObject.SetActive(false);

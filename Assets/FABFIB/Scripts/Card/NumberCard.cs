@@ -15,6 +15,7 @@ namespace FABFIB
         [SerializeField] private Image cardImage;
         [SerializeField] private TextMeshProUGUI numText;
         [SerializeField] private List<GameObject> skullList = new();
+        [SerializeField] private InGameMain gameMain;
 
         /// <summary>
         /// 카드 UI표시
@@ -41,8 +42,17 @@ namespace FABFIB
         public void ClickCard()
         {
             isClick = !isClick;
-            if(isClick) cardImage.color = Color.yellow;
-            else cardImage.color = Color.white;
+            if (isClick)
+            {
+                GameManager.Instance.CurChangeCount = Mathf.Min(GameManager.Instance.CurChangeCount+ 1, GameManager.maxChangeCount);
+                cardImage.color = Color.yellow;
+            }
+            else
+            {
+                GameManager.Instance.CurChangeCount = Mathf.Max(GameManager.Instance.CurChangeCount - 1, 0);
+                cardImage.color = Color.white;
+            }
+            gameMain.ShowRestChangeCardNum();
         }
 
         /// <summary>

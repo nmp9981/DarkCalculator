@@ -107,20 +107,23 @@ namespace FABFIB
                 return;
             }
 
+            //클릭한 카드 전부 교체
             int changeIndex = -1;
             for (int i = 0; i < presentNumber.Count; i++)
             {
                 if (presentNumber[i].isClick)
                 {
+                    //바닥에 남은 패가 없으면 다시 뽑기
+                    if (gm.restNumberCardList.Count < 2)
+                    {
+                        ChargeCardInFloor();
+                    }
                     changeIndex = i;
+                    //카드 교체
+                    ChangeCardInfo(changeIndex);
+
                     break;
                 }
-            }
-
-            //바닥에 남은 패가 없으면 다시 뽑기
-            if (gm.restNumberCardList.Count < 2)
-            {
-                ChargeCardInFloor();
             }
 
             //클릭한 카드가 없음
@@ -131,22 +134,29 @@ namespace FABFIB
                 return;
             }
 
-            NumberCard clickCard = gm.restNumberCardList.Pop();
-            //카드 정보 변경
-            var card = presentNumber[changeIndex];
+            //UI및 교체 가능 버튼 비활성화
+            gm.playerList[playerIdx].ShowPlayerInfo();
+            gm.playerList[playerIdx].changeCount = 0;
+            gameMain.ShowRestChangeCardNum();
+
+            //카드 정렬
+            SortOrderCard();
+        }
+
+        /// <summary>
+        /// 카드 정보 변경
+        /// </summary>
+        void ChangeCardInfo(int idx)
+        {
+            NumberCard clickCard = GameManager.Instance.restNumberCardList.Pop();
+            var card = presentNumber[idx];
             card.Num = clickCard.Num;
             card.Attack = clickCard.Attack;
             card.isClick = false;
             card.RandomValue = clickCard.RandomValue;
             card.GetComponent<NumberCard>().InitClickState();
 
-            //UI및 교체 가능 횟수 감소
-            gm.usedCardList.Add(clickCard);
-            gm.playerList[playerIdx].changeCount -= 1;
-            gm.playerList[playerIdx].ShowPlayerInfo();
-            gameMain.ShowRestChangeCardNum();
-
-            SortOrderCard();
+            GameManager.Instance.usedCardList.Add(clickCard);
         }
 
         /// <summary>

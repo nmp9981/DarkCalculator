@@ -65,7 +65,7 @@ namespace FABFIB
             //다음 사람으로 넘어감
             gm.CurrentUserIndex = PlayerManager.Instance.NextPlayerIndex();
             gm.playerList[gm.CurrentUserIndex].isMyTurn = true;
-            gm.playerList[gm.CurrentUserIndex].changeCount = GameManager.maxChangeCount;//교환 횟수 초기화
+            gm.CurChangeCount = 0;//교환 횟수 초기화
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
             ShowRestChangeCardNum();
 
@@ -83,8 +83,7 @@ namespace FABFIB
         public void DrawNewCard()
         {
             GameManager gm = GameManager.Instance;
-            HideImageActive(false);
-
+            
             //바닥에 남은 패 개수가 5개 미만이면 다시 뽑기
             if (gm.restNumberCardList.Count < 5)
             {
@@ -111,8 +110,7 @@ namespace FABFIB
         /// </summary>
         public void ShowRestChangeCardNum()
         {
-            int idx = GameManager.Instance.CurrentUserIndex;
-            restChangeNumText.text = "남은 횟수 : "+ GameManager.Instance.playerList[idx].changeCount.ToString();
+            restChangeNumText.text = "고른 카드 개수 : "+ GameManager.Instance.CurChangeCount;
         }
 
         /// <summary>
