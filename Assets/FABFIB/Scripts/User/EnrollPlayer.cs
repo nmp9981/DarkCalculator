@@ -102,7 +102,6 @@ namespace FABFIB
         private bool IsRepetitionUserName(List<string> nameList)
         {
             List<string> sortingList = nameList;
-            sortingList.Sort();//정렬
             for (int i = 0; i < sortingList.Count - 1; i++)
             {
                 //이름 중복 발생

@@ -99,14 +99,6 @@ namespace FABFIB
             GameManager gm = GameManager.Instance;
             int playerIdx = gm.CurrentUserIndex;
 
-            //횟수 남아있을대만 유효
-            if (gm.playerList[playerIdx].changeCount < 1)
-            {
-                uiManager.ShowMessage("더 이상 교체할 수 없습니다");
-                InitChangeState();
-                return;
-            }
-
             //클릭한 카드 전부 교체
             int changeIndex = -1;
             for (int i = 0; i < presentNumber.Count; i++)
@@ -136,7 +128,7 @@ namespace FABFIB
 
             //UI및 교체 가능 버튼 비활성화
             gm.playerList[playerIdx].ShowPlayerInfo();
-            gm.playerList[playerIdx].changeCount = 0;
+            gm.CurChangeCount = 0;
             gameMain.ShowRestChangeCardNum();
 
             //카드 정렬
