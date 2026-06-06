@@ -78,8 +78,14 @@ namespace FABFIB
         {
             GameManager gm = GameManager.Instance;
 
+            //턴 제한 모드
+            if(gm.FABFIBGameMode == FABFIBMode.Turn)
+            {
+                gm.CurTurnCount = 1;
+            }
+
             int userCount = gm.UserCount;
-            int startUserIndex = Random.Range(0, userCount);
+            gm.StartUserIndex = Random.Range(0, userCount);
             for (int idx = 0; idx < userCount; idx++)
             {
                 //오브젝트 생성
@@ -90,10 +96,10 @@ namespace FABFIB
                 string playerName = gm.playerNameList[idx];
                 PlayerInfo playerInfo = playerObj.GetComponent<PlayerInfo>();
 
-                bool isStartUser = (idx==startUserIndex)?true:false;
+                bool isStartUser = (idx==gm.StartUserIndex)?true:false;
                 playerInfo.EnrollPlayerInfo(playerName,idx, isStartUser);
                 gm.playerList.Add(playerInfo);
-                gm.CurrentUserIndex = startUserIndex;
+                gm.CurrentUserIndex = gm.StartUserIndex;
             }
         }
 

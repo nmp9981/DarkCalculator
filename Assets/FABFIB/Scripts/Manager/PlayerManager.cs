@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -99,6 +100,30 @@ namespace FABFIB
                 _victoryObj.gameObject.SetActive(true);
                 _winnerText.text = winner;
             }
+        }
+
+        /// <summary>
+        /// 최종 승리자
+        /// </summary>
+        public void WinPlayer_TurnLimit()
+        {
+            //가장 높은 HP
+            int maxiHP = 1;
+            string winner = string.Empty;
+            List<string> winPlayerNameList = new(); 
+            foreach (var player in GameManager.Instance.playerList)
+            {
+                if (player.playerHP > maxiHP) maxiHP = player.playerHP;
+            }
+
+            //승자 대상
+            foreach (var player in GameManager.Instance.playerList)
+            {
+                if (player.playerHP == maxiHP) winner = winner + player.playerName+"\n";
+            }
+
+            _victoryObj.gameObject.SetActive(true);
+            _winnerText.text = winner;
         }
     }
 }

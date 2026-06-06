@@ -97,6 +97,13 @@ namespace FABFIB
             inGame.HideImageActive(true);
             inGame.ShowResultText(resultMsg);
 
+            //턴 제한 모드에서 승자 검사
+            if(gm.FABFIBGameMode == FABFIBMode.Turn && gm.CurTurnCount > GameManager.totalTurnCount)
+            {
+                PlayerManager.Instance.WinPlayer_TurnLimit();
+                this.gameObject.SetActive(false);
+            }
+
             //창 닫기
             this.gameObject.SetActive(false);
         }

@@ -16,10 +16,12 @@ namespace FABFIB
         [SerializeField] public TMP_InputField callInput;
 
         [SerializeField] TextMeshProUGUI _resultText;
+        [SerializeField] TextMeshProUGUI _limitTurnText;
 
         private void OnEnable()
         {
             ShowUserInfoUI();
+            ShowTurnLimit();
             HideImageActive(true);
             ShowResultText(string.Empty);
             DrawNewCard();
@@ -73,6 +75,13 @@ namespace FABFIB
             gm.CurChangeCount = 0;//교환 횟수 초기화
             gm.playerList[gm.CurrentUserIndex].ShowPlayerInfo();
             ShowRestChangeCardNum();
+
+            //턴 증가
+            if(gm.CurrentUserIndex == gm.StartUserIndex)
+            {
+                gm.CurTurnCount += 1;
+                ShowTurnLimit();
+            }
 
             //교체 버튼 재활성화
             cardChangeButton.interactable = true;
@@ -134,6 +143,16 @@ namespace FABFIB
         public void ShowResultText(string msg)
         {
             _resultText.text = msg;
+        }
+        /// <summary>
+        /// 몇턴 남았는지 보이기
+        /// </summary>
+        /// <param name="limitTurnMsg"></param>
+        public void ShowTurnLimit()
+        {
+            if (GameManager.Instance.FABFIBGameMode == FABFIBMode.Turn)
+                _limitTurnText.text = $"현재 턴 수 : {GameManager.Instance.CurTurnCount} / {GameManager.totalTurnCount}";
+            else _limitTurnText.text = string.Empty;
         }
     }
 }
