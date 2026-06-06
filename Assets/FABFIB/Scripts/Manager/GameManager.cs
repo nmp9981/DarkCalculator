@@ -3,6 +3,16 @@ using UnityEngine;
 
 namespace FABFIB
 {
+    /// <summary>
+    /// 게임 모드
+    /// </summary>
+    public enum FABFIBMode
+    {
+        General,
+        Turn,
+        Count
+    }
+
     public class GameManager : MonoBehaviour
     {
         static GameManager _instance;
@@ -43,7 +53,8 @@ namespace FABFIB
         private int _curChangeCount = 0;//현재 교환한 카드 개수
         [SerializeField] private int _currentPlayerIdx;//현재 플레이어
         private int _callNumber = -1;//부른 번호
-        
+        private FABFIBMode _fabfibMode;//게임 모드
+
         public int UserCount { get { return _userCount; } set { _userCount = value; } }
         public int MinUserCount { get { return _minUserCount; } }
         public int MaxUserCount { get {return _maxUserCount; } }
@@ -52,6 +63,7 @@ namespace FABFIB
         public int CurChangeCount { get { return _curChangeCount; } set { _curChangeCount = value; } }
         public int CurrentUserIndex { get { return _currentPlayerIdx; } set { _currentPlayerIdx = value; } }
         public int CallNumber { get { return _callNumber; } set { _callNumber = value; } }
+        public FABFIBMode FABFIBGameMode { get { return _fabfibMode; } set{ _fabfibMode = value; } }
 
         public Stack<NumberCard> restNumberCardList = new Stack<NumberCard>();
         public List<NumberCard> usedCardList = new List<NumberCard>();//사용한 카드
