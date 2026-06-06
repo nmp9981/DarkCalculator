@@ -61,6 +61,7 @@ namespace FABFIB
         public void InitClickState()
         {
             cardImage.color = Color.white;
+            GameManager.Instance.CurChangeCount = Mathf.Max(GameManager.Instance.CurChangeCount - 1, 0);
             ShowCard();
         }
     }

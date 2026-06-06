@@ -113,8 +113,6 @@ namespace FABFIB
                     changeIndex = i;
                     //카드 교체
                     ChangeCardInfo(changeIndex);
-
-                    break;
                 }
             }
 
